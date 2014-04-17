@@ -1,0 +1,1 @@
+Thanks for registering! An activation link has been sent to your email address.
