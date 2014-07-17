@@ -29,7 +29,7 @@
 			<li>it won't be published until an administrator reviews it.</li>
 		</ul>
 		<p>
-			You can 
+			You can
 			<strong>
 				<?php echo $this->Html->link('register an account', array('controller' => 'users', 'action' => 'register')); ?>
 			</strong>
@@ -42,10 +42,10 @@
 	</div>
 <?php endif; ?>
 
-<?php 
+<?php
 	echo $this->Form->create('Event');
 	if (isset($event_id) && $event_id) {
-		echo $this->Form->input('Event.id', array('type' => 'hidden'));	
+		echo $this->Form->input('Event.id', array('type' => 'hidden'));
 	}
 ?>
 <table class="event_form">
@@ -54,7 +54,7 @@
 			<th>Event</th>
 			<td><?php
 				echo $this->Form->input('title', array(
-					'label' => false, 
+					'label' => false,
 					'div' => false
 				));
 			?></td>
@@ -64,7 +64,7 @@
 				<th>Part of Series</th>
 				<td class="in_series">
 					<?php if (! empty($this->data['EventSeries']['title'])): ?>
-						<?php echo $this->data['EventSeries']['title']; ?> 
+						<?php echo $this->data['EventSeries']['title']; ?>
 					<?php else: ?>
 						(Unnamed series)
 					<?php endif; ?>
@@ -92,7 +92,7 @@
 			<th>Category</th>
 			<td><?php
 				echo $this->Form->input('category_id', array(
-					'label' => false, 
+					'label' => false,
 					'options' => $categories,
 					'div' => false,
 					'empty' => false,
@@ -112,7 +112,7 @@
 							var preselected_dates = $datepicker_preselected_dates;
 							setupDatepickerMultiple(default_date, preselected_dates);
 						");
-						
+
 					} else {	// Only one date can be selected
 						$this->Js->buffer("
 							var default_date = '".$this->request->data['Event']['date']."';
@@ -120,13 +120,13 @@
 						");
 					}
 					echo $this->Form->input('date', array(
-						'type' => 'hidden', 
+						'type' => 'hidden',
 						'id' => 'datepicker_hidden'
 					));
 				?>
 				<?php if ($multiple_dates_allowed): ?>
 					<div class="footnote">
-						Select more than one date to create multiple events connected by a series. 
+						Select more than one date to create multiple events connected by a series.
 					</div>
 				<?php endif; ?>
 			</td>
@@ -136,7 +136,7 @@
 				<th>Series Name</th>
 				<td>
 					<?php echo $this->Form->input('EventSeries.title', array(
-						'label' => false, 
+						'label' => false,
 						'div' => false,
 						'after' => '<div class="footnote">By default, the series and its events have the same title.</div>'
 					)); ?>
@@ -151,7 +151,7 @@
 			<td>
 				<?php
 					echo $this->Form->input('time_start', array(
-						'label' => false, 
+						'label' => false,
 						'interval' => 5,
 						'timeFormat' => '12',
 						'div' => array('id' => 'eventform_timestart_div'),
@@ -159,15 +159,15 @@
 					));
 				?>
 				<div id="eventform_hasendtime" <?php if (! $has['end_time']): ?>style="display: none;"<?php endif; ?>>
-					<?php 
+					<?php
 						if (isset($this->data['Event']['time_end'])) {
 							$selected_end_time = ($this->data['Event']['time_end'] == '00:00:00')
 								? '24:00:00'	// Fixes bug where midnight is represented as noon
 								: $this->data['Event']['time_end'];
 						} else {
 							$selected_end_time = array(
-								'hour' => '1', 
-								'min' => '00', 
+								'hour' => '1',
+								'min' => '00',
 								'meridian' => 'pm'
 							);
 						}
@@ -210,7 +210,7 @@
 			<th>Address</th>
 			<td>
 				<?php echo $this->Form->input('address', array(
-					'label' => false, 
+					'label' => false,
 					'div' => false
 				)); ?>
 			</td>
@@ -228,7 +228,7 @@
 			<td id="eventform_tags">
 				<?php
 					echo $this->element('tags/tag_editing', array(
-						'available_tags' => $available_tags, 
+						'available_tags' => $available_tags,
 						'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
 						'hide_label' => true,
 						'allow_custom' => $logged_in
@@ -256,9 +256,9 @@
 			<th>Cost</th>
 			<td>
 				<?php echo $this->Form->input('cost', array(
-					'maxLength' => 200, 
-					'label' => false, 
-					'div' => false, 
+					'maxLength' => 200,
+					'label' => false,
+					'div' => false,
 					'after' => ' <a class="toggler" href="#" id="event_remove_cost">Remove</a><div class="footnote">Just leave this blank if the event is free.</div>'
 				)); ?>
 			</td>
@@ -275,10 +275,10 @@
 			<th>Age&nbsp;Restriction</th>
 			<td>
 				<?php echo $this->Form->input('age_restriction', array(
-					'label' => false, 
+					'label' => false,
 					'div' => false,
 					'maxLength' => 30,
-					'after' => '<a class="toggler" href="#" id="event_remove_age_restriction">Remove</a><div class="footnote">Leave this blank if this event has no age restrictions.</div>'
+					'after' => ' <a class="toggler" href="#" id="event_remove_age_restriction">Remove</a><div class="footnote">Leave this blank if this event has no age restrictions.</div>'
 				)); ?>
 			</td>
 		</tr>
@@ -322,7 +322,7 @@
 						case 'edit_series':
 							$label = 'Update Series';
 							break;
-					} 
+					}
 					echo $this->Form->end($label);
 				?>
 			</td>
@@ -330,7 +330,7 @@
 	</tbody>
 </table>
 
-<?php 
+<?php
 	$previous_locations_for_autocomplete = array();
 	foreach ($previous_locations as $location => $address) {
 		$previous_locations_for_autocomplete[] = array(
