@@ -43,7 +43,9 @@
 class EmailConfig {
 
 	public $default = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
@@ -51,17 +53,21 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
-	
+
 	public $contact_form = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
 		'emailFormat' => 'both',
 	);
-	
+
 	public $mailing_list = array(
-		'transport' => 'Mail',
+		'transport' => 'Smtp',
+		'port' => 25,
+		'host' => 'localhost', // puffer.interserver.net or 209.159.145.114 could also be used
 		'from' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
@@ -112,9 +118,9 @@ class EmailConfig {
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
-	
+
     public function __construct() {
         // Do conditional assignments here.
     }
-	
+
 }
