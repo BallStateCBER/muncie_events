@@ -6,30 +6,30 @@ class MailingListController extends AppController {
 	public $helpers = array();
 	public $uses = array('MailingList', 'MailingListLog', 'Event', 'Category');
 	public $admin_actions = array('reset_processed_time', 'set_categories');
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->deny('reset_processed_time', 'set_categories');
 	}
-	
+
 	public function beforeRender() {
 		parent::beforeRender();
 	}
-	
+
 	public function isAuthorized() {
 		// Admins can access everything
 		if ($this->Auth->user('role') == 'admin') {
 			return true;
-			
+
 		// Some actions are admin-only
 		} elseif (in_array($this->action, $this->admin_actions)) {
-			return false;	
+			return false;
 		}
-		
+
 		// Logged-in users can access everything else
 		return true;
 	}
-	
+
 	/**
 	 * For all users, sets the 'mailing_list_id' field according to matching
 	 * email addresses. Intended to be run once, manually.
@@ -37,7 +37,7 @@ class MailingListController extends AppController {
 	public function set_ids() {
 		// Currently disabled to prevent being run accidentally
 		return;
-		
+
 		$list_members = $this->MailingList->find('list');
 		$this->MailingList->User->displayField = 'email';
 		$users = $this->MailingList->User->find('all', array(
@@ -67,16 +67,16 @@ class MailingListController extends AppController {
 			'class' => 'success'
 		));
 	}
-	
+
 	/**
-	 * For all list members, sets all_categories or the appropriate category associations; 
+	 * For all list members, sets all_categories or the appropriate category associations;
 	 * Intended to be run once , manually.
 	 */
 	/* Has been run, will probably not be necessary in the future
 	public function set_categories() {
 		// Determine what value for the old (TheMuncieScene.com) MailingList.category field would represent 'all categories'
 		$all_categories_value = '8,9,10,11,12,13';
-		
+
 		$members = $this->MailingList->find('all', array(
 			'fields' => array('id', 'all_categories', 'categories'),
 			'contain' => false
@@ -84,23 +84,23 @@ class MailingListController extends AppController {
 		foreach ($members as $member) {
 			$this->MailingList->id = $member['MailingList']['id'];
 			$is_all_categories = $member['MailingList']['categories'] == $all_categories_value;
-			
+
 			// Set MailingList.all_categories
 			$this->MailingList->saveField('all_categories', $is_all_categories);
-			
+
 			// Set the associated categories even if this user has signed up for all of them
 			$this->MailingList->save(array(
 				'Category' => explode(',', $member['MailingList']['categories'])
 			));
 		}
-		
+
 		return $this->renderMessage(array(
 			'title' => 'Done',
 			'class' => 'success'
 		));
 	}
 	*/
-	
+
 	private function __sendDailyEmail($events, $recipient, $testing = false) {
 		list($result, $message) = $this->MailingList->sendDaily($recipient, $events, $testing);
 		if ($result) {
@@ -110,7 +110,7 @@ class MailingListController extends AppController {
 		}
 		return $result;
 	}
-	
+
 	private function __sendWeeklyEmail($events, $recipient, $testing = false) {
 		list($result, $message) = $this->MailingList->sendWeekly($recipient, $events, $testing);
 		if ($result) {
@@ -120,7 +120,7 @@ class MailingListController extends AppController {
 		}
 		return $result;
 	}
-	
+
 	public function preview_daily($y = null, $m = null, $d = null) {
 		if (! $y && ! $m && ! $d) {
 			list($y, $m, $d) = $this->MailingList->getTodayYMD();
@@ -130,11 +130,11 @@ class MailingListController extends AppController {
 		foreach ($recipients as $recipient) {
 			$this->__sendDailyEmail($events, $recipient, true);
 		}
-		
+
 		// Pull the flash messages set by __sendDailyEmail()
 		$recipient_results = $this->Session->read('FlashMessage');
 		$this->Session->delete('FlashMessage');
-		
+
 		$this->set(array(
 			'title_for_layout' => 'Preview of Email',
 			'recipient_email' => 'fake@email.addy',
@@ -146,7 +146,7 @@ class MailingListController extends AppController {
 		));
 		$this->set(compact('events', 'recipients', 'recipient_results'));
 	}
-	
+
 	public function preview_weekly($y = null, $m = null, $d = null) {
 		if (! $y && ! $m && ! $d) {
 			list($y, $m, $d) = $this->MailingList->getTodayYMD();
@@ -156,11 +156,11 @@ class MailingListController extends AppController {
 		foreach ($recipients as $recipient) {
 			$this->__sendWeeklyEmail($events, $recipient, true);
 		}
-		
+
 		// Pull the flash messages set by __sendWeeklyEmail()
 		$recipient_results = $this->Session->read('FlashMessage');
 		$this->Session->delete('FlashMessage');
-		
+
 		$this->set(array(
 			'title_for_layout' => 'Preview of Weekly Events Email',
 			'recipient_email' => 'fake@email.addy',
@@ -173,7 +173,7 @@ class MailingListController extends AppController {
 		));
 		$this->set(compact('events', 'recipients', 'recipient_results'));
 	}
-	
+
 	public function send_daily() {
 		// Make sure there are recipients
 		$recipients = $this->MailingList->getDailyRecipients();
@@ -184,9 +184,9 @@ class MailingListController extends AppController {
 				'class' => 'notification'
 			));
 		}
-		
+
 		// Make sure there are events to report
-		list($y, $m, $d) = $this->MailingList->getTodayYMD();		
+		list($y, $m, $d) = $this->MailingList->getTodayYMD();
 		$events = $this->Event->getEventsOnDay($y, $m, $d, true);
 		if (empty($events)) {
 			$this->MailingList->markAllDailyAsProcessed($recipients, 'd');
@@ -196,7 +196,7 @@ class MailingListController extends AppController {
 				'class' => 'notification'
 			));
 		}
-		
+
 		// Send emails
 		$email_addresses = array();
 		foreach ($recipients as $recipient) {
@@ -209,7 +209,7 @@ class MailingListController extends AppController {
 			'class' => 'success'
 		));
 	}
-	
+
 	public function send_weekly() {
 		// Make sure that today is the correct day
 		if (! $this->MailingList->testing_mode && ! $this->MailingList->isWeeklyDeliveryDay()) {
@@ -219,7 +219,7 @@ class MailingListController extends AppController {
 				'class' => 'notification'
 			));
 		}
-		
+
 		// Make sure there are recipients
 		$recipients = $this->MailingList->getWeeklyRecipients();
 		if (empty($recipients)) {
@@ -229,7 +229,7 @@ class MailingListController extends AppController {
 				'class' => 'notification'
 			));
 		}
-		
+
 		// Make sure there are events to report
 		list($y, $m, $d) = $this->MailingList->getTodayYMD();
 		$events = $this->Event->getEventsUpcomingWeek($y, $m, $d, true);
@@ -241,12 +241,12 @@ class MailingListController extends AppController {
 				'class' => 'notification'
 			));
 		}
-		
+
 		// Send emails
 		$success_count = 0;
 		foreach ($recipients as $recipient) {
 			if ($this->__sendWeeklyEmail($events, $recipient)) {
-				$success_count++;	
+				$success_count++;
 			}
 		}
 		$events_count = 0;
@@ -259,11 +259,11 @@ class MailingListController extends AppController {
 			'class' => 'success'
 		));
 	}
-	
+
 	public function join($email = null) {
 		$categories = $this->Category->getAll();
 		$days = $this->MailingList->getDays();
-		
+
 		if ($this->request->is('post')) {
 			$error = false;
 			$this->MailingList->create();
@@ -280,8 +280,8 @@ class MailingListController extends AppController {
 				$join_url = Router::url();
 				return $this->renderMessage(array(
 					'title' => 'Error Subscribing',
-					'message' => 'There was an error adding you to the mailing list. 
-						Please <a href="'.$join_url.'">try again</a> or 
+					'message' => 'There was an error adding you to the mailing list.
+						Please <a href="'.$join_url.'">try again</a> or
 						<a href="/contact">contact support</a> if you need assistance.',
 					'class' => 'error'
 				));
@@ -289,32 +289,32 @@ class MailingListController extends AppController {
 		} else {
 			$this->__setDefaultValues();
 			if ($email) {
-				$this->request->data['MailingList']['email'] = trim(strtolower($email));	
+				$this->request->data['MailingList']['email'] = trim(strtolower($email));
 			}
 		}
-		
+
 		$this->set(array(
 			'title_for_layout' => 'Join Muncie Events Mailing List'
 		));
 		$this->set(compact('categories', 'days'));
 	}
-	
+
 	public function settings($recipient_id = null, $hash = null) {
 		if ($this->request->is('ajax')) {
 			$this->layout = 'ajax';
 		}
-		
+
 		// Make sure link is valid
 		if (! $recipient_id || $hash != $this->MailingList->getHash($recipient_id)) {
 			return $this->renderMessage(array(
 				'title' => 'Invalid Link',
-				'message' => 'It appears that you clicked on a broken link. If you copied and 
-					pasted a URL to get here, you may not have copied the whole address. 
+				'message' => 'It appears that you clicked on a broken link. If you copied and
+					pasted a URL to get here, you may not have copied the whole address.
 					Please <a href="/contact">contact support</a> if you need assistance.',
 				'class' => 'error'
 			));
 		}
-		
+
 		// Make sure subscriber exists
 		$this->MailingList->id = $recipient_id;
 		if (! $this->MailingList->exists()) {
@@ -325,17 +325,17 @@ class MailingListController extends AppController {
 				'class' => 'error'
 			));
 		}
-		
+
 		$recipient = $this->MailingList->read();
-		
+
 		if ($this->request->is('post')) {
 			// Unsubscribe
 			if ($this->request->data['MailingList']['unsubscribe']) {
 				return $this->__unsubscribe();
 			}
-			
+
 			$this->__readFormData();
-			
+
 			/*
 			// If there's an associated user, update its email too
 			$user_id = $this->MailingList->getAssociatedUserId();
@@ -344,18 +344,18 @@ class MailingListController extends AppController {
 				$this->User->saveField('email', $this->request->data['MailingList']['email']);
 			}
 			*/
-			
+
 			// Update settings
 			if ($this->__validateForm($recipient_id)) {
 				if ($this->MailingList->save()) {
 					return $this->renderMessage(array(
-						'title' => 'Settings Updated',	
+						'title' => 'Settings Updated',
 						'message' => 'Your mailing list settings have been updated.',
 						'class' => 'success'
 					));
 				}
 				return $this->renderMessage(array(
-					'title' => 'Error Updating Settings',	
+					'title' => 'Error Updating Settings',
 					'message' => 'Please try again, or <a href="/contact">contact support</a> for assistance.',
 					'class' => 'error'
 				));
@@ -370,14 +370,14 @@ class MailingListController extends AppController {
 		));
 		$this->set(compact('recipient', 'recipient_id', 'hash'));
 	}
-	
+
 	/**
 	 * Sets $this->MailingList->data with submitted form data
 	 */
 	private function __readFormData() {
 		$this->request->data['MailingList']['email'] = strtolower(trim($this->request->data['MailingList']['email']));
 		$this->MailingList->set('email', $this->request->data['MailingList']['email']);
-		
+
 		// If joining for the first time with default settings
 		if (isset($this->request->data['MailingList']['settings'])) {
 			if ($this->request->data['MailingList']['settings'] == 'default') {
@@ -389,42 +389,46 @@ class MailingListController extends AppController {
 				return;
 			}
 		}
-		
+
+		// All event types
+		// If the user did not select 'all events', but has each category individually selected, set 'all_categories' to true
 		$all_categories_selected = ($this->request->data['MailingList']['event_categories'] == 'all');
-		
-		// If the user did not select 'all events', but has each category individually selected,
-		// set 'all_categories' to true
 		if (! $all_categories_selected) {
 			$selected_category_count = count($this->request->data['MailingList']['selected_categories']);
 			$all_categories_count = $this->MailingList->Category->find('count');
 			if ($selected_category_count == $all_categories_count) {
-				$all_categories_selected = true;	
+				$all_categories_selected = true;
 			}
 		}
-		$this->MailingList->set(array(
-			'MailingList' => array(
-				'weekly' => $this->request->data['MailingList']['weekly'],
-				'all_categories' => $all_categories_selected
-			)
-		));
+		$this->MailingList->set('all_categories', $all_categories_selected);
+
+		// Custom event types
 		if (isset($this->request->data['MailingList']['selected_categories'])) {
 			$this->MailingList->set(array(
 				'Category' => array_keys($this->request->data['MailingList']['selected_categories'])
 			));
 		}
+
+		// Weekly frequency
+		$weekly = $this->request->data['MailingList']['weekly'] || $this->request->data['MailingList']['frequency'] == 'weekly';
+		$this->MailingList->set('weekly', $weekly);
+
+		// Daily frequency
 		$days = $this->MailingList->getDays();
+		$daily = $this->request->data['MailingList']['frequency'] == 'daily';
 		foreach ($days as $code => $day) {
-			$this->MailingList->set(array("daily_$code" => $this->request->data['MailingList']["daily_$code"]));
+			$value = $daily || $this->request->data['MailingList']["daily_$code"];
+			$this->MailingList->set("daily_$code", $value);
 		}
 	}
-	
+
 	/**
 	 * Run special validation in addition to MailingList->validates(), returns TRUE if data is valid
 	 * @return boolean
 	 */
 	private function __validateForm($recipient_id = null) {
 		$error_found = false;
-		
+
 		// If updating an existing subscription
 		if ($recipient_id) {
 			$email_in_use = $this->MailingList->find('count', array(
@@ -437,7 +441,7 @@ class MailingListController extends AppController {
 				$error_found = true;
 				$this->MailingList->validationErrors['email'] = 'Cannot change to that email address because another subscriber is currently signed up with it.';
 			}
-			
+
 		// If creating a new subscription
 		} else {
 			$email_in_use = $this->MailingList->find('count', array(
@@ -471,11 +475,11 @@ class MailingListController extends AppController {
 		}
 		return ($this->MailingList->validates() && ! $error_found);
 	}
-	
+
 	private function __setDefaultValues($recipient = null) {
 		$this->request->data = $this->MailingList->getDefaultFormValues($recipient);
 	}
-	
+
 	private function __unsubscribe() {
 		if ($this->MailingList->delete()) {
 			// Un-associate associated User
@@ -489,18 +493,18 @@ class MailingListController extends AppController {
 				$this->User->saveField('mailing_list_id', null);
 			}
 			return $this->renderMessage(array(
-				'title' => 'Unsubscribed',	
+				'title' => 'Unsubscribed',
 				'message' => 'You have been removed from the mailing list.',
 				'class' => 'success'
 			));
 		}
 		return $this->renderMessage(array(
-			'title' => 'Error Unsubscribing',	
+			'title' => 'Error Unsubscribing',
 			'message' => 'There was an error removing you from the mailing list. Please <a href="/contact">contact support</a> for assistance.',
 			'class' => 'error'
 		));
 	}
-	
+
 	public function reset_processed_time() {
 		$recipients = $this->MailingList->find('list');
 		foreach ($recipients as $r_id => $r_email) {
@@ -510,7 +514,7 @@ class MailingListController extends AppController {
 		}
 		$this->Flash->success(count($recipients).' mailing list members\' "last processed" times reset.');
 	}
-	
+
 	public function bulk_add() {
 		if (! empty($this->request->data)) {
 			$addresses = explode("\n", $this->request->data['email_addresses']);
@@ -520,7 +524,7 @@ class MailingListController extends AppController {
 				if (! $address) {
 					continue;
 				}
-				
+
 				// Set
 				$this->MailingList->create();
 				$this->MailingList->set(array(
@@ -528,7 +532,7 @@ class MailingListController extends AppController {
 					'weekly' => 1,
 					'all_categories' => 1
 				));
-				
+
 				if ($this->MailingList->validates()) {
 					if ($this->MailingList->save()) {
 						$this->Flash->success("$address added.");
@@ -543,7 +547,7 @@ class MailingListController extends AppController {
 			}
 			$this->request->data['email_addresses'] = implode("\n", $retained_addresses);
 		}
-		
+
 		$this->set(array(
 			'title_for_layout' => 'Bulk Add - Mailing List'
 		));
