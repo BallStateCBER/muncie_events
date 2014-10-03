@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 class Event extends AppModel {
 	public $displayField = 'title';
 	public $actsAs = array(
-		'Containable', 
+		'Containable',
 		'Search.Searchable'
 	);
 	public $hasMany = array(
@@ -64,10 +64,10 @@ class Event extends AppModel {
 			)
 		)
 	);
-	
+
 	// If this is changed, also change /View/Elements/tinymce_input.ctp
 	public $allowed_tags = '<p><br><a><strong><b><i><em><u>';
-	
+
 
 	/**
 	 * Used by the Search plugin
@@ -85,7 +85,7 @@ class Event extends AppModel {
 		//'username' => array('type' => 'like', 'field' => array('User.name', 'UserInfo.email')),
 		//'tags' => array('type' => 'subquery', 'method' => 'findByTags', 'field' => 'Event.id')
     );
-    
+
 	/**
 	 * Custom find types
 	 * @var array
@@ -94,13 +94,13 @@ class Event extends AppModel {
 		'upcomingWithTag' => true,
 		'pastWithTag' => true
 	);
-	
+
 	protected function _findInDirectionWithTag($direction, $state, $query, $results = array()) {
 		if ($state == 'before') {
 			$event_ids = $this->EventsTag->find('list', array(
 				'conditions' => array(
-					'event_id' => ($direction == 'future') 
-						? $this->getFutureEventIDs() 
+					'event_id' => ($direction == 'future')
+						? $this->getFutureEventIDs()
 						: $this->getPastEventIDs(),
 					'tag_id' => $query['conditions']['Tag.id']
 				),
@@ -113,19 +113,19 @@ class Event extends AppModel {
 		}
 		return $results;
 	}
-	
+
 	protected function _findUpcomingWithTag($state, $query, $results = array()) {
 		return $this->_findInDirectionWithTag('future', $state, $query, $results);
 	}
-	
+
 	protected function _findPastWithTag($state, $query, $results = array()) {
 		return $this->_findInDirectionWithTag('past', $state, $query, $results);
 	}
-    
+
 	public function getCountInDirectionWithTag($direction, $tag_id) {
 		$conditions = array('tag_id' => $tag_id);
 		if ($direction == 'future') {
-			$conditions['event_id'] = $this->getFutureEventIDs(); 
+			$conditions['event_id'] = $this->getFutureEventIDs();
 		} else {
 			// Since there are always more past events than future, this is quicker
 			// than pulling the IDs of all past events
@@ -133,11 +133,11 @@ class Event extends AppModel {
 		}
 		return $this->EventsTag->find('count', array('conditions' => $conditions));
 	}
-	
+
 	public function getCountUpcomingWithTag($tag_id) {
 		return $this->getCountInDirectionWithTag('future', $tag_id);
 	}
-	
+
 	public function getCountPastWithTag($tag_id) {
 		return $this->getCountInDirectionWithTag('past', $tag_id);
 	}
@@ -146,10 +146,10 @@ class Event extends AppModel {
 		$filter = $data['filter'];
 		$conditions = array('OR' => array());
 		$fields = array(
-			'Event.title', 
-			'Event.description', 
+			'Event.title',
+			'Event.description',
 			'Event.location',
-			'Event.address', 
+			'Event.address',
 			'Event.source'
 		);
 		foreach ($fields as $field) {
@@ -158,7 +158,7 @@ class Event extends AppModel {
 		$tags = $this->Tag->find('list', array(
 			'conditions' => array('Tag.name LIKE'  => '%'.$filter.'%')
 		));
-		
+
 		// If there are any matching tags with associated events,
 		// let that association qualify those events for inclusion
 		if (! empty($tags)) {
@@ -175,7 +175,7 @@ class Event extends AppModel {
 		}
 		return $conditions;
 	}
-	
+
 	public function searchEventDirection($data = array()) {
 		$conditions = array();
 		if (! isset($data['direction'])) {
@@ -188,18 +188,18 @@ class Event extends AppModel {
 		}
 		return $conditions;
 	}
-    
+
 	public function getFilterName($filters) {
 		if (isset($filters['tag'])) {
 			$tag_id = $this->Tag->getIdFromSlug($filters['tag']);
 			$this->Tag->id = $tag_id;
 			if ($this->Tag->exists()) {
-				return $this->Tag->field('name');	
+				return $this->Tag->field('name');
 			}
 		}
 		return '';
 	}
-	
+
 	function getPreppedEvent($id) {
 		$this->id = $id;
 		$event = $this->find('first', array(
@@ -243,8 +243,8 @@ class Event extends AppModel {
 		if ($event['User']['id']) {
 			if ($event['User']['name']) {
 				$url = Router::url(array(
-					'controller' => 'users', 
-					'action' => 'view', 
+					'controller' => 'users',
+					'action' => 'view',
 					'id' => $event['User']['id']
 				));
 				$added_by = '<a href="'.$url.'">'.$event['User']['name'].'</a>';
@@ -269,7 +269,7 @@ class Event extends AppModel {
 		}
 		return $event;
 	}
-	
+
 	function getEventsOnDay($year, $month, $day, $only_approved = false) {
 		$conditions = array(
 			'Event.published' => 1,
@@ -292,12 +292,12 @@ class Event extends AppModel {
 				)
 			),
 			'fields' => array(
-				'Event.id', 
-				'Event.title', 
-				'Event.time_start', 
-				'Event.time_end', 
+				'Event.id',
+				'Event.title',
+				'Event.time_start',
+				'Event.time_end',
 				'Event.location',
-				'Event.location_details', 
+				'Event.location_details',
 				'Event.date',
 				'Event.approved_by'
 			),
@@ -305,10 +305,10 @@ class Event extends AppModel {
 		));
 		return $this->orderEventsByAdjustedTime($events);
 	}
-	
+
 	function orderEventsByAdjustedTime($events) {
 		if (empty($events)) {
-			return array();	
+			return array();
 		}
 		$ordered_events = array();
 		foreach ($events as $event) {
@@ -326,7 +326,7 @@ class Event extends AppModel {
 		}
 		return $final_events;
 	}
-	
+
 	function getEventsUpcomingWeek($y, $m, $d, $only_approved = false) {
 		$events = array();
 		for ($n = 0; $n < 7; $n++) {
@@ -341,7 +341,7 @@ class Event extends AppModel {
 		}
 		return $events;
 	}
-	
+
 	function getTeasers($year, $month, $limit = 15) {
 		$events = $this->find('all', array(
 			'conditions' => array(
@@ -387,7 +387,7 @@ class Event extends AppModel {
 		}
 		return $teasers;
 	}
-	
+
 	function getUsersNonSeriesEvents($user_id) {
 		return $this->find('all', array(
 			'conditions' => array(
@@ -399,7 +399,7 @@ class Event extends AppModel {
 			'contain' => false
 		));
 	}
-	
+
 	function getBigCalendarEvents($month = null, $year = null) {
 		$year = $year ? $year : date('Y');
 		$month = $month ? str_pad($month, 2, '0', STR_PAD_LEFT) : date('m');
@@ -436,7 +436,7 @@ class Event extends AppModel {
 		}
 		return $arranged_events;
 	}
-	
+
 	// Returns an array of days (e.g. [1, 2, 4, 7]) for the selected month that have events
 	function getDaysWithEvents($month, $year) {
 		$events = $this->find('all', array(
@@ -456,7 +456,7 @@ class Event extends AppModel {
 		}
 		return $days_with_events;
 	}
-	
+
 	function getNextInCategory($category_id) {
 		$result = $this->find('all', array(
 			'conditions' => array(
@@ -468,10 +468,10 @@ class Event extends AppModel {
 			'order' => array('Event.date ASC', 'Event.time_start ASC'),
 			'contain' => false,
 			'fields' => array('Event.id', 'Event.title', 'Event.location', 'Event.location_details', 'Event.date', 'Event.time_start')
-		));		
+		));
 		return $result;
 	}
-	
+
 	public function getUnapproved($find_type = 'all') {
 		return $this->find($find_type, array(
 			'conditions' => array(
@@ -480,16 +480,16 @@ class Event extends AppModel {
 			'order' => array('Event.created' => 'asc')
 		));
 	}
-	
+
 	public function applyFiltersToFindParams($find_params, $filters = array(), $start_date = null) {
 		if (isset($filters['category']) && ! empty($filters['category'])) {
-			$find_params['conditions']['Event.category_id'] = $filters['category'];	
+			$find_params['conditions']['Event.category_id'] = $filters['category'];
 		}
 		if (isset($filters['location']) && ! empty($filters['location'])) {
-			$find_params['conditions']['Event.location LIKE'] = '%'.$filters['location'].'%';	
+			$find_params['conditions']['Event.location LIKE'] = '%'.$filters['location'].'%';
 		}
-		
-		// If there are included/excluded tags, retrieve all potentially 
+
+		// If there are included/excluded tags, retrieve all potentially
 		// applicable event IDs that must / must not be part of the final results
 		$event_ids = array();
 		foreach(array('included', 'excluded') as $foocluded) {
@@ -518,7 +518,7 @@ class Event extends AppModel {
 		}
 		return $find_params;
 	}
-	
+
 	/* Unused
 	public function getFilterTagIds($filters = array()) {
 		$tag_ids = array();
@@ -527,7 +527,7 @@ class Event extends AppModel {
 				foreach ($filters["tags_$foocluded"] as $tag_name) {
 					$tag_id = $this->Tag->getIdFromName($tag_name);
 					if ($tag_id) {
-						$tag_ids[$foocluded][] = $tag_id;	
+						$tag_ids[$foocluded][] = $tag_id;
 					}
 				}
 			}
@@ -535,11 +535,11 @@ class Event extends AppModel {
 		return $tag_ids;
 	}
 	*/
-	
+
 	public function getNextPopulatedDays($start_date, $limit, $filters = array()) {
 		$find_params = array(
 			'conditions' => array(
-				'Event.published' => 1, 
+				'Event.published' => 1,
 				'Event.date >=' => $start_date
 			),
 			'fields' => array('DISTINCT Event.date'),
@@ -557,7 +557,7 @@ class Event extends AppModel {
 		}
 		return $dates;
 	}
-	
+
 	public function getLocations($direction = 'future') {
 		$find_params = array(
 			'conditions' => array('Event.published' => 1),
@@ -585,7 +585,7 @@ class Event extends AppModel {
 		uksort($retval, 'strcasecmp');
 		return $retval;
 	}
-	
+
 	/**
 	 * Returns an array of events arranged by date
 	 * @param string|array $dates Can be 'yyyy-mm-dd' or an array of strings in same format
@@ -596,7 +596,7 @@ class Event extends AppModel {
 	public function getFilteredEventsOnDates($dates, $filters = array(), $for_widget = false) {
 		$find_params = array(
 			'conditions' => array(
-				'Event.published' => 1, 
+				'Event.published' => 1,
 				'Event.date' => $dates
 			),
 			'order' => array('Event.date ASC', 'Event.time_start ASC'),
@@ -619,54 +619,55 @@ class Event extends AppModel {
 			$start_date = $dates;
 		}
 		$find_params = $this->applyFiltersToFindParams($find_params, $filters, $start_date);
-		
+
 		// Request full fields or minimal fields (for widget)
 		if ($for_widget) {
 			$find_params['fields'] = array(
-				'Event.id', 
-				'Event.title', 
-				'Event.location', 
-				'Event.date', 
+				'Event.id',
+				'Event.title',
+				'Event.location',
+				'Event.date',
 				'Event.time_start'
 			);
 		} else {
 			$find_params['fields'] = array(
-				'Event.id', 
-				'Event.title', 
-				'Event.description', 
-				'Event.location', 
-				'Event.location_details', 
-				'Event.address', 
-				'Event.series_id', 
-				'Event.date', 
-				'Event.time_start', 
-				'Event.time_end', 
-				'Event.age_restriction', 
-				'Event.cost', 
-				'Event.source', 
-				'Event.user_id', 
+				'Event.id',
+				'Event.title',
+				'Event.description',
+				'Event.location',
+				'Event.location_details',
+				'Event.address',
+				'Event.series_id',
+				'Event.date',
+				'Event.time_start',
+				'Event.time_end',
+				'Event.age_restriction',
+				'Event.cost',
+				'Event.source',
+				'Event.user_id',
 				'Event.approved_by'
-			);			
-			$find_params['contain']['User'] = array('fields' => array('User.id', 'User.name')); 
+			);
+			$find_params['contain']['User'] = array('fields' => array('User.id', 'User.name'));
 			$find_params['contain']['Tag'] = array('fields' => array('Tag.id', 'Tag.name'));
 			$find_params['contain']['EventSeries'] = array('fields' => array('EventSeries.id', 'EventSeries.title'));
 		}
-		
+
 		$events = $this->find('all', $find_params);
 		$events = $this->orderEventsByAdjustedTime($events);
 		return $this->arrangeByDate($events);
 	}
-	
+
 	/**
-	 * Accepts an array of date => eventsOnDate and returns the date after its last date 
+	 * Accepts an array of date => eventsOnDate and returns the date after its last date
 	 * @param array $events
 	 * @return string
 	 */
 	public function getNextStartDate($events) {
-		$last_date = end(array_keys($events));
-		return date('Y-m-d', strtotime("$last_date + 1 day"));	
+		$event_keys = array_keys($events);
+		$last_date = end($event_keys);
+		return date('Y-m-d', strtotime("$last_date + 1 day"));
 	}
-	
+
 	/**
 	 * Returns events for the next seven populated days
 	 * @param string $start_date YYYY-MM-D
@@ -677,20 +678,20 @@ class Event extends AppModel {
 			$start_date = date('Y-m-d');
 		}
 		$dates_per_page = 7;
-		
+
 		// Get list of populated dates
 		$dates = $this->getNextPopulatedDays($start_date, $dates_per_page);
 		if (empty($dates)) {
 			return array();
 		}
-		
+
 		$events = $this->find('all', array(
 			'conditions' => array('Event.published' => 1, 'Event.date' => $dates),
 			'fields' => array('Event.id', 'Event.title', 'Event.description', 'Event.location', 'Event.location_details', 'Event.address', 'Event.series_id', 'Event.date', 'Event.time_start', 'Event.time_end', 'Event.age_restriction', 'Event.cost', 'Event.source', 'Event.user_id'),
 			'order' => array('Event.date ASC', 'Event.time_start ASC'),
 			'contain' => array(
-				'Category' => array('fields' => array('Category.id', 'Category.name', 'Category.slug')), 
-				'User' => array('fields' => array('User.id', 'User.name')), 
+				'Category' => array('fields' => array('Category.id', 'Category.name', 'Category.slug')),
+				'User' => array('fields' => array('User.id', 'User.name')),
 				'Tag' => array('fields' => array('Tag.id', 'Tag.name')),
 				'EventSeries' => array('fields' => array('EventSeries.id', 'EventSeries.title')),
 				'EventsImage' => array(
@@ -701,10 +702,10 @@ class Event extends AppModel {
 				)
 			)
 		));
-		
+
 		return $this->arrangeByDate($events);
 	}
-	
+
 	/**
 	 * Get a set of events for a 'page' of the calendar
 	 * @param string $start_date
@@ -719,7 +720,7 @@ class Event extends AppModel {
 		$dates = $this->getNextPopulatedDays($start_date, $dates_per_page, $filters);
 		return $this->getFilteredEventsOnDates($dates, $filters, $for_widget);
 	}
-	
+
 	/**
 	 * Get a set of events for a 'page' of the widget.
 	 * This is like Event::getPage(), but pulls less data
@@ -731,21 +732,21 @@ class Event extends AppModel {
 		$filters = $this->formatWidgetFilters($filters);
 		return $this->getPage($start_date, $filters, true);
 	}
-	
+
 	/**
-	 * Takes $filters provided by a Widget page, converts 
-	 * valid tag names into tag IDs, and removes invalid 
+	 * Takes $filters provided by a Widget page, converts
+	 * valid tag names into tag IDs, and removes invalid
 	 * tag names, and returns the formatted $filters.
 	 * @param array $filters
 	 * @return array $filters:
 	 */
 	public function formatWidgetFilters($filters) {
 		foreach(array('included', 'excluded') as $foocluded) {
-			if (isset($filters["tags_$foocluded"])) {		
+			if (isset($filters["tags_$foocluded"])) {
 				foreach ($filters["tags_$foocluded"] as $k => $tag_name) {
 					$tag_id = $this->Tag->getIdFromName($tag_name);
 					if ($tag_id) {
-						$filters["tags_$foocluded"][$k] = $tag_id;	
+						$filters["tags_$foocluded"][$k] = $tag_id;
 					} else {
 						unset($filters["tags_$foocluded"][$k]);
 					}
@@ -755,7 +756,7 @@ class Event extends AppModel {
 		}
 		return $filters;
 	}
-	
+
 	/**
 	 * Arranges a flat array of events by date => array(events in date)
 	 * @param array $events
@@ -770,13 +771,13 @@ class Event extends AppModel {
 		ksort($arranged_events);
 		return $arranged_events;
 	}
-	
+
 	function getUpcomingTags($filter = array()) {
 		return $this->Tag->getUpcoming($filter);
 	}
-	
+
 	/**
-	 * Takes an array of options and returns any event filters included 
+	 * Takes an array of options and returns any event filters included
 	 * after validating and correcting any formatting errors
 	 * @param array $options
 	 * @return array
@@ -791,7 +792,7 @@ class Event extends AppModel {
 			if (stripos($var, 'amp;') === 0) {
 				$var = str_replace('amp;', '', $var);
 			}
-			
+
 			// Turn specified options into arrays if they're comma-delimited strings
 			$expected_arrays = array('category', 'tags_included', 'tags_excluded');
 			if (in_array($var, $expected_arrays) && ! is_array($val)) {
@@ -805,25 +806,25 @@ class Event extends AppModel {
 				}
 				$val = $corrected_array;
 			}
-			
+
 			// Only include if not empty
-			/* Note: A value of 0 is a valid Widget parameter elsewhere (e.g. the 
-			 * boolean 'outerBorder'), but not valid for any event filters. */ 
+			/* Note: A value of 0 is a valid Widget parameter elsewhere (e.g. the
+			 * boolean 'outerBorder'), but not valid for any event filters. */
 			if (! empty($val)) {
 				$corrected_options[$var] = $val;
 			}
 		}
 		$options = $corrected_options;
-		
+
 		// Pull event filters out of options
 		$filters = array();
 		$filter_types = array('category', 'location', 'tags_included', 'tags_excluded');
 		foreach ($filter_types as $type) {
 			if (isset($options[$type])) {
 				$filters[$type] = $options[$type];
-			}	
+			}
 		}
-		
+
 		// Remove categories filter if it specifies all categories
 		if (isset($filters['category'])) {
 			sort($filters['category']);
@@ -833,7 +834,7 @@ class Event extends AppModel {
 				unset($filters['category']);
 			}
 		}
-		
+
 		// If a tag is both excluded and included, favor excluding
 		if (isset($filters['tags_included']) && isset($filters['tags_excluded'])) {
 			foreach ($filters['tags_included'] as $k => $id) {
@@ -845,10 +846,10 @@ class Event extends AppModel {
 				unset($filters['tags_included']);
 			}
 		}
-		
+
 		return $filters;
 	}
-	
+
 	/**
 	 * Returns the IDs of all events taking place before today
 	 * @return array
@@ -856,10 +857,10 @@ class Event extends AppModel {
 	public function getPastEventIDs() {
 		$result = $this->find('list', array(
 			'conditions' => array('Event.date <' => date('Y-m-d'))
-		));	
+		));
 		return array_keys($result);
 	}
-	
+
 	/**
 	 * Returns the IDs of all events taking place today and in the future
 	 * @return array
@@ -867,10 +868,10 @@ class Event extends AppModel {
 	public function getFutureEventIDs() {
 		$result = $this->find('list', array(
 			'conditions' => array('Event.date >=' => date('Y-m-d'))
-		));	
+		));
 		return array_keys($result);
 	}
-	
+
 	/**
 	 * Returns a MySQL query that returns the IDs of all events taking place before today
 	 * @return array
@@ -898,7 +899,7 @@ class Event extends AppModel {
 		$subQueryExpression = $db->expression($subQuery);
 		return $subQueryExpression;
 	}
-	
+
 	/**
 	 * Removes all associations that the specified event has with any images
 	 * @param integer $id
@@ -906,7 +907,7 @@ class Event extends AppModel {
 	public function removeImageAssociations($id) {
 		return $this->EventsImage->deleteAll(array('event_id' => $id));
 	}
-	
+
 	/**
 	 * Removes all associations that the specified event has with any images
 	 * @param integer $id
@@ -914,7 +915,7 @@ class Event extends AppModel {
 	public function removeTagAssociations($id) {
 		return $this->EventsTag->deleteAll(array('event_id' => $id));
 	}
-	
+
 	/**
 	 * Returns an array of dates (YYYY-MM-DD) with published events
 	 * @param string $month Optional, zero-padded
@@ -929,7 +930,7 @@ class Event extends AppModel {
 			'contain' => array(),
 			'order' => array('Event.date ASC')
 		);
-		
+
 		// Apply optional month/year limits
 		if ($month && $year) {
 			$month = str_pad($month, 2, '0', STR_PAD_LEFT);
@@ -938,13 +939,13 @@ class Event extends AppModel {
 		} elseif ($year) {
 			$find_params['conditions']['Event.date LIKE'] = "$year-%";
 		}
-		
+
 		// Apply optional filters
 		if ($filters) {
 			$start_date = null;
 			$find_params = $this->applyFiltersToFindParams($find_params, $filters, $start_date);
 		}
-		
+
 		$date_results = $this->find('all', $find_params);
 		$dates = array();
 		foreach ($date_results as $result) {
@@ -954,7 +955,7 @@ class Event extends AppModel {
 		}
 		return $dates;
 	}
-	
+
 	public function getMonth($year_month = null, $filters = array()) {
 		if (! $year_month) {
 			$year_month = date('my');
@@ -965,8 +966,8 @@ class Event extends AppModel {
 		$dates = $this->getPopulatedDates($month, $year, $filters);
 		return $this->getFilteredEventsOnDates($dates, $filters, true);
 	}
-	
-	
+
+
 	/**
 	 * Returns the locations and addresses used in events added by this user
 	 * @param int $user_id
@@ -983,7 +984,7 @@ class Event extends AppModel {
 			'contain' => false,
 			'order' => array('Event.created DESC')
 		));
-		
+
 		// Attempt to fill in missing addresses
 		foreach ($locations as $location => &$address) {
 			if ($address == '') {
@@ -1008,9 +1009,9 @@ class Event extends AppModel {
 		}
 		return $locations;
 	}
-	
+
 	/**
-	 * Returns the most recently published address 
+	 * Returns the most recently published address
 	 * for the provided location name or FALSE if none is found
 	 * @param string $location
 	 * @return boolean
@@ -1033,7 +1034,7 @@ class Event extends AppModel {
 		}
 		return $result['Event']['address'];
 	}
-	
+
 	/**
 	 * If an event has not yet been approved, approves and publishes this event
 	 * @param int $id
@@ -1049,13 +1050,13 @@ class Event extends AppModel {
 		if (CakeSession::read('Auth.User.role') != 'admin') {
 			throw new ForbiddenException('Only logged-in administrators may approve events.');
 		}
-		
+
 		// Avoid overwriting one admin's approval with another
 		$approved = $this->field('approved_by');
 		if (! $approved) {
 			$this->saveField('approved_by', CakeSession::read('Auth.User.id'));
 			$this->saveField('published', 1);
-			return true;	
+			return true;
 		}
 		return false;
 	}
