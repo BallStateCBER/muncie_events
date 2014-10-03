@@ -26,7 +26,7 @@ class FB {
    */
   private function __initInstance() {
   	if (empty(self::$Facebook)) {
-		self::$Facebook = new Facebook(FacebookInfo::getConfig());
+  		self::$Facebook = new Facebook(FacebookInfo::getConfig());
   	}
   }
   
@@ -63,7 +63,7 @@ class FB {
   public static function __callstatic($method, $params){  	
   	try {
   		if (empty(self::$Facebook)) {
-  			$this->__initInstance();
+  			self::__initInstance();
   		}
   		return call_user_func_array(array(self::$Facebook, $method), $params);
   	} catch (FacebookApiException $e) {
