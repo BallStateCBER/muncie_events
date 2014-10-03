@@ -44,7 +44,7 @@ class User extends AppModel {
 			)
 		)
 	);
-	
+
 	public function identicalFieldValues($field = array(), $compare_field = null) {
 		foreach ($field as $key => $value ) {
 			$v1 = $value;
@@ -55,36 +55,36 @@ class User extends AppModel {
 		}
 		return true;
 	}
-	
+
     public function emailUnclaimed($data) {
     	$result = $this->find('first', array(
-			'conditions' => array('User.email' => strtolower($data['email'])), 
+			'conditions' => array('User.email' => strtolower($data['email'])),
 			'fields' => array('id'),
 			'contains' => false
 		));
 		return empty($result);
     }
-    
+
     public function getIdFromEmail($email) {
 		$email = strtolower(trim($email));
 		$result = $this->find('first', array(
 			'conditions' => array('User.email' => $email),
 			'fields' => array('User.id'),
-			'contain' => false 
+			'contain' => false
 		));
 		if (isset($result['User']['id']) && $result['User']['id']) {
 			return $result['User']['id'];
 		}
 		return false;
 	}
-	
+
 	public function getImagesList($id) {
 		return $this->Image->find('list', array(
 			'conditions' => array('user_id' => $id),
 			'order' => 'created DESC'
 		));
 	}
-	
+
 	public function sendPasswordResetEmail($user_id, $email_address) {
 		$reset_password_hash = $this->getResetPasswordHash($user_id, $email_address);
 		App::uses('CakeEmail', 'Network/Email');
@@ -108,10 +108,33 @@ class User extends AppModel {
 			));
 		return $email->send();
 	}
-	
-	function getResetPasswordHash($user_id, $email = null) {
+
+	public function getResetPasswordHash($user_id, $email = null) {
 		$salt = 'resetmygoddamnpassword';
 		$month = date('my');
-		return md5($user_id.$email.$salt.$month);	
+		return md5($user_id.$email.$salt.$month);
+	}
+
+	/**
+	 * Returns true only if the user has previously submitted an event that has been published/approved
+	 * @param $user_id
+	 * @return boolean
+	 */
+	public function canAutopublish($user_id) {
+		if (! $user_id) {
+			return false;
+		}
+		$count = $this->Event->find(
+			'count',
+			array(
+				'conditions' => array(
+					'Event.user_id' => $user_id,
+					'Event.published' => true,
+					'Event.approved_by NOT' => null
+				),
+				'limit' => 1
+			)
+		);
+		return $count > 1;
 	}
 }
