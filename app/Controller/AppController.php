@@ -43,7 +43,7 @@ class AppController extends Controller {
 		$this->Cookie->type('rijndael');
 
 		// When using "rijndael" encryption the "key" value must be longer than 32 bytes.
-		$this->Cookie->key = '"Then it doesn\'t matter which way you go."';
+		$this->Cookie->key = Configure::read('cookie_encryption_key');
 
 		// Prevents cookies from being accessible in Javascript
 		$this->Cookie->httpOnly = true;
