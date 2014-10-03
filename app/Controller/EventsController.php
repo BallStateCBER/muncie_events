@@ -627,7 +627,8 @@ class EventsController extends AppController {
 
 		$this->__prepareEventForm();
 		$this->set(array(
-			'title_for_layout' => 'Submit an Event'
+			'title_for_layout' => 'Submit an Event',
+			'autopublish' => $autopublish
 		));
 		$this->render('form');
 	}
