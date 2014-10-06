@@ -5,7 +5,7 @@
 <ul class="event_accordion">
 	<?php foreach ($events as $event): ?>
 		<li <?php if (! empty($event['EventsImage'])): ?>class="with_images"<?php endif; ?>>
-			<?php 
+			<?php
 				$url = Router::url(array(
 					'controller' => 'events',
 					'action' => 'view',
@@ -48,10 +48,10 @@
 					<?php endif; ?>
 				</span>
 			</a>
-			<div class="more_info" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="display: none;"<?php endif; ?>>
+			<div class="more_info" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="height: 0;"<?php endif; ?>>
 				<div>
 					<?php echo $this->element('events/actions', compact('event')); ?>
-					
+
 					<?php if ($event['Event']['cost'] || $event['Event']['age_restriction']): ?>
 						<div class="details">
 							<table>
@@ -70,7 +70,7 @@
 							</table>
 						</div>
 					<?php endif; ?>
-					
+
 					<div class="description">
 						<?php if (! empty($event['EventsImage'])): ?>
 							<div class="images">
@@ -92,7 +92,7 @@
 							<?php echo $this->Text->autolink($event['Event']['description'], array('escape' => false)); ?>
 						<?php endif; ?>
 					</div>
-					
+
 					<table class="details">
 						<?php if (! empty($event['Tag'])): ?>
 							<tr class="tags">
@@ -107,8 +107,8 @@
 								<th>Series:</th>
 								<td>
 									<?php echo $this->Html->link($event['EventSeries']['title'], array(
-										'controller' => 'event_series', 
-										'action' => 'view', 
+										'controller' => 'event_series',
+										'action' => 'view',
 										'id' => $event['EventSeries']['id']
 									)); ?>
 								</td>
@@ -132,7 +132,7 @@
 									Author:
 								</th>
 								<td>
-									 <?php echo $this->Html->link($event['User']['name'], 
+									 <?php echo $this->Html->link($event['User']['name'],
 									 	array('controller' => 'users', 'action' => 'view', 'id' => $event['User']['id'])
 									 ); ?>
 								</td>
@@ -144,7 +144,7 @@
 		</li>
 	<?php endforeach; ?>
 </ul>
-<?php 
+<?php
 	if ($leave_open) {
 		$this->Js->buffer("
 			$('.event_accordion a.tn_tiny').hide();
