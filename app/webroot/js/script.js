@@ -376,7 +376,16 @@ function setupEventAccordion() {
 						thumbnail.fadeOut(200);
 					}
 				}
+				
+				/* Initially, div.more_info needs to be visible (display: block) but height: 0
+				 * so that its Facebook widgets will properly load. After first opening this
+				 * container, it switches back to a normal slideToggle */ 
+				if (more_info.is(':visible') && more_info.css('height') == '0px') {
+					more_info.hide();
+					more_info.css('height', '');
+				}
 				more_info.slideToggle(200);
+				
 				toggler.find('.address').slideToggle(200);
 				toggler.find('.location_details').slideToggle(200);
 				var more_info_id = 'more_info_'+event_id;
