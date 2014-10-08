@@ -122,6 +122,6 @@ class PagesController extends AppController {
 	public function robots() {
 		$this->RequestHandler = $this->Components->load('RequestHandler');
 		$this->RequestHandler->respondAs('text');
-		$this->layout = 'ajax';
+		$this->layout = 'blank';
 	}
 }
