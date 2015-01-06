@@ -545,7 +545,7 @@ class EventsController extends AppController {
 					$this->Event->EventSeries->create();
 					$this->Event->EventSeries->set('title', $this->request->data['EventSeries']['title']);
 					$this->Event->EventSeries->set('user_id', $user_id);
-					$this->Event->EventSeries->set('published', $autopublished);
+					$this->Event->EventSeries->set('published', $autopublish);
 					if ($this->Event->EventSeries->save()) {
 						$this->request->data['Event']['series_id'] = $this->Event->EventSeries->id;
 
