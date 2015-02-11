@@ -930,7 +930,7 @@ class EventsController extends AppController {
 		));
 	}
 
-	public function validate($action) {
+	public function validate() {
 		if (! $this->request->is('put') && ! $this->request->is('post')) {
 			return;
 		}
