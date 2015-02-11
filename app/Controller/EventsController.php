@@ -209,6 +209,25 @@ class EventsController extends AppController {
 		$this->set(compact('og_meta_tags'));
 	}
 
+	private function __rejectSpam() {
+		$spammy_words = array(
+			'viagra',
+			'cialis'
+		);
+		foreach ($spammy_words as $spammy_word) {
+			if (stripos($this->request->data['Event']['title'], $spammy_word) !== false) {
+				$this->set(array(
+					'title_for_layout' => 'Uh oh. Something smells spammy.',
+					'spammy_word' => $spammy_word
+				));
+				$this->response->statusCode(403);
+				$this->render('spam_rejection');
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function index() {
 		$filters = $this->request->params['named'];
 		$events = $this->Event->getPage(null, $filters);
@@ -512,6 +531,9 @@ class EventsController extends AppController {
 			$this->prepareRecaptcha();
 		}
 		if ($this->request->is('post')) {
+			if ($this->__rejectSpam()) {
+				return;
+			}
 			$dates = explode(',', $this->request->data['Event']['date']);
 			$is_series = count($dates) > 1;
 			$user_id = $this->Auth->user('id');
