@@ -5,12 +5,12 @@ class CalendarComponent extends Component {
 	public $components = array('Cookie');
 	public $event_filter = array();
 	public $controller = null;
-	
-	function initialize(&$controller) {
+
+	function initialize(Controller $controller) {
 		$this->controller = $controller;
 	}
-	
-	function setEventFilter() {		
+
+	function setEventFilter() {
 		// Collect active filters
 		$filter = array();
 		if (isset($this->controller->params['named']['tag'])) {
@@ -30,11 +30,11 @@ class CalendarComponent extends Component {
 			$filter['categories'] = array_keys($Category->getList());
 			$this->Cookie->write('EventFilter.categories', $filter['categories'], false);
 		}
-		
+
 		$this->event_filter = $filter;
 		$this->controller->set(compact('filter'));
 	}
-	
+
 	// Sets the variables needed for the "event accordion"
 	function prepareEventAccordion() {
 		// Determine the date boundaries of this page
@@ -57,7 +57,7 @@ class CalendarComponent extends Component {
 			'events', 'starting_date', 'ending_date', 'filter', 'boundary'
 		));
 	}
-	
+
 	function prepareEventAccordionWrapper() {
 		App::uses('Category', 'Model');
 		$Category = new Category();
