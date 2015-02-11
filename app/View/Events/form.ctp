@@ -137,6 +137,11 @@
 						Select more than one date to create multiple events connected by a series.
 					</div>
 				<?php endif; ?>
+				<?php if (isset($this->validationErrors['Event']['date'][0])): ?>
+					<div class="error-message">
+						<?php echo $this->validationErrors['Event']['date'][0]; ?>
+					</div>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php if ($multiple_dates_allowed): ?>
