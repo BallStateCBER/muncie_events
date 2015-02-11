@@ -44,6 +44,12 @@ class Event extends AppModel {
 				'message' => 'Title required.'
 			)
 		),
+		'date' => array(
+			'notEmpty' => array(
+				'rule' => 'notEmpty',
+				'message' => 'Please select a date'
+			)
+		),
 		'location' => array(
 			'notEmpty' => array(
 				'rule' => 'notEmpty',
