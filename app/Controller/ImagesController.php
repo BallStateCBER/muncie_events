@@ -9,11 +9,11 @@ class ImagesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
 	}
-	
+
 	public function upload() {
 		$uploadDir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'full'.DS;
 		$fileTypes = array('jpg', 'jpeg', 'gif', 'png');
-		$verifyToken = md5('d7LFYtkQtX' . $_POST['timestamp']);
+		$verifyToken = md5(Configure::read('upload_verify_token') . $_POST['timestamp']);
 		if (! empty($_FILES) && $_POST['token'] == $verifyToken) {
 			$tempFile = $_FILES['Filedata']['tmp_name'];
 			$image_id = $this->Image->getNextId();
@@ -70,20 +70,20 @@ class ImagesController extends AppController {
 			}
 		} else {
 			$this->response->statusCode(500);
-			echo 'Security code incorrect';	
+			echo 'Security code incorrect';
 		}
 		$this->layout = 'blank';
 		$this->render('/Pages/blank');
 	}
-	
+
 	/**
 	 * Effectively bypasses Uploadify's check for an existing file
-	 * (because the filename is changed as it's being saved). 
+	 * (because the filename is changed as it's being saved).
 	 */
 	public function file_exists() {
 		exit(0);
 	}
-	
+
 	public function newest($user_id) {
 		$result = $this->Image->find('first', array(
 			'conditions' => array('Image.user_id' => $user_id),
@@ -92,14 +92,14 @@ class ImagesController extends AppController {
 			'fields' => array('Image.id', 'Image.filename')
 		));
 		if ($result) {
-			
+
 		} else {
 			echo 0;
 		}
 		$this->layout = 'blank';
 		$this->render('/Pages/blank');
 	}
-	
+
 	public function filename($image_id) {
 		$this->Image->id = $image_id;
 		$filename = $this->Image->field('filename');

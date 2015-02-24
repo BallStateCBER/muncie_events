@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$upload_max = ini_get('upload_max_filesize');
 	$post_max = ini_get('post_max_size');
 	$this->Html->script('image_manager.js', array('inline' => false));
@@ -16,7 +16,7 @@
 			<a href="#" id="image_help_toggler" class="help_toggler">Help</a>
 		</li>
 	</ul>
-	
+
 	<div id="image_upload_container" style="display: none;">
 		<a href="#" id="image_upload_rules_toggler">Rules for uploaded images</a>
 		<div class="notification_message" id="image_upload_rules">
@@ -29,9 +29,9 @@
 		</div>
 		<a href="#" id="image_upload_button">Select image</a>
 	</div>
-	
+
 	<?php
-		// Avoiding whitespace to prevent some display oddities 
+		// Avoiding whitespace to prevent some display oddities
 		echo '<div id="image_select_container" style="display: none;">';
 		if (isset($images) && ! empty($images)) {
 			foreach ($images as $image_id => $filename) {
@@ -44,7 +44,7 @@
 		}
 		echo '</div>';
 	?>
-		
+
 	<div id="image_help" class="help" style="display: none;">
 		<h3>Uploading</h3>
 		<ul class="footnote">
@@ -53,7 +53,7 @@
 			<li>You can upload an image once and re-use it in multiple events.</li>
 			<li>By uploading an image, you affirm that you are not violating any copyrights.</li>
 		</ul>
-		
+
 		<h3>After selecting images</h3>
 		<ul class="footnote">
 			<li>
@@ -67,7 +67,7 @@
 			</li>
 		</ul>
 	</div>
-	
+
 	<ul id="selected_images">
 		<?php if (! empty($this->request->data['EventsImage'])): ?>
 			<?php foreach ($this->request->data['EventsImage'] as $selected_image): ?>
@@ -96,12 +96,12 @@
 	</ul>
 </div>
 
-<?php 
+<?php
 	echo $this->Html->script('/uploadifive/jquery.uploadifive.min.js', array('inline' => false));
 	echo $this->Html->css('/uploadifive/uploadifive.css', null, array('inline' => false));
 	$this->Js->buffer("
 		ImageManager.setupUpload({
-			token: '".md5('d7LFYtkQtX'.time())."',
+			token: '".md5(Configure::read('upload_verify_token').time())."',
 			user_id: '".$this->Session->read('Auth.User.id')."',
 			event_id: ".(isset($event_id) ? $event_id : 'null').",
 			post_max: '{$post_max}B',
