@@ -482,16 +482,14 @@ class MailingListController extends AppController {
 
 	private function __unsubscribe($recipient_id) {
 		if ($this->MailingList->delete($recipient_id)) {
+
 			// Un-associate associated User
-			$result = $this->User->field('first', array(
-				'conditions' => array('mailing_list_id' => $recipient_id),
-				'fields' => array('id'),
-				'contain' => false
-			));
-			if (! empty($result)) {
-				$this->User->id = $result['User']['id'];
+			$user_id = $this->User->field('id', array('mailing_list_id' => $recipient_id));
+			if ($user_id) {
+				$this->User->id = $user_id;
 				$this->User->saveField('mailing_list_id', null);
 			}
+
 			return $this->renderMessage(array(
 				'title' => 'Unsubscribed',
 				'message' => 'You have been removed from the mailing list.',
