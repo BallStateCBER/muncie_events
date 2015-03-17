@@ -20,10 +20,10 @@ class Tag extends AppModel {
 			'foreignKey' => 'tag_id'
 		)
 	);
-	
+
 	/**
-	 * Returns an array of IDs of tags associated with events; 
-	 * If $direction is 'past' or 'future', 
+	 * Returns an array of IDs of tags associated with events;
+	 * If $direction is 'past' or 'future',
 	 * then only tags associated with events in the past/future.
 	 * @param string $direction
 	 * @return array
@@ -54,7 +54,7 @@ class Tag extends AppModel {
 			);
 			$subQuery = ' EventsTag.event_id IN (' . $subQuery . ') ';
 			$subQueryExpression = $db->expression($subQuery);
-			
+
 			$find_options['conditions'] = array(
 				//'EventsTag.event_id' => $event_ids
 				$subQueryExpression
@@ -63,12 +63,12 @@ class Tag extends AppModel {
 		$results = $this->EventsTag->find('all', $find_options);
 		$retval = array();
 		foreach ($results as $result) {
-			$retval[] = $result['EventsTag']['tag_id'];	
+			$retval[] = $result['EventsTag']['tag_id'];
 		}
 		return $retval;
 	}
-	
-	public function getList() { 		
+
+	public function getList() {
 		$results = $this->find('threaded', array(
 			'conditions' => array('Tag.listed' => 1),
 			'recursive' => 0,
@@ -78,7 +78,7 @@ class Tag extends AppModel {
 		$results = $this->sortThreaded($results);
 		return $results;
 	}
-	
+
 	/**
 	 * Takes the reslt of find('threaded') and sorts so that branches (with children) come before leaves; Assumes that everythign is already alphabetized
 	 * @param array $threaded
@@ -88,7 +88,7 @@ class Tag extends AppModel {
 		$branches = $leaves = array();
 		foreach ($threaded as $item) {
 			if (empty($item['children'])) {
-				$leaves[] = $item;	
+				$leaves[] = $item;
 			} else {
 				$item['children'] = $this->sortThreaded($item['children']);
 				$branches[] = $item;
@@ -96,14 +96,14 @@ class Tag extends AppModel {
 		}
 		return array_merge($branches, $leaves);
 	}
-	
+
 	// Gets all of the tags that are ancestors of a specified parent
 	public function getListBranch($parent_id) {
 		$tree = $this->find('threaded', array(
 			'conditions' => array(
 				'listed' => 1,
 				'Tag.parent_id' => $parent_id
-			), 
+			),
 			'recursive' => 0,
 			'fields' => array('Tag.name', 'Tag.id', 'Tag.parent_id', 'Tag.selectable'),
 			'order' => array('Tag.name ASC')
@@ -111,7 +111,7 @@ class Tag extends AppModel {
 		if (! empty($tree)) {
 			foreach ($tree as &$child) {
 				$parent_id = $child['Tag']['id'];
-				$child['children'] = $this->getListBranch($parent_id);	
+				$child['children'] = $this->getListBranch($parent_id);
 			}
 		}
 		return $tree;
@@ -166,7 +166,7 @@ class Tag extends AppModel {
 		}
 		return $art_genres;
 	}
-	
+
 	public function getIdFromName($name) {
 		$result = $this->find('list', array(
 			'conditions' => array('name' => trim(strtolower($name))),
@@ -174,16 +174,21 @@ class Tag extends AppModel {
 		));
 		return empty($result) ? false : reset(array_keys($result));
 	}
-	
-	public function getIdFromSlug($slug) {
-		// Expected format: ID_name
-		return reset(explode('_', $slug));	
-	}
-	
+
 	/**
-	 * Returns a list of tags; 
+	 * Returns ID from a slug with format "ID_slugname"
+	 * @param string $slug
+	 * @return int
+	 */
+	public function getIdFromSlug($slug) {
+		$split_slug = explode('_', $slug);
+		return (int) $split_slug[0];
+	}
+
+	/**
+	 * Returns a list of tags;
 	 * If $with_events is true, only tags associated with events are returned;
-	 * If $direction is 'past' or 'future', then only tags associated with past/future events are returned. 
+	 * If $direction is 'past' or 'future', then only tags associated with past/future events are returned.
 	 * @param string $containing
 	 * @param boolean $with_events
 	 * @param string $direction
@@ -203,26 +208,26 @@ class Tag extends AppModel {
 			),
 			'contain' => false
 		));
-		
+
 		return $tags;
 	}
-	
+
 	/**
-	 * Returns the ID of the 'unlisted' tag group that new custom tags automatically go into. 
+	 * Returns the ID of the 'unlisted' tag group that new custom tags automatically go into.
 	 * @return int
 	 */
 	public function getUnlistedGroupId() {
-		return 1012;	
+		return 1012;
 	}
-	
+
 	/**
-	 * Returns the ID of the 'delete' tag group for tags to be deleted. 
+	 * Returns the ID of the 'delete' tag group for tags to be deleted.
 	 * @return int
 	 */
 	public function getDeleteGroupId() {
-		return 1011;	
+		return 1011;
 	}
-	
+
 	public function isUnderUnlistedGroup($id = null) {
 		if (! $id) {
 			if (! $this->id) {
@@ -231,28 +236,28 @@ class Tag extends AppModel {
 			$id = $this->id;
 		}
 		$unlisted_group_id = $this->getUnlistedGroupId();
-		
+
 		// Assume that after 100 levels, a circular path must have been found and exit
 		for ($n = 0; $n <= 100; $n++) {
 			$parent_id = $this->field('parent_id', array('id' => $id));
-			
+
 			// Child of root
 			if (empty($parent_id)) {
-				return false;	
+				return false;
 			}
-			
+
 			// Child of 'unlisted'
 			if ($parent_id == $unlisted_group_id) {
 				return true;
 			}
-			
+
 			// Go up a level
 			$id = $parent_id;
 		}
-		
+
 		return false;
-	}	
-	
+	}
+
 	/**
 	 * Used by the tag adder (in the tag manager) to determine how indented a line is
 	 * @param string $name
@@ -262,14 +267,14 @@ class Tag extends AppModel {
 		$level = 0;
 		for ($i = 0; $i < strlen($name); $i++) {
 			if ($name[$i] == "\t" || $name[$i] == '-') {
-				$level++;	
+				$level++;
 			} else {
-				break;	
+				break;
 			}
 		}
 		return $level;
     }
-    
+
     /**
      * Returns the tags associated with events on or after today
      * @param array $filter
@@ -279,7 +284,7 @@ class Tag extends AppModel {
     	$filter['direction'] = 'future';
     	return $this->getWithCounts($filter);
     }
-    
+
 	/**
      * Returns the tags associated with events that occurred before today
      * @param array $filter
@@ -289,7 +294,7 @@ class Tag extends AppModel {
     	$filter['direction'] = 'past';
     	return $this->getWithCounts($filter);
     }
-    
+
     /**
      * Returns an array of the IDs of Tags associated with Events
      * @param string $direction Optional, either 'future' or 'past'
@@ -298,7 +303,7 @@ class Tag extends AppModel {
     public function getIDsWithEvents($direction = null) {
 		$conditions = array();
 		if ($direction == 'future') {
-			$conditions['EventsTag.event_id'] = $this->Event->getFutureEventIDs(); 
+			$conditions['EventsTag.event_id'] = $this->Event->getFutureEventIDs();
 		} elseif ($direction == 'past') {
 			$conditions['EventsTag.event_id'] = $this->Event->getPastEventIDs();
 		}
@@ -323,20 +328,20 @@ class Tag extends AppModel {
     	// Apply filters and find tags
     	$conditions = array('published' => 1);
     	if ($filter['direction'] == 'future') {
-    		$conditions['date >='] = date('Y-m-d');	
+    		$conditions['date >='] = date('Y-m-d');
     	} elseif ($filter['direction'] == 'past') {
     		$conditions['date <'] = date('Y-m-d');
     	}
 		if (isset($filter['categories'])) {
-			$conditions['category_id'] = $filter['categories'];	
+			$conditions['category_id'] = $filter['categories'];
 		}
 		$results = $this->Event->find('all', array(
 			'conditions' => $conditions,
 			'fields' => array('id'),
 			'contain' => array('Tag' => array('fields' => array('Tag.id', 'Tag.name')))
 		));
-		
-		// Create an alphabetically-sorted array of 
+
+		// Create an alphabetically-sorted array of
 		// tags with count information included
 		$tags = array();
 		foreach ($results as $result) {
@@ -347,16 +352,16 @@ class Tag extends AppModel {
 					$tags[$tag['name']] = array(
 						'id' => $tag['id'],
 						'name' => $tag['name'],
-						'count' => 1 
+						'count' => 1
 					);
 				}
 			}
 		}
 		ksort($tags);
 		if ($sort == 'alpha') {
-			return $tags;	
+			return $tags;
 		}
-		
+
 		// Sort by count if $sort is not 'alpha'
 		$sorted_tags = array();
 		foreach ($tags as $tag_name => $tag) {
@@ -371,7 +376,7 @@ class Tag extends AppModel {
 		}
 		return $final_tags;
     }
-    
+
     public function getCategoriesWithTags($direction = 'future') {
     	if ($direction == 'future') {
     		$event_ids = $this->Event->getFutureEventIDs();
