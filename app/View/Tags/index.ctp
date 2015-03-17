@@ -11,7 +11,7 @@
 					<?php echo $this->Html->link(
 						ucfirst($dir).' Events',
 						array(
-							'controller' => 'tags', 
+							'controller' => 'tags',
 							'action' => 'index',
 							($dir == 'upcoming' ? 'future' : 'past')
 						),
@@ -112,11 +112,11 @@
 		</tr>
 	</table>
 </div>
-	
+
 <div id="tag_index_cloud">
 	<?php if (empty($tags)): ?>
 		<p class="notification_message">
-			No tags found for any <?php echo $direction_adjective; ?> events. 
+			No tags found for any <?php echo $direction_adjective; ?> events.
 		</p>
 	<?php else: ?>
 		<?php foreach ($tags as $tag_name => $tag): ?>
@@ -124,10 +124,10 @@
 			<?php echo $this->Html->link(
 				$tag_name,
 				array(
-					'controller' => 'events', 
-					'action' => 'tag', 
-					$tag['id'].'_'.Inflector::slug($tag['name']),
-					$direction
+					'controller' => 'events',
+					'action' => 'tag',
+					'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
+					'direction' => $direction
 				),
 				array(
 					'title' => $tag['count'].' '.__n('event', 'events', $tag['count']),
@@ -146,10 +146,10 @@
 					<?php echo $this->Html->link(
 						ucfirst($tag_name),
 						array(
-							'controller' => 'events', 
-							'action' => 'tag', 
-							$tag['id'].'_'.Inflector::slug($tag['name']),
-							$direction
+							'controller' => 'events',
+							'action' => 'tag',
+							'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
+							'direction' => $direction
 						)
 					); ?>
 					<span class="count">

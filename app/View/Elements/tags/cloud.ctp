@@ -36,17 +36,17 @@
 				echo $this->Html->link(
 					'<span style="font-size: '.$font_size.'%;">'.$tag_info['name'].'</span>',
 					array(
-						'controller' => 'events', 
-						'action' => 'tag', 
-						$tag_info['id'].'_'.Inflector::slug($tag_info['name'])
+						'controller' => 'events',
+						'action' => 'tag',
+						'slug' => $tag_info['id'].'_'.Inflector::slug($tag_info['name'])
 					),
 					array(
-						'escape' => false, 
+						'escape' => false,
 						'id' => 'filter_tag_'.$tag_info['id']
 					)
 				);
 			?>
-			
+
 			<?php // $this->Js->buffer("setTagFilterListener('filter_tag_{$tag_info['id']}', '{$tag_info['id']}_".Inflector::slug($tag_name)."');"); ?>
 		<?php endforeach; ?>
 	<?php endif; ?>

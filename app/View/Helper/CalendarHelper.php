@@ -2,16 +2,16 @@
 App::uses('AppHelper', 'View/Helper');
 class CalendarHelper extends AppHelper {
 	public $helpers = array('Html', 'Js');
-	
+
 	/**
 	 * Returns a header describing the dates included in this selection
 	 */
 	public function selectionHeader($events, $boundary, $starting_date, $ending_date) {
 		if (empty($events)) {
-			$boundary_date = ($boundary[1] == date('Y-m-d')) ? 'Today' : date('M j, Y', strtotime($boundary[1])); 
+			$boundary_date = ($boundary[1] == date('Y-m-d')) ? 'Today' : date('M j, Y', strtotime($boundary[1]));
 			return ($boundary[0] == 'start') ? 'After '.$boundary_date : 'Before '.$boundary_date;
 		}
-		
+
 		$retval = '';
 		$starts_today = $starting_date == date('Y-m-d');
 		if ($starting_date == $ending_date) {
@@ -30,7 +30,7 @@ class CalendarHelper extends AppHelper {
 					$retval .= ' to '.date('M j, Y', strtotime($ending_date));
 				} else {
 					if ($starts_today) {
-						$retval .= 'Today to '.date('M j, Y', strtotime($ending_date));	
+						$retval .= 'Today to '.date('M j, Y', strtotime($ending_date));
 					} else {
 						$retval .= date('M j', strtotime($starting_date));
 						$retval .= '-'.date('j, Y', strtotime($ending_date));
@@ -40,19 +40,19 @@ class CalendarHelper extends AppHelper {
 		}
 		return $retval;
 	}
-	
+
 	public function prevLink($starting_date, $filter) {
 		if ($starting_date) {
 			$prev_url = array_merge(
 				array(
-					'controller' => 'events', 
+					'controller' => 'events',
 					'action' => 'accordion',
 					'end_date' => date('Y-m-d', strtotime("$starting_date - 1 day"))
 				),
 				$this->__getFilterUrlParams($filter)
 			);
 			return $this->Js->link(
-				'&larr; <span>Previous</span> <img id="event_accordion_prev_indicator" src="/img/loading_small.gif" style="visibility: hidden;" />', 
+				'&larr; <span>Previous</span> <img id="event_accordion_prev_indicator" src="/img/loading_small.gif" style="visibility: hidden;" />',
 				$prev_url,
 				array(
 					'update' => 'event_accordion_inner',
@@ -67,19 +67,19 @@ class CalendarHelper extends AppHelper {
 			return '&nbsp;';
 		}
 	}
-	
+
 	public function nextLink($ending_date, $filter) {
 		if ($ending_date) {
 			$next_url = array_merge(
 				array(
-					'controller' => 'events', 
+					'controller' => 'events',
 					'action' => 'accordion',
 					'start_date' => date('Y-m-d', strtotime("$ending_date + 1 day"))
 				),
 				$this->__getFilterUrlParams($filter)
 			);
 			return $this->Js->link(
-				'<img id="event_accordion_next_indicator" src="/img/loading_small.gif" style="visibility: hidden;" /> <span>Next</span> &rarr;', 
+				'<img id="event_accordion_next_indicator" src="/img/loading_small.gif" style="visibility: hidden;" /> <span>Next</span> &rarr;',
 				$next_url,
 				array(
 					'update' => 'event_accordion_inner',
@@ -92,9 +92,9 @@ class CalendarHelper extends AppHelper {
 		} else {
 			// Non-breaking space forces element to appear even if it has no link
 			return '&nbsp;';
-		}	
+		}
 	}
-	
+
 	/**
 	 * Returns subheader reflecting current tag filter(s)
 	 */
@@ -120,7 +120,7 @@ class CalendarHelper extends AppHelper {
 		}
 		return $retval;
 	}
-	
+
 	/**
 	 * Return filter parameters to be used in 'previous' and 'next' links
 	 * @param Array $filter
@@ -133,7 +133,7 @@ class CalendarHelper extends AppHelper {
 		}
 		return $filter_url_params;
 	}
-	
+
 	/**
 	 * Assuming no events were found, outputs an appropriate message depending on $filter
 	 * @param Array $filter
@@ -147,9 +147,9 @@ class CalendarHelper extends AppHelper {
 			return "The calendar contains no events in $that_category in this date range.";
 		} else {
 			return 'The calendar contains no events in this date range.';
-		} 	
+		}
 	}
-	
+
 	/**
 	 * Returns an <hgroup> tag for the provided Y-m-d format date string
 	 * @param string $date
@@ -166,22 +166,22 @@ class CalendarHelper extends AppHelper {
 			$day = date('l', strtotime($date));
 			$this_week = ($date > date('Y-m-d') && $date < date('Y-m-d', strtotime('today + 6 days')));
 			if ($this_week) {
-				$day = 'This '.$day;	
+				$day = 'This '.$day;
 			}
 		}
 		$timestamp = strtotime($date);
-		
+
 		$pattern = 'M j, Y';
 		$header_short_date = '<h2 class="short_date">'.date($pattern, $timestamp).'</h2>';
-		$header_day = '<h2 class="day">'.$day.'</h2>'; 
+		$header_day = '<h2 class="day">'.$day.'</h2>';
 		$headers = $header_short_date.$header_day;
 		$classes = 'event_accordion';
 		if ($this_week) {
 			$classes .= ' this_week';
 		}
-		return "<hgroup class=\"$classes\">$headers</hgroup>";	
+		return "<hgroup class=\"$classes\">$headers</hgroup>";
 	}
-	
+
 	public function eventTime($event) {
 		$start_stamp = strtotime($event['Event']['time_start']);
 		if (substr($event['Event']['time_start'], 3, 5) == '00:00') {
@@ -199,32 +199,32 @@ class CalendarHelper extends AppHelper {
 		}
 		return $retval;
 	}
-	
+
 	/**
 	 * Returns a linked list of tags
 	 * @param Array $event
 	 * @return string
 	 */
 	public function eventTags($event) {
-		$linked_tags = array(); 
+		$linked_tags = array();
 		foreach ($event['Tag'] as $tag) {
 			$tag_link_id = "filter_tag_inline_{$event['Event']['id']}_{$tag['id']}";
 			$tag_slug = "{$tag['id']}_".Inflector::slug($tag['name']);
 			$linked_tags[] = $this->Html->link($tag['name'],
 				array(
-					'controller' => 'events', 
-					'action' => 'tag', 
-					$tag_slug
+					'controller' => 'events',
+					'action' => 'tag',
+					'slug' => $tag_slug
 				),
 				array(
-					'escape' => false, 
+					'escape' => false,
 					'id' => $tag_link_id
 				)
 			);
 		}
-		return implode(', ', $linked_tags);	
+		return implode(', ', $linked_tags);
 	}
-	
+
 	/**
 	 * Returns a formatted version of the date of the provided event
 	 * @param array $event
@@ -235,9 +235,9 @@ class CalendarHelper extends AppHelper {
 		$year = $date_split[0];
 		$month = ($date_split[1] < 10) ? substr($date_split[1], 1, 1) : $date_split[1];
 		$day = ($date_split[2] < 10) ? substr($date_split[2], 1, 1) : $date_split[2];
-		return date('l, F j, Y', mktime(0, 0, 0, $month, $day, $year));	
+		return date('l, F j, Y', mktime(0, 0, 0, $month, $day, $year));
 	}
-	
+
 	/**
 	 * Returns a formatted version of the time of the provided event
 	 * @param array $event
@@ -250,7 +250,7 @@ class CalendarHelper extends AppHelper {
 		}
 		return $retval;
 	}
-	
+
 	/**
 	 * Returns a linked arrow to the previous day
 	 * @param int $timestamp Of the previous day
@@ -259,34 +259,34 @@ class CalendarHelper extends AppHelper {
 		return $this->Html->link(
 			'&larr; Previous Day',
 		    array(
-		    	'controller' => 'events', 
-				'action' => 'day', 
-				date('m', $timestamp), 
+		    	'controller' => 'events',
+				'action' => 'day',
+				date('m', $timestamp),
 				date('d', $timestamp),
 				date('Y', $timestamp)
-		    ), 
+		    ),
 			array('escape' => false)
 		);
 	}
-	
+
 	/**
 	 * Returns a linked arrow to the next day
 	 * @param int $timestamp Of the next day
 	 */
 	public function nextDay($timestamp) {
 		return $this->Html->link(
-			'Next Day &rarr;', 
+			'Next Day &rarr;',
 		    array(
-		    	'controller' => 'events', 
-				'action' => 'day', 
-				date('m', $timestamp), 
+		    	'controller' => 'events',
+				'action' => 'day',
+				date('m', $timestamp),
 				date('d', $timestamp),
 				date('Y', $timestamp)
-		    ), 
+		    ),
 			array('escape' => false)
 		);
 	}
-	
+
 	/**
 	 * Outputs either a thumbnail (square) image or a small (width-limited) image
 	 * @param string $type 'small' or 'tiny'
@@ -310,12 +310,12 @@ class CalendarHelper extends AppHelper {
 
 		// Reduced image
 		$image = '<img src="/img/events/'.$type.'/'.$filename.'" class="'.$class.'" />';
-		
-		
+
+
 		if (! file_exists($full_path)) {
 			return $image;
 		}
-		
+
 		// Link to full image
 		$rel = "popup";
 		if (isset($params['group'])) {

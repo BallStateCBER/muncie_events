@@ -3,11 +3,11 @@
 </h1>
 
 <div class="event">
-	<?php 
+	<?php
 		echo $this->element('events/actions', compact('event'));
 		$this->Js->buffer("setupEventActions('.event');");
 	?>
-	
+
 	<div class="header_details">
 		<table class="details">
 			<tr>
@@ -42,14 +42,14 @@
 							array('escape' => false, 'title' => 'View this category')
 						);
 						if (! empty($event['Tag'])) {
-							$linked_tags = array(); 
+							$linked_tags = array();
 							foreach ($event['Tag'] as $tag) {
 								$linked_tags[] = $this->Html->link(
-									$tag['name'], 
+									$tag['name'],
 									array(
-										'controller' => 'events', 
-										'action' => 'tag', 
-										$tag['id'].'_'.Inflector::slug($tag['name'])
+										'controller' => 'events',
+										'action' => 'tag',
+										'slug' => $tag['id'].'_'.Inflector::slug($tag['name'])
 									),
 									array('title' => 'View this tag')
 								);
@@ -105,7 +105,7 @@
 			'escape' => false
 		)); ?>
 	</div>
-	
+
 	<div class="footer_details">
 		<p>
 			<?php if (! $event['User']['id']): ?>
@@ -118,10 +118,10 @@
 					array('controller' => 'users', 'action' => 'view', 'id' => $event['User']['id'])
 				); ?>
 			<?php endif; ?>
-			
+
 			<?php if ($event['Event']['source']): ?>
 				<br />
-				Source: 
+				Source:
 				<?php echo $this->Text->autoLink($event['Event']['source']); ?>
 			<?php endif; ?>
 		</p>
