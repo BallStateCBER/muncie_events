@@ -54,18 +54,9 @@ foreach ($category_slugs as $slug) {
 
 // Tag
 Router::connect(
-	"/tag/:slug/:direction",
-	array('controller' => 'events', 'action' => 'tag'),
-	array('pass' => array('slug', 'direction'))
-);
-Router::connect(
-	"/tag/:slug",
+	"/tag/:slug/*",
 	array('controller' => 'events', 'action' => 'tag'),
 	array('pass' => array('slug'))
-);
-Router::connect(
-	"/tag/*",
-	array('controller' => 'events', 'action' => 'tag')
 );
 
 // Tags

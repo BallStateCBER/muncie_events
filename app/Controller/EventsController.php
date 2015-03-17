@@ -825,7 +825,9 @@ class EventsController extends AppController {
 		));
 	}
 
-	public function tag($slug = '', $direction = 'future') {
+	public function tag($slug = '') {
+		$direction = isset($this->request->named['direction']) ? $this->request->named['direction'] : 'future';
+
 		// Get tag
 		$tag_id = $this->Event->Tag->getIdFromSlug($slug);
 		$tag = $this->Event->Tag->find('first', array(
