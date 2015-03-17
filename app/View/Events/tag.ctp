@@ -10,13 +10,13 @@
 
 
 <?php if ($count_other_direction): ?>
-	<?php 
+	<?php
 		$link_text = $count_other_direction.' ';
 		$link_text .= ($direction == 'future') ? 'past' : 'upcoming';
 		$link_text .= ' event';
 		$link_text .= $count_other_direction == 1 ? '' : 's';
 		echo $this->Html->link($link_text, array(
-			'controller' => 'events', 
+			'controller' => 'events',
 			'action' => 'tag',
 			'slug' => $slug,
 			'direction' => ($direction == 'future') ? 'past' : 'future'
@@ -32,16 +32,16 @@
 <?php if (isset($events) && ! empty($events)): ?>
 
 	<?php echo $this->element('pagination'); ?>
-	
+
 	<?php foreach ($events as $date => $days_events): ?>
 		<?php echo $this->Calendar->dayHeaders($date); ?>
 		<?php echo $this->element('events/accordion_day', array(
 			'events' => $days_events
 		)); ?>
 	<?php endforeach; ?>
-		
+
 	<?php echo $this->element('pagination'); ?>
-		
+
 	<?php $this->Js->buffer("setupEventAccordion();"); ?>
 
 <?php else: ?>
