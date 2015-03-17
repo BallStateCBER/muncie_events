@@ -331,7 +331,7 @@ class MailingListController extends AppController {
 		if ($this->request->is('post')) {
 			// Unsubscribe
 			if ($this->request->data['MailingList']['unsubscribe']) {
-				return $this->__unsubscribe();
+				return $this->__unsubscribe($recipient_id);
 			}
 
 			$this->__readFormData();
@@ -480,11 +480,11 @@ class MailingListController extends AppController {
 		$this->request->data = $this->MailingList->getDefaultFormValues($recipient);
 	}
 
-	private function __unsubscribe() {
-		if ($this->MailingList->delete()) {
+	private function __unsubscribe($recipient_id) {
+		if ($this->MailingList->delete($recipient_id)) {
 			// Un-associate associated User
 			$result = $this->User->field('first', array(
-				'conditions' => array('mailing_list_id' => $this->MailingList->id),
+				'conditions' => array('mailing_list_id' => $recipient_id),
 				'fields' => array('id'),
 				'contain' => false
 			));
