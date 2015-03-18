@@ -734,7 +734,8 @@ class EventsController extends AppController {
 		$dates = array_values($events);
 
 		// Pick an arbitrary event in the series
-		$this->Event->id = reset(array_keys($events));
+		$event_ids = array_keys($events);
+		$this->Event->id = $event_ids[0];
 		$this->Event->set('date', implode(',', $dates));
 
 		if ($this->request->is('put') || $this->request->is('post')) {
