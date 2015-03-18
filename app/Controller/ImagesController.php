@@ -8,6 +8,7 @@ App::uses('AppController', 'Controller');
 class ImagesController extends AppController {
 	public function beforeFilter() {
 		parent::beforeFilter();
+		$this->Auth->deny('upload');
 	}
 
 	public function upload() {
