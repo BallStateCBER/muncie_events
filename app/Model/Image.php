@@ -11,6 +11,11 @@ class Image extends AppModel {
 			'dependent' => true
 		)
 	);
+	public $belongsTo = array(
+		'User' => array(
+			'fields' => array('User.id', 'User.name')
+		)
+	);
 	public $validate = array(
 		'image' => array(
 			'upload' => array(
@@ -61,7 +66,7 @@ class Image extends AppModel {
 			)
 		)
 	);
-	
+
 	private $__errors = array();
 	private $__fileToDelete = null;
 	public $errors = array();
@@ -73,7 +78,7 @@ class Image extends AppModel {
 	public $smallWidth = 200;
 	public $smallQuality = 90;
 	public $fullQuality = 90;
-	
+
 	/**
 	 * Returns the ID for the next Image to be added to the database.
 	 */
@@ -81,7 +86,7 @@ class Image extends AppModel {
 		$result = $this->query('SHOW TABLE STATUS LIKE \'images\'');
 		return $result[0]['TABLES']['Auto_increment'];
 	}
-	
+
 	/**
 	 * Resizes the image only if it exceeds maximum dimensions, returns FALSE on error or TRUE otherwise
 	 * @param string $filepath
@@ -93,7 +98,7 @@ class Image extends AppModel {
 			// No resize necessary
 			return true;
 		}
-		
+
 		// Make longest side fit inside the maximum dimensions
 		if ($width >= $height) {
 			$new_width = $this->maxWidth;
@@ -107,7 +112,7 @@ class Image extends AppModel {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Accepts the filename of an uploaded image and creates a tiny thumbnail
 	 * @param string $filename
@@ -117,7 +122,7 @@ class Image extends AppModel {
 		$filename = substr($source_file, strrpos($source_file, DS) + 1);
 		$destination_file = $path.$filename;
 		list($width, $height, $type, $attr) = getimagesize($source_file);
-		
+
 		// Make the shortest side fit inside the maximum dimensions
 		if ($width >= $height) {
 			$new_width = 0; // Automatically determined in ResizeBehavior::resize()
@@ -134,10 +139,10 @@ class Image extends AppModel {
 		if (! $this->cropCenter($destination_file, $destination_file, $this->tinyWidth, $this->tinyHeight, $this->tinyQuality)) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Accepts the filename of an uploaded image and creates a smaller (limited width) version
 	 * @param string $filename
@@ -146,14 +151,14 @@ class Image extends AppModel {
 		$path = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'small'.DS;
 		$filename = substr($source_file, strrpos($source_file, DS) + 1);
 		$destination_file = $path.$filename;
-		
+
 		$new_width = $this->smallWidth;
 		$new_height = 0; // Automatically determined in ResizeBehavior::resize()
-		
+
 		if (! $this->resize($source_file, $destination_file, $new_width, $new_height, $this->smallQuality)) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -177,10 +182,10 @@ class Image extends AppModel {
             $this->errors[] = 'Original file is not a valid image: ' . $source_file;
             return false;
         }
-        
+
         $width = $image_params[0];
         $height = $image_params[1];
-        
+
         if(0 != $new_width && 0 == $new_height) {
             $scaled_width = $new_width;
             $scaled_height = floor($new_width * $height / $width);
@@ -195,7 +200,7 @@ class Image extends AppModel {
             $scaled_height = $new_height;
         }
 
-        //create image        
+        //create image
         $ext = $image_params[2];
         switch($ext) {
             case IMAGETYPE_GIF:
@@ -206,28 +211,28 @@ class Image extends AppModel {
                 break;
             case IMAGETYPE_PNG:
                 $return = $this->__resizePng($source_file, $new_filename, $scaled_width, $scaled_height, $width, $height, $quality);
-                break;    
+                break;
             default:
                 $return = $this->__resizeJpeg($source_file, $new_filename, $scaled_width, $scaled_height, $width, $height, $quality);
                 break;
         }
-        
+
         return $return;
     }
-    
+
     private function __resizeGif($original, $new_filename, $scaled_width, $scaled_height, $width, $height) {
         $error = false;
-        
+
         if(!($src = imagecreatefromgif($original))) {
             $this->errors[] = 'There was an error creating your resized image (gif).';
             $error = true;
         }
-        
+
         if(!($tmp = imagecreatetruecolor($scaled_width, $scaled_height))) {
             $this->errors[] = 'There was an error creating your true color image (gif).';
             $error = true;
         }
-        
+
         if(!imagecopyresampled($tmp, $src, 0, 0, 0, 0, $scaled_width, $scaled_height, $width, $height)) {
             $this->errors[] = 'There was an error creating your true color image (gif).';
             $error = true;
@@ -237,19 +242,19 @@ class Image extends AppModel {
             $this->errors[] = 'There was an error writing your image to file (gif).';
             $error = true;
         }
-        
+
         imagedestroy($tmp);
 
         if(false == $error) {
             return $new_image;
         }
-        
+
         return false;
     }
-    
+
     private function __resizeJpeg($original, $new_filename, $scaled_width, $scaled_height, $width, $height, $quality) {
         $error = false;
-        
+
         if(!($src = imagecreatefromjpeg($original))) {
             $this->errors[] = 'There was an error creating your resized image (jpg).';
             $error = true;
@@ -259,7 +264,7 @@ class Image extends AppModel {
             $this->errors[] = 'There was an error creating your true color image (jpg).';
             $error = true;
         }
-        
+
         if(!imagecopyresampled($tmp, $src, 0, 0, 0, 0, $scaled_width, $scaled_height, $width, $height)) {
             $this->errors[] = 'There was an error creating your true color image (jpg).';
             $error = true;
@@ -269,21 +274,21 @@ class Image extends AppModel {
             $this->errors[] = 'There was an error writing your image to file (jpg).';
             $error = true;
         }
-        
+
         imagedestroy($tmp);
-        
+
         if(false == $error) {
             return $new_image;
         }
-        
+
         return false;
     }
-    
+
     private function __resizePng($original, $new_filename, $scaled_width, $scaled_height, $width, $height, $quality) {
         $error = false;
         /**
          * we need to recalculate the quality for imagepng()
-         * the quality parameter in imagepng() is actually the compression level, 
+         * the quality parameter in imagepng() is actually the compression level,
          * so the higher the value (0-9), the lower the quality. this is pretty much
          * the opposite of how imagejpeg() works.
          */
@@ -294,40 +299,40 @@ class Image extends AppModel {
             $quality = ($quality - 1) % 9;
         }
 
-        
+
         if(!($src = imagecreatefrompng($original))) {
             $this->errors[] = 'There was an error creating your resized image (png).';
             $error = true;
         }
-        
+
         if(!($tmp = imagecreatetruecolor($scaled_width, $scaled_height))) {
             $this->errors[] = 'There was an error creating your true color image (png).';
             $error = true;
         }
-        
+
         imagealphablending($tmp, false);
-        
+
         if(!imagecopyresampled($tmp, $src, 0, 0, 0, 0, $scaled_width, $scaled_height, $width, $height)) {
             $this->errors[] = 'There was an error creating your true color image (png).';
             $error = true;
         }
-        
+
         imagesavealpha($tmp, true);
-        
+
         if(!($new_image = imagepng($tmp, $new_filename, $quality))) {
             $this->errors[] = 'There was an error writing your image to file (png).';
             $error = true;
         }
-        
+
         imagedestroy($tmp);
-        
+
         if(false == $error) {
             return $new_image;
         }
-        
+
         return false;
     }
-    
+
 	/**
 	 * Saves to $destination_file the cropped center of $source_file.
 	 * @param string $source_file
@@ -347,7 +352,7 @@ class Image extends AppModel {
 		$y = max(0, ($center_y - $half_new_height));
 		return $this->crop($source_file, $destination_file, $w, $h, $x, $y, $quality);
 	}
-    
+
 	/**
 	 * Crops $source_file and saves the result to $destination_file.
 	 * @param string $source_file
@@ -360,17 +365,17 @@ class Image extends AppModel {
 	 * @return boolean
 	 */
  	public function crop($source_file, $destination_file, $w, $h, $x, $y, $quality) {
-		if (! $source_file || ! file_exists($source_file)) { 
+		if (! $source_file || ! file_exists($source_file)) {
 			$this->errors[] = 'No image found to crop';
 			return false;
 		}
-		
+
 		// Use for overriding destination image type
 		$destination_img_type = false;
-        
+
 		// get image details
 		$image_info = getimagesize($source_file);
-        
+
  		// set source as resource
 		switch($image_info['mime']) {
 			case 'image/gif':
@@ -395,13 +400,13 @@ class Image extends AppModel {
 		// Source dimensions
 		$s_width = imagesx($src);
 		$s_height = imagesy($src);
-        
+
 		// Create target image
 		$canvas = imagecreatetruecolor($w, $h);
-        
+
 		// Copy image
 		imagecopyresampled($canvas, $src, 0, 0, $x, $y, $s_width, $s_height, $s_width, $s_height);
-        
+
 		// output image
 		switch($img_type) {
 			case 'gif':
@@ -414,24 +419,24 @@ class Image extends AppModel {
 			default:
 				$newImg = imagejpeg($canvas, $destination_file, $quality);
 		}
-        
+
 		// clean up
 		imagedestroy($src);
 		imagedestroy($canvas);
 
 		return file_exists($destination_file);
     }
-    
+
 	public function beforeDelete($cascade = true) {
 		$this->__fileToDelete = $this->field('filename');
 	}
-	
+
 	public function afterDelete() {
 		App::uses('File', 'Utility');
-		$full_img_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'full';		
+		$full_img_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'full';
 		$file = new File($full_img_dir.$filename, false, 0777);
 		$file->delete();
-		
+
 		$tiny_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'tiny'.DS;
 		$file = new File($tiny_dir.$filename, false, 0777);
 		$file->delete();
