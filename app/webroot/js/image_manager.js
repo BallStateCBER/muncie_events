@@ -210,18 +210,17 @@ var ImageManager = {
 		$('#image_select_toggler').click(function (event) {
 			event.preventDefault();
 			var upload = $('#image_upload_container');
-			var select = $('#image_select_container');
 			var help = $('#image_help');
 			if (upload.is(':visible')) {
 				upload.slideUp(300, function() {
-					select.slideDown(300);
+					ImageManager.showUploadedImages();
 				});
 			} else if (help.is(':visible')) {
 				help.slideUp(300, function() {
-					select.slideDown(300);
+					ImageManager.showUploadedImages();
 				});
 			} else {
-				select.slideToggle(300);
+				ImageManager.showUploadedImages();
 			}
 		});
 		
@@ -264,5 +263,9 @@ var ImageManager = {
 				ImageManager.unselectImage(container);
 			});
 		});
+	},
+	showUploadedImages: function () {
+		var container = $('#image_select_container');
+		container.slideDown(300);
 	}
 };
