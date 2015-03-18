@@ -543,8 +543,12 @@ class EventsController extends AppController {
 			$this->__formatFormData();
 			$this->__processCustomTags();
 			$this->__processImageData();
+
+			// Correct date format
 			foreach ($dates as &$date) {
-				$date = date('Y-m-d', strtotime(trim($date)));
+				$date = trim($date);
+				$timestamp = strtotime($date);
+				$date = date('Y-m-d', $timestamp);
 			}
 			unset($date);
 			$this->request->data['Event']['user_id'] = $user_id;
@@ -676,7 +680,10 @@ class EventsController extends AppController {
 			$this->__formatFormData();
 			$this->__processCustomTags();
 			$this->__processImageData();
-			$this->request->data['Event']['date'] = date('Y-m-d', strtotime($this->request->data['Event']['date']));
+
+			// Correct date format
+			$timestamp = strtotime($this->request->data['Event']['date']);
+			$this->request->data['Event']['date'] = date('Y-m-d', $timestamp);
 
 			$this->Event->set($this->request->data);
 			if ($this->Event->validates()) {
@@ -684,12 +691,13 @@ class EventsController extends AppController {
 				$this->Event->removeTagAssociations($id);
 				if ($this->Event->saveAssociated($this->request->data)) {
 					$is_admin = $this->Auth->user('role') == 'admin';
-					if ($is_admin && $this->Event->approve()) {
-						$this->Flash->success('Event updated and approved.');
-					} else {
-						$this->Flash->success('Event updated.');
-					}
-					$this->redirect(array('controller' => 'events', 'action' => 'view', 'id' => $id));
+					$action = ($is_admin && $this->Event->approve()) ? 'updated and approved' : 'updated';
+					$this->Flash->success("Event $action.");
+					$this->redirect(array(
+						'controller' => 'events',
+						'action' => 'view',
+						'id' => $id
+					));
 				} else {
 					$this->Flash->error('There was a problem editing that event.');
 				}
@@ -699,9 +707,8 @@ class EventsController extends AppController {
 		}
 
 		$this->__prepareEventForm();
-		$event = $this->request->data['Event'];
 		$this->set(array(
-			'title_for_layout' => 'Edit Event: '.$event['title'],
+			'title_for_layout' => 'Edit Event: '.$this->request->data['Event']['title'],
 			'event_id' => $id
 		));
 		$this->render('form');
