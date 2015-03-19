@@ -1,10 +1,10 @@
 <h1 class="page_title">
 	<?php echo $title_for_layout; ?>
 </h1>
-<div id="moderate_events">	
+<div id="moderate_events">
 	<?php if (empty($unapproved)): ?>
 		<p>
-			Nothing to approve. Take a break and watch some cat videos. 
+			Nothing to approve. Take a break and watch some cat videos.
 		</p>
 	<?php else: ?>
 		<ul>
@@ -15,11 +15,11 @@
 					$modified = $event['Event']['modified'];
 					$published = $event['Event']['published'];
 					$is_series = isset($event['EventSeries']['id']);
-					
+
 					if ($is_series) {
 						$series_id = $event['EventSeries']['id'];
 						$count = count($identical_series_members[$series_id][$modified]);
-						
+
 						// If events in a series have been modified, they are separated out
 						$count_series_parts = count($identical_series_members[$series_id]);
 						$series_part_event_ids = $identical_series_members[$series_id][$modified];
@@ -28,7 +28,7 @@
 				<li>
 					<ul class="actions">
 						<li>
-							<?php 
+							<?php
 								$url = array('controller' => 'events', 'action' => 'approve');
 								if ($is_series) {
 									$url = array_merge($url, $series_part_event_ids);
@@ -36,7 +36,7 @@
 									$url[] = $event_id;
 								}
 								echo $this->Html->link(
-									$this->Html->image('icons/tick.png').'Approve'.($published ? '' : ' and publish'), 
+									$this->Html->image('icons/tick.png').'Approve'.($published ? '' : ' and publish'),
 									$url,
 									array('escape' => false)
 								);
@@ -45,15 +45,15 @@
 						<li>
 							<?php
 								if ($is_series && $count > 1) {
-									$confirm = 'You will only be editing this event, and not the '.($count - 1).' other '.__n('event', 'events', ($count - 1)).' in this series.';	
+									$confirm = 'You will only be editing this event, and not the '.($count - 1).' other '.__n('event', 'events', ($count - 1)).' in this series.';
 								} else {
-									$confirm = false;	
+									$confirm = false;
 								}
 								echo $this->Html->link(
-									$this->Html->image('icons/pencil.png').'Edit', 
+									$this->Html->image('icons/pencil.png').'Edit',
 									array(
-										'controller' => 'events', 
-										'action' => 'edit', 
+										'controller' => 'events',
+										'action' => 'edit',
 										'id' => $event_id
 									),
 									array('escape' => false, 'confirm' => $confirm)
@@ -66,15 +66,15 @@
 								if ($is_series && $count > 1) {
 									$url = array_merge($url, $series_part_event_ids);
 									if ($count_series_parts > 1) {
-										$confirm = "All $count events in this part of the series will be deleted."; 
+										$confirm = "All $count events in this part of the series will be deleted.";
 									} else {
-										$confirm = "All events this series will be deleted.";
+										$confirm = "All events in this series will be deleted.";
 									}
 									$confirm .= ' Are you sure?';
 								} else {
 									$url[] = $event_id;
 									$confirm = 'Are you sure?';
-								} 
+								}
 								echo $this->Form->postLink(
 									$this->Html->image('icons/cross.png').'Delete',
 									$url,
@@ -84,13 +84,13 @@
 							?>
 						</li>
 					</ul>
-					
+
 					<?php if (! $published): ?>
 						<p>
 							<span class="unpublished">Not published</span>
 						</p>
 					<?php endif; ?>
-					
+
 					<table>
 						<?php if ($is_series): ?>
 							<tr>
@@ -98,7 +98,7 @@
 									Series
 								</th>
 								<td>
-									<?php echo $event['EventSeries']['title']; ?>											
+									<?php echo $event['EventSeries']['title']; ?>
 									(<?php echo $count.__n(' event', ' events', $count); ?>)
 									<?php if ($count_series_parts > 1 && $created != $modified): ?>
 										<br />
