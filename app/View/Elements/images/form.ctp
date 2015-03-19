@@ -30,20 +30,7 @@
 		<a href="#" id="image_upload_button">Select image</a>
 	</div>
 
-	<?php
-		// Avoiding whitespace to prevent some display oddities
-		echo '<div id="image_select_container" style="display: none;">';
-		if (isset($images) && ! empty($images)) {
-			foreach ($images as $image_id => $filename) {
-				echo '<a href="#" id="listed_image_'.$image_id.'" data-image-id="'.$image_id.'" data-image-filename="'.$filename.'">';
-				echo '<img src="/img/events/tiny/'.$filename.'" />';
-				echo '</a>';
-			}
-		} else {
-			echo 'No uploaded images to select.';
-		}
-		echo '</div>';
-	?>
+	<div id="image_select_container" style="display: none;"></div>
 
 	<div id="image_help" class="help" style="display: none;">
 		<h3>Uploading</h3>
@@ -107,6 +94,7 @@
 			post_max: '{$post_max}B',
 			timestamp: ".time()."
 		});
+		ImageManager.user_id = $user_id;
 		ImageManager.setupManager();
 	");
 ?>

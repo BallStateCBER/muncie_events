@@ -1,4 +1,6 @@
 var ImageManager = {
+	user_id: null,
+	
 	getSelectionContainer: function(image_id) {
 		return $('<li id="selectedimage_'+image_id+'" data-image-id="'+image_id+'"></li>');
 	},
@@ -209,19 +211,7 @@ var ImageManager = {
 		
 		$('#image_select_toggler').click(function (event) {
 			event.preventDefault();
-			var upload = $('#image_upload_container');
-			var help = $('#image_help');
-			if (upload.is(':visible')) {
-				upload.slideUp(300, function() {
-					ImageManager.showUploadedImages();
-				});
-			} else if (help.is(':visible')) {
-				help.slideUp(300, function() {
-					ImageManager.showUploadedImages();
-				});
-			} else {
-				ImageManager.showUploadedImages();
-			}
+			ImageManager.toggleUploadedImages();
 		});
 		
 		$('#image_help_toggler').click(function (event) {
@@ -242,12 +232,6 @@ var ImageManager = {
 			}
 		});
 		
-		$('#image_select_container a').click(function (event) {
-			event.preventDefault();
-			var image_id = $(this).data('imageId');
-			ImageManager.selectListedImage(image_id);
-		});
-		
 		// Hide preselected images in the collection of 
 		// selectable images
 		$('#selected_images li').each(function() {
@@ -264,8 +248,68 @@ var ImageManager = {
 			});
 		});
 	},
+	toggleUploadedImages: function () {
+		var upload = $('#image_upload_container');
+		var help = $('#image_help');
+		var uploaded = $('#image_select_container');
+		if (uploaded.is(':visible')) {
+			uploaded.slideUp(300);
+		} else if (upload.is(':visible')) {
+			upload.slideUp(300, function() {
+				ImageManager.showUploadedImages();
+			});
+		} else if (help.is(':visible')) {
+			help.slideUp(300, function() {
+				ImageManager.showUploadedImages();
+			});
+		} else {
+			ImageManager.showUploadedImages();
+		}
+	},
 	showUploadedImages: function () {
 		var container = $('#image_select_container');
-		container.slideDown(300);
+		var link = $('#image_select_toggler');
+		if (link.hasClass('loading')) {
+			return;
+		}
+		if (container.is(':empty')) {
+			$.ajax({
+				url: '/images/user_images/'+ImageManager.user_id,
+				beforeSend: function () {
+					link.addClass('loading');
+					container.html('<img src="/img/loading.gif" class="loading" alt="Loading..." />');
+					container.slideDown(300);
+				},
+				complete: function () {
+					link.removeClass('loading');
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR);
+					console.log(textStatus);
+					console.log(errorThrown);
+					container.find('.loading').slideUp(300, function () {
+						$(this).remove();
+					});
+					var error = $('<div class="error_message">There was an error loading your uploaded images. Please try again or contact an administrator for assistance.</div>');
+					error.hide();
+					container.after(error);
+					error.slideDown(300);
+				},
+				success: function (data) {
+					container.find('.loading').slideUp(300, function () {
+						$(this).remove();
+						container.html(data);
+						container.find('a').click(function (event) {
+							event.preventDefault();
+							var image_id = $(this).data('imageId');
+							ImageManager.selectListedImage(image_id);
+						});
+						container.slideDown(300);
+					});
+				}
+			});
+		} else {
+			container.slideDown(300);
+		}
 	}
 };

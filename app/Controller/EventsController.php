@@ -438,7 +438,8 @@ class EventsController extends AppController {
 		$this->set(array(
 			'categories' => $this->Event->Category->getList(),
 			'available_tags' => $this->Event->Tag->getList(),
-			'previous_locations' => $this->Event->getPreviousLocations($user_id)
+			'previous_locations' => $this->Event->getPreviousLocations($user_id),
+			'user_id' => $user_id
 		));
 
 		// Determine what optional attributes this Event has
