@@ -194,21 +194,15 @@ var ImageManager = {
 				console.log(data);
 				
 				var intRegex = /^\d+$/;
+				
 				// If the image's ID is returned
 				if (intRegex.test(data)) {
 					var image_id = data;
 					ImageManager.selectUnlistedImage(image_id);
-				} else {
-					
 				}
-			},
-			'onFallback': function() {
-				// Warn user that their browser is old
 			},
 			'onError': function(errorType, files) {
 				alert('There was an error uploading that file: '+file.xhr.responseText);
-			},
-			'onInit': function() {
 			},
 			'onQueueComplete': function() {
 				this.uploadifive('clearQueue');
@@ -306,6 +300,7 @@ var ImageManager = {
 		if ($('#image_select_toggler').hasClass('loading')) {
 			return;
 		}
+		
 		var container = $('#image_select_container');
 		if (container.is(':empty')) {
 			this.loadUploadedImages();
