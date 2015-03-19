@@ -281,14 +281,14 @@ class EventsController extends AppController {
 		));
 	}
 
-	public function delete($id) {
+	public function delete() {
 		if ($this->request->is('post')) {
-			$this->Event->id = $id;
-			$exists = $this->Event->exists();
-			if ($exists) {
-				$result = $this->Event->delete();
-			} else {
-				$result = false;
+			foreach ($this->request->pass as $event_id) {
+				$this->Event->id = $event_id;
+				$result = $this->Event->exists() && $this->Event->delete();
+				if (! $result) {
+					break;
+				}
 			}
 			$this->__redirectAfterDelete($id, $exists, $result);
 		} else {
