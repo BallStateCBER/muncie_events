@@ -74,6 +74,7 @@ class Event extends AppModel {
 	// If this is changed, also change /View/Elements/tinymce_input.ctp
 	public $allowed_tags = '<p><br><a><strong><b><i><em><u>';
 
+	public $delete_series = null;
 
 	/**
 	 * Used by the Search plugin
@@ -126,6 +127,32 @@ class Event extends AppModel {
 
 	protected function _findPastWithTag($state, $query, $results = array()) {
 		return $this->_findInDirectionWithTag('past', $state, $query, $results);
+	}
+
+	public function beforeDelete($cascade = true) {
+		// Before deleting, check to see if this is the last event in a series
+		// and if so, mark that series for deletion
+		$series_id = $this->field('series_id');
+		if ($series_id) {
+			$event_count = $this->find(
+				'count',
+				array('conditions' => compact('series_id'))
+			);
+			if ($event_count == 1) {
+				$this->delete_series = $series_id;
+			}
+		}
+
+		return true;
+	}
+
+	public function afterDelete() {
+		// Delete the now-empty series if its last event has been successfully deleted
+		if ($this->delete_series) {
+			$this->EventSeries->id = $this->delete_series;
+			$this->EventSeries->delete();
+			$this->delete_series = null;
+		}
 	}
 
 	public function getCountInDirectionWithTag($direction, $tag_id) {

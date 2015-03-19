@@ -285,12 +285,13 @@ class EventsController extends AppController {
 		if ($this->request->is('post')) {
 			foreach ($this->request->pass as $event_id) {
 				$this->Event->id = $event_id;
-				$result = $this->Event->exists() && $this->Event->delete();
+				$exists = $this->Event->exists();
+				$result = $exists && $this->Event->delete();
 				if (! $result) {
 					break;
 				}
 			}
-			$this->__redirectAfterDelete($id, $exists, $result);
+			$this->__redirectAfterDelete($event_id, $exists, $result);
 		} else {
 			$referer = $this->referer();
 			return $this->renderMessage(array(
