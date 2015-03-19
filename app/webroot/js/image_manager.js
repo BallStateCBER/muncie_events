@@ -338,6 +338,7 @@ var ImageManager = {
 				container.find('.loading').slideUp(300, function () {
 					$(this).remove();
 					container.html(data);
+					ImageManager.addHiddenUploadedImages();
 					container.find('a').click(function (event) {
 						event.preventDefault();
 						var image_id = $(this).data('imageId');
@@ -346,6 +347,29 @@ var ImageManager = {
 					container.slideDown(300);
 				});
 			}
+		});
+	},
+	
+	/** 
+	 * Look for selected images that aren't in the uploaded images list
+	 * (which might happen if the current user is an admin editing someone
+	 * else's event) and add them to the uploaded images list. This allows
+	 * such a user to unselect and then reselect such images. */
+	addHiddenUploadedImages: function () {
+		var container = $('#image_select_container');
+		$('#selected_images li').each(function () {
+			var image_id = $(this).data('imageId');
+			var filename = $(this).find('img.selected_image').attr('src').split('/').pop();
+			
+			// The Calendar helper does not show image thumbnails if the file is not found
+			if (typeof filename == 'undefined') {
+				return;
+			}
+			
+			var linked_image = $('<a href="#" id="listed_image_'+image_id+'" data-image-id="'+image_id+'" data-image-filename="'+filename+'">');
+			linked_image.html('<img src="/img/events/tiny/'+filename+'" />');
+			linked_image.hide();
+			container.append(linked_image);
 		});
 	}
 };
