@@ -108,4 +108,11 @@ class ImagesController extends AppController {
 		$this->layout = 'blank';
 		$this->render('/Pages/blank');
 	}
+
+	public function user_images($user_id) {
+		$this->layout = 'ajax';
+		$this->set(array(
+			'images' => $this->Image->User->getImagesList($user_id)
+		));
+	}
 }
