@@ -2,17 +2,17 @@
 App::uses('AppController', 'Controller');
 class WidgetsController extends AppController {
 	public $name = 'Widgets';
-	public $uses = array('Event', 'Widget');	
+	public $uses = array('Event', 'Widget');
 	public $components = array();
 	public $helpers = array();
-	
+
 	public $custom_styles = array();
-	
+
 	public function beforeFilter() {
 		parent::beforeFilter();
 		$this->Auth->allow();
 	}
-	
+
 	public function beforeRender() {
 		parent::beforeRender();
 	}
@@ -26,26 +26,26 @@ class WidgetsController extends AppController {
 			'defaults' => $this->Widget->getDefaults(),
 			'iframe_styles' => $iframe_styles,
 			'iframe_url' => Router::url(array(
-				'controller' => 'widgets', 
-				'action' => $widget_type, 
+				'controller' => 'widgets',
+				'action' => $widget_type,
 				'?' => $iframe_query_string
 			), true),
 			'code_url' => Router::url(array(
-				'controller' => 'widgets', 
-				'action' => $widget_type, 
+				'controller' => 'widgets',
+				'action' => $widget_type,
 				'?' => str_replace('&', '&amp;', $iframe_query_string)
 			), true),
 			'categories' => $this->Event->Category->getAll()
 		));
 	}
-	
+
 	/**
 	 * Produces a view that lists seven event-populated days, starting with $start_date
 	 * @param string $start_date 'yyyy-mm-dd', today by default
 	 */
 	public function feed($start_date = null) {
 		$this->__setDemoData('feed');
-		
+
 		// Get relevant event filters
 		$options = $_GET;
 		$filters = $this->Event->getValidFilters($options);
@@ -62,7 +62,7 @@ class WidgetsController extends AppController {
 		// $_SERVER['QUERY_STRING'] includes the base url in AJAX requests for some reason
 		$base_url = Router::url(array('controller' => 'widgets', 'action' => 'feed'), true);
 		$query_string = str_replace($base_url, '', $_SERVER['QUERY_STRING']);
-		
+
 		$this->set(array(
 			'title_for_layout' => 'Upcoming Events',
 			'events' => $events,
@@ -75,20 +75,21 @@ class WidgetsController extends AppController {
 			'all_events_url' => $this->__getAllEventsUrl('feed', $query_string)
 		));
 	}
-	
+
 	/**
 	 * Produces a grid-calendar view for the provided month
 	 * @param string $month 'yyyy-mm', current month by default
 	 */
 	public function month($year_month = null) {
 		$this->__setDemoData('month');
-		
+
 		// Process various date information
 		if (! $year_month) {
 			$year_month = date('Y-m');
 		}
-		$year = reset(explode('-', $year_month));
-		$month = end(explode('-', $year_month));
+		$split = explode('-', $year_month);
+		$year = reset($split);
+		$month = end($split);
 		$timestamp = mktime(0, 0, 0, $month, 1, $year);
 		$month_name = date('F', $timestamp);
 		$pre_spacer = date('w', $timestamp);
@@ -99,7 +100,7 @@ class WidgetsController extends AppController {
 		$next_year = ($month == 12) ? $year + 1 : $year;
 		$next_month = ($month == 12) ? 1 : $month + 1;
 		$today = date('Y').date('m').date('j');
-		
+
 		// Get relevant event filters
 		$options = $_GET;
 		$filters = $this->Event->getValidFilters($options);
@@ -137,11 +138,11 @@ class WidgetsController extends AppController {
 			$defaults = $this->Widget->getDefaults();
 			$events_displayed_per_day = $defaults['event_options']['events_displayed_per_day'];
 		}
-		
+
 		// $_SERVER['QUERY_STRING'] includes the base url in AJAX requests for some reason
 		$base_url = Router::url(array('controller' => 'widgets', 'action' => 'month'), true);
 		$query_string = str_replace($base_url, '', $_SERVER['QUERY_STRING']);
-		
+
 		$this->set(array(
 			'title_for_layout' => "$month_name $year",
 			'events_displayed_per_day' => $events_displayed_per_day,
@@ -155,7 +156,7 @@ class WidgetsController extends AppController {
 			'events_for_json', 'filters'
 		));
 	}
-	
+
 	/**
 	 * Loads a list of all events on a given day, used by the month widget
 	 * @param int $year Format: yyyy
@@ -173,7 +174,7 @@ class WidgetsController extends AppController {
 			'events' => $events
 		));
 	}
-	
+
 	/**
 	 * Accepts a query string and returns the URL to view this calendar with no filters (but custom styles retained)
 	 * @param string $query_string
@@ -196,12 +197,12 @@ class WidgetsController extends AppController {
 			$new_query_string = http_build_query($filtered_params, '', '&amp;');
 		}
 		return Router::url(array(
-			'controller' => 'widgets', 
+			'controller' => 'widgets',
 			'action' => $action,
 			'?' => $new_query_string
 		));
 	}
-	
+
 	public function event($id) {
 		$event = $this->Event->find('first', array(
 			'conditions' => array('Event.id' => $id),
@@ -226,7 +227,7 @@ class WidgetsController extends AppController {
 				)
 			)
 		));
-		
+
 		if (empty($event)) {
 			return $this->renderMessage(array(
 				'title' => 'Event Not Found',
@@ -239,20 +240,20 @@ class WidgetsController extends AppController {
 			'event' => $event)
 		);
 	}
-	
+
 	public function index() {
 		$this->set(array(
 			'title_for_layout' => 'Website Widgets'
 		));
 		$this->layout = 'no_sidebar';
 	}
-	
+
 	// Produces a view listing the upcoming events for a given location
 	public function venue($venue_name = '', $starting_date = null) {
 		if (! $starting_date) {
 			$starting_date = date('Y-m-d');
 		}
-		
+
 		$event_results = $this->Event->find('all', array(
 			'conditions' => array(
 				'published' => 1,
@@ -282,26 +283,26 @@ class WidgetsController extends AppController {
 			'venue_name' => $venue_name
 		));
 	}
-	
+
 	public function demo_feed() {
 		$this->__setDemoData('feed');
 		$this->layout = 'ajax';
 		$this->render('customize/demo');
 	}
-	
+
 	public function demo_month() {
 		$this->__setDemoData('month');
 		$this->layout = 'ajax';
 		$this->render('customize/demo');
 	}
-	
+
 	public function customize_feed() {
 		$this->__setDemoData('feed');
 		$this->set('title_for_layout', 'Customize Feed Widget');
 		$this->layout = 'no_sidebar';
 		$this->render('customize/feed');
 	}
-	
+
 	public function customize_month() {
 		$this->__setDemoData('month');
 		$this->set('title_for_layout', 'Customize Month Widget');

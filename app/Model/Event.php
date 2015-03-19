@@ -966,8 +966,9 @@ class Event extends AppModel {
 		if (! $year_month) {
 			$year_month = date('my');
 		}
-		$year = reset(explode('-', $year_month));
-		$month = end(explode('-', $year_month));
+		$split = explode('-', $year_month);
+		$year = reset($split);
+		$month = end($split);
 		$filters = $this->formatWidgetFilters($filters);
 		$dates = $this->getPopulatedDates($month, $year, $filters);
 		return $this->getFilteredEventsOnDates($dates, $filters, true);
