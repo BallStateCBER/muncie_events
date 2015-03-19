@@ -1,25 +1,23 @@
 <?php
 /**
- * Contains methods for Profiling and creating
- * timers.
- *
- * PHP versions 5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.lib
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 App::uses('Debugger', 'Utility');
 
+/**
+ * Contains methods for Profiling and creating timers.
+ *
+ */
 class DebugTimer {
 
 /**
@@ -34,7 +32,7 @@ class DebugTimer {
  *
  * @param string $name The name of the timer to start.
  * @param string $message A message for your timer
- * @return bool true
+ * @return boolean Always true
  */
 	public static function start($name = null, $message = null) {
 		$start = microtime(true);
@@ -112,7 +110,7 @@ class DebugTimer {
  * Get all timers that have been started and stopped.
  * Calculates elapsed time for each timer. If clear is true, will delete existing timers
  *
- * @param bool $clear false
+ * @param boolean $clear false
  * @return array
  */
 	public static function getAll($clear = false) {
@@ -121,7 +119,7 @@ class DebugTimer {
 
 		$times = array();
 		if (!empty(self::$_timers)) {
-			$firstTimer = current(self::$_timers);
+			$firstTimer = reset(self::$_timers);
 			$_end = $firstTimer['start'];
 		} else {
 			$_end = $now;
@@ -152,7 +150,7 @@ class DebugTimer {
 /**
  * Clear all existing timers
  *
- * @return bool true
+ * @return boolean true
  */
 	public static function clear() {
 		self::$_timers = array();
@@ -199,4 +197,5 @@ class DebugTimer {
 		}
 		return $startTime;
 	}
+
 }

@@ -1,28 +1,28 @@
 <?php
 /**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         DebugKit 0.1
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
+App::uses('ToolbarHelper', 'DebugKit.View/Helper');
+App::uses('Security', 'Utility');
+
+/**
  * Html Toolbar Helper
  *
  * Injects the toolbar elements into HTML layouts.
  * Contains helper methods for
  *
- * PHP versions 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org
- * @package       debug_kit
- * @subpackage    debug_kit.views.helpers
  * @since         DebugKit 0.1
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- **/
-App::uses('ToolbarHelper', 'DebugKit.View/Helper');
-App::uses('Security', 'Utility');
-
+ */
 class HtmlToolbarHelper extends ToolbarHelper {
 
 /**
@@ -43,11 +43,16 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Recursively goes through an array and makes neat HTML out of it.
  *
  * @param mixed $values Array to make pretty.
- * @param int $openDepth Depth to add open class
- * @param int $currentDepth current depth.
+ * @param integer $openDepth Depth to add open class
+ * @param integer $currentDepth current depth.
+ * @param boolean $doubleEncode
  * @return string
  */
 	public function makeNeatArray($values, $openDepth = 0, $currentDepth = 0, $doubleEncode = false) {
+		static $printedObjects = null;
+		if ($currentDepth === 0) {
+			$printedObjects = new SplObjectStorage();
+		}
 		$className = "neat-array depth-$currentDepth";
 		if ($openDepth > $currentDepth) {
 			$className .= ' expanded';
@@ -58,7 +63,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 			if (is_bool($values)) {
 				$values = array($values);
 			}
-			if (is_null($values)) {
+			if ($values === null) {
 				$values = array(null);
 			}
 		}
@@ -67,6 +72,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		}
 		foreach ($values as $key => $value) {
 			$out .= '<li><strong>' . $key . '</strong>';
+			if (is_array($value) && count($value) > 0) {
+				$out .= '(array)';
+			} elseif (is_object($value)) {
+				$out .= '(object)';
+			}
 			if ($value === null) {
 				$value = '(null)';
 			}
@@ -83,7 +93,24 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				$value = 'function';
 			}
 
-			if (($value instanceof ArrayAccess || $value instanceof Iterator || is_array($value)) && !empty($value)) {
+			$isObject = is_object($value);
+			if ($isObject && $printedObjects->contains($value)) {
+				$isObject = false;
+				$value = ' - recursion';
+			}
+
+			if ($isObject) {
+				$printedObjects->attach($value);
+			}
+
+			if (
+				(
+				$value instanceof ArrayAccess ||
+				$value instanceof Iterator ||
+				is_array($value) ||
+				$isObject
+				) && !empty($value)
+			) {
 				$out .= $this->makeNeatArray($value, $openDepth, $nextDepth, $doubleEncode);
 			} else {
 				$out .= h($value, $doubleEncode);
@@ -107,9 +134,11 @@ class HtmlToolbarHelper extends ToolbarHelper {
 
 /**
  * Start a panel.
- * make a link and anchor.
+ * Make a link and anchor.
  *
- * @return void
+ * @param $title
+ * @param $anchor
+ * @return string
  */
 	public function panelStart($title, $anchor) {
 		$link = $this->Html->link($title, '#' . $anchor);
@@ -134,7 +163,7 @@ class HtmlToolbarHelper extends ToolbarHelper {
 	}
 
 /**
- * send method
+ * Send method
  *
  * @return void
  */
@@ -147,6 +176,10 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		if (isset($view->viewVars['debugToolbarCss']) && !empty($view->viewVars['debugToolbarCss'])) {
 			$head .= $this->Html->css($view->viewVars['debugToolbarCss']);
 		}
+
+		$js = sprintf('window.DEBUGKIT_JQUERY_URL = "%s";', $this->webroot('/debug_kit/js/jquery.js'));
+		$head .= $this->Html->scriptBlock($js);
+
 		if (isset($view->viewVars['debugToolbarJavascript'])) {
 			foreach ($view->viewVars['debugToolbarJavascript'] as $script) {
 				if ($script) {
@@ -154,12 +187,16 @@ class HtmlToolbarHelper extends ToolbarHelper {
 				}
 			}
 		}
-		if (preg_match('#</head>#', $view->output)) {
-			$view->output = preg_replace('#</head>#', $head . "\n</head>", $view->output, 1);
+		$search = '</head>';
+		$pos = strpos($view->output, $search);
+		if ($pos !== false) {
+			$view->output = substr_replace($view->output, $head . "\n</head>", $pos, strlen($search));
 		}
 		$toolbar = $view->element('debug_toolbar', array('disableTimer' => true), array('plugin' => 'DebugKit'));
-		if (preg_match('#</body>#', $view->output)) {
-			$view->output = preg_replace('#</body>#', $toolbar . "\n</body>", $view->output, 1);
+		$search = '</body>';
+		$pos = strrpos($view->output, $search);
+		if ($pos !== false) {
+			$view->output = substr_replace($view->output, $toolbar . "\n</body>", $pos, strlen($search));
 		}
 	}
 
@@ -167,13 +204,15 @@ class HtmlToolbarHelper extends ToolbarHelper {
  * Generates a SQL explain link for a given query
  *
  * @param string $sql SQL query string you want an explain link for.
+ * @param $connection
  * @return string Rendered Html link or '' if the query is not a select/describe
  */
 	public function explainLink($sql, $connection) {
 		if (!preg_match('/^[\s()]*SELECT/i', $sql)) {
 			return '';
 		}
-		$hash = Security::hash($sql . $connection, null, true);
+		$sql = str_replace(array("\n", "\t"), ' ', $sql);
+		$hash = Security::hash($sql . $connection, 'sha1', true);
 		$url = array(
 			'plugin' => 'debug_kit',
 			'controller' => 'toolbar_access',
@@ -195,4 +234,5 @@ class HtmlToolbarHelper extends ToolbarHelper {
 		$form .= $this->Form->end();
 		return $form;
 	}
+
 }
