@@ -238,6 +238,10 @@ var ImageManager = {
 	},
 	
 	toggleHelp: function () {
+		if ($('#image_select_toggler').hasClass('loading')) {
+			return;
+		}
+		
 		var upload = $('#image_upload_container');
 		var select = $('#image_select_container');
 		var help = $('#image_help');
@@ -255,6 +259,10 @@ var ImageManager = {
 	},
 	
 	toggleImageUpload: function () {
+		if ($('#image_select_toggler').hasClass('loading')) {
+			return;
+		}
+		
 		var upload = $('#image_upload_container');
 		var select = $('#image_select_container');
 		var help = $('#image_help');
@@ -272,6 +280,10 @@ var ImageManager = {
 	},
 	
 	toggleUploadedImages: function () {
+		if ($('#image_select_toggler').hasClass('loading')) {
+			return;
+		}
+
 		var upload = $('#image_upload_container');
 		var help = $('#image_help');
 		var uploaded = $('#image_select_container');
@@ -291,11 +303,10 @@ var ImageManager = {
 	},
 	
 	showUploadedImages: function () {
-		var container = $('#image_select_container');
-		var link = $('#image_select_toggler');
-		if (link.hasClass('loading')) {
+		if ($('#image_select_toggler').hasClass('loading')) {
 			return;
 		}
+		var container = $('#image_select_container');
 		if (container.is(':empty')) {
 			this.loadUploadedImages();
 		} else {
@@ -304,6 +315,8 @@ var ImageManager = {
 	},
 	
 	loadUploadedImages: function () {
+		var container = $('#image_select_container');
+		var link = $('#image_select_toggler');
 		$.ajax({
 			url: '/images/user_images/'+ImageManager.user_id,
 			beforeSend: function () {
