@@ -80,7 +80,7 @@ class Tag extends AppModel {
 	}
 
 	/**
-	 * Takes the reslt of find('threaded') and sorts so that branches (with children) come before leaves; Assumes that everythign is already alphabetized
+	 * Takes the result of find('threaded') and sorts so that branches (with children) come before leaves; Assumes that everything is already alphabetized
 	 * @param array $threaded
 	 * @return array
 	 */
