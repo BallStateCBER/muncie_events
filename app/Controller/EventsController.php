@@ -701,13 +701,11 @@ class EventsController extends AppController {
 					$is_admin = $this->Auth->user('role') == 'admin';
 					$action = ($is_admin && $this->Event->approve()) ? 'updated and approved' : 'updated';
 					$this->Flash->success("Event $action.");
-					/*
 					$this->redirect(array(
 						'controller' => 'events',
 						'action' => 'view',
 						'id' => $id
 					));
-					*/
 				} else {
 					$this->Flash->error('There was a problem editing that event.');
 				}
