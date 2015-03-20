@@ -314,7 +314,7 @@
 			</td>
 		</tr>
 
-		<?php if ($this->action == 'edit'): ?>
+		<?php if ($has['series'] && $this->action == 'edit'): ?>
 			<tr id="series_editing_options">
 				<th>
 					Series Editing
