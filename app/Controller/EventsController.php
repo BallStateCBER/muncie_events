@@ -442,6 +442,9 @@ class EventsController extends AppController {
 			'previous_locations' => $this->Event->getPreviousLocations($user_id),
 			'user_id' => $user_id
 		));
+		if (! isset($this->request->data['Event']['update_series'])) {
+			$this->request->data['Event']['update_series'] = 0;
+		}
 
 		// Determine what optional attributes this Event has
 		$event = $this->request->data['Event'];
@@ -692,14 +695,19 @@ class EventsController extends AppController {
 				$this->Event->removeImageAssociations($id);
 				$this->Event->removeTagAssociations($id);
 				if ($this->Event->saveAssociated($this->request->data)) {
+					if ($this->request->data['Event']['update_series']) {
+						$this->Event->updateSeries($this->request->data);
+					}
 					$is_admin = $this->Auth->user('role') == 'admin';
 					$action = ($is_admin && $this->Event->approve()) ? 'updated and approved' : 'updated';
 					$this->Flash->success("Event $action.");
+					/*
 					$this->redirect(array(
 						'controller' => 'events',
 						'action' => 'view',
 						'id' => $id
 					));
+					*/
 				} else {
 					$this->Flash->error('There was a problem editing that event.');
 				}
