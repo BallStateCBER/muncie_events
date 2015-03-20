@@ -331,6 +331,10 @@
 							'legend' => false
 						)
 					); ?>
+					<p id="series_editing_warning">
+						Warning: All event information will be copied from this event to other events in this series,
+						overwriting any changes that you may have made to those events since first posting them.
+					</p>
 				</td>
 			</tr>
 		<?php endif; ?>

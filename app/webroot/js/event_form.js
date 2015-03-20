@@ -184,6 +184,17 @@ function setupEventForm() {
 	}
 	setupLocationAutocomplete();
 	setupAddressLookup();
+	
+	$('#series_editing_options input[type=radio]').click(function () {
+		if ($(this).val() != '0') {
+			$('#series_editing_warning').slideDown(300);
+		} else {
+			$('#series_editing_warning').slideUp(300);
+		}
+	});
+	if ($('#EventUpdateSeries0').is(':checked')) {
+		$('#series_editing_warning').hide();
+	}
 }
 
 function setupLocationAutocomplete() {
