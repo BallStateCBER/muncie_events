@@ -313,6 +313,28 @@
 				)); ?>
 			</td>
 		</tr>
+
+		<?php if ($this->action == 'edit'): ?>
+			<tr id="series_editing_options">
+				<th>
+					Series Editing
+				</th>
+				<td>
+					<?php echo $this->Form->radio(
+						'update_series',
+						array(
+							'0' => 'Only update <strong>this event</strong>',
+							'future' => 'Update <strong>this and future events</strong> in this series',
+							'all' => 'Update <strong>all events</strong> in this series'
+						),
+						array(
+							'legend' => false
+						)
+					); ?>
+				</td>
+			</tr>
+		<?php endif; ?>
+
 		<?php if ($this->action == 'add' && ! $this->Session->read('Auth.User.id')): ?>
 			<tr>
 				<th>Spam Protection</th>
