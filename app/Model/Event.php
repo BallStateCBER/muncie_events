@@ -1094,4 +1094,73 @@ class Event extends AppModel {
 		}
 		return false;
 	}
+
+	/**
+	 * Updates more events in addition to the currently-selected one
+	 * if they are part of the same series and in the selected range.
+	 * @param $data Is $this->request->data
+	 * @return boolean
+	 */
+	public function updateSeries($data) {
+		$update_type = $data['Event']['update_series'];
+		if (! $update_type) {
+			return true;
+		}
+
+		// Get applicable event IDs
+		$selected_event_id = $data['Event']['id'];
+		$series_id = $this->field('series_id', array('id' => $selected_event_id));
+		if (! $series_id) {
+			return true;
+		}
+		$conditions = array(
+			'Event.series_id' => $series_id,
+			'Event.id NOT' => $selected_event_id
+		);
+		if ($update_type == 'future') {
+			$conditions['Event.date >'] = $data['Event']['date'];
+		}
+		$result = $this->find('list', compact('conditions'));
+		$event_ids = array_keys($result);
+
+		/* Create array to use to update events, using only SOME
+		 * of the data in $this->request->data BUT only specified
+		 * fields for the Event model. */
+		$fields = array(
+			'title',
+			'description',
+			'location',
+			'location_details',
+			'address',
+			'category_id',
+			'time_start',
+			'time_end',
+			'age_restriction',
+			'cost',
+			'source'
+		);
+		$update_data = array();
+		foreach ($fields as $field) {
+			$update_data['Event'][$field] = $data['Event'][$field];
+		}
+		$update_data['EventsImage'] = isset($data['EventsImage']) ? $data['EventsImage'] : array();
+		$update_data['Tag'] = isset($data['Tag']) ? $data['Tag'] : array();
+
+		// Update events
+		foreach ($event_ids as $event_id) {
+			$update_data['Event']['id'] = $event_id;
+			$this->create();
+			if ($this->validates($update_data)) {
+				$this->removeImageAssociations($event_id);
+				$this->removeTagAssociations($event_id);
+				if (! $this->saveAssociated($update_data)) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
