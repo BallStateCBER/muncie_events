@@ -119,8 +119,29 @@
 			No tags found for any <?php echo $direction_adjective; ?> events.
 		</p>
 	<?php else: ?>
+	    <?php
+            $min_count = $max_count = null;
+            foreach ($tags as $tag_name => $tag) {
+                if ($min_count == null) {
+                    $min_count = $max_count = $tag['count'];
+                }
+                if ($tag['count'] < $min_count) {
+                    $min_count = $tag['count'];
+                }
+                if ($tag['count'] > $max_count) {
+                    $max_count = $tag['count'];
+                }
+            }
+            $count_range = max($max_count - $min_count, 1);
+            $min_font_size = 75;
+            $max_font_size = 150;
+            $font_size_range = $max_font_size - $min_font_size;
+        ?>
 		<?php foreach ($tags as $tag_name => $tag): ?>
-			<?php $font_size = (8 + (.4 * ($tag['count']))); ?>
+			<?php
+                $font_size = log($tag['count']) / log($max_count) * $font_size_range + $min_font_size;
+                $font_size = round($font_size, 1);
+			?>
 			<?php echo $this->Html->link(
 				$tag_name,
 				array(
@@ -131,7 +152,7 @@
 				),
 				array(
 					'title' => $tag['count'].' '.__n('event', 'events', $tag['count']),
-					'style' => "font-size: {$font_size}pt"
+					'style' => "font-size: {$font_size}%"
 				)
 			); ?>
 		<?php endforeach; ?>
