@@ -3,8 +3,8 @@
 </h1>
 
 <p>
-	Muncie Events is a comprehensive event promotion tool provided to the city of 
-	Muncie, Indiana by the Center for Business and Economic Research at Ball State 
+	Muncie Events is a comprehensive event promotion tool provided to the city of
+	Muncie, Indiana by the Center for Business and Economic Research at Ball State
 	University and the Full Circle Arts Co-op, a 501(c)(3) not-for-profit organization.
 </p>
 <p>
@@ -21,13 +21,13 @@
 	</li>
 	<li>
 		<strong>Egalitarian:</strong>
-		All demographics, event types, and genres of expression should be promoted 
+		All demographics, event types, and genres of expression should be promoted
 		equally in order to break down social barriers and unite disparate components of the community.
 	</li>
 	<li>
 		<strong>Decentralized:</strong>
-		A decentralized, multifaceted approach to distributing a database of event 
-		information allows it to reach a wider audience by a variety of methods and with the 
+		A decentralized, multifaceted approach to distributing a database of event
+		information allows it to reach a wider audience by a variety of methods and with the
 		participation of community partners.
 	</li>
 	<li>
@@ -43,11 +43,8 @@
 
 <?php
 	$credits = array(
-		'People' => array(	
-			'<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Head Administrator',
-			'<a href="mailto:adamsdally@yahoo.com">Adam Dally</a>' => 'Assistant Web Developer, Administrator',
-			'<a href="mailto:ogle.mary@gmail.com">Mary Ogle</a>' => 'Administrator',
-			'<a href="mailto:akvanderluit@bsu.edu">Angie Vanderluit</a>' => 'Administrator',
+		'People' => array(
+			'<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Administrator',
 			'Benjamin Easley' => 'Graphic Designer',
 			'Nicholas Boyum' => 'Artist (map of Muncie background image)'
 		),
