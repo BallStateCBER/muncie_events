@@ -9,7 +9,7 @@ class TagHelper extends AppHelper {
 			$array_for_json[] = array(
 				'id' => $tag['Tag']['id'],
 				'name' => $tag['Tag']['name'],
-				'selectable' => $tag['Tag']['selectable'],
+				'selectable' => (boolean) $tag['Tag']['selectable'],
 				'children' => $this->availableTagsForJs($tag['children'])
 			);
 		}
