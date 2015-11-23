@@ -326,38 +326,25 @@ class Tag extends AppModel {
      */
     public function getWithCounts($filter = array(), $sort = 'alpha') {
     	// Apply filters and find tags
-    	$conditions = array('published' => 1);
+    	$conditions = array('Event.published' => 1);
     	if ($filter['direction'] == 'future') {
-    		$conditions['date >='] = date('Y-m-d');
+    		$conditions['Event.date >='] = date('Y-m-d');
     	} elseif ($filter['direction'] == 'past') {
-    		$conditions['date <'] = date('Y-m-d');
+    		$conditions['Event.date <'] = date('Y-m-d');
     	}
 		if (isset($filter['categories'])) {
-			$conditions['category_id'] = $filter['categories'];
+			$conditions['Event.category_id'] = $filter['categories'];
 		}
-		$results = $this->Event->find('all', array(
-			'conditions' => $conditions,
-			'fields' => array('id'),
-			'contain' => array('Tag' => array('fields' => array('Tag.id', 'Tag.name')))
-		));
 
-		// Create an alphabetically-sorted array of
-		// tags with count information included
-		$tags = array();
-		foreach ($results as $result) {
-			foreach ($result['Tag'] as $tag) {
-				if (isset($tags[$tag['name']])) {
-					$tags[$tag['name']]['count']++;
-				} else {
-					$tags[$tag['name']] = array(
-						'id' => $tag['id'],
-						'name' => $tag['name'],
-						'count' => 1
-					);
-				}
-			}
-		}
-		ksort($tags);
+        if ($filter['direction'] == 'future') {
+            $tags = $this->getWithCountsSlowly($conditions);
+        } else {
+            $tags = $this->getWithCountsQuickly($conditions, $filter);
+        }
+        if (empty($tags)) {
+            return array();
+        }
+
 		if ($sort == 'alpha') {
 			return $tags;
 		}
@@ -375,6 +362,91 @@ class Tag extends AppModel {
 			}
 		}
 		return $final_tags;
+    }
+
+    /**
+     * Collects tags and their counts, roughly matching the 'past' or 'future' condition
+     * by using a boundary event (most recent past event or soonest upcoming event).
+     * This sacrifices exactly fulfilling the 'past' or 'future' condition in exchange for
+     * running over ten times faster.
+     *
+     * @param array $conditions
+     * @param array $filter
+     * @return array
+     */
+    public function getWithCountsQuickly($conditions, $filter) {
+        // Get ID that creates one side of a boundary
+        $result = $this->Event->find('first', array(
+            'conditions' => $conditions,
+            'fields' => array('id'),
+            'order' => array(
+                'date' => ($filter['direction'] == 'past') ? 'DESC' : 'ASC'
+            ),
+            'contain' => false
+        ));
+        if (empty($result)) {
+            return array();
+        }
+        $boundary_event_id = $result['Event']['id'];
+
+        $tags_events = $this->EventsTag->find('all', array(
+            'conditions' => array(
+                'EventsTag.event_id '.($filter['direction'] == 'past' ? '<=' : '>=') => $boundary_event_id
+            ),
+            'fields' => array('EventsTag.tag_id', 'COUNT(*) as count'),
+            'group' => array('EventsTag.tag_id')
+        ));
+        $tag_counts = Hash::combine($tags_events, '{n}.EventsTag.tag_id', '{n}.0.count');
+        $tag_names = $this->find('list', array(
+            'conditions' => array('id' => array_keys($tag_counts)),
+            'order' => array('name' => 'ASC')
+        ));
+
+        // Create an alphabetically-sorted array of
+        // tags with count information included
+        $tags = array();
+        foreach ($tag_names as $tag_id => $tag_name) {
+            $tags[$tag_name] = array(
+              'id' => $tag_id,
+              'name' => $tag_name,
+              'count' => $tag_counts[$tag_id]
+            );
+        }
+        return $tags;
+    }
+
+    /**
+     * Collects tags and their counts, exactly matching the 'past' or 'future' condition.
+     * This can get extremely slow and cause timeouts on large collections of tags, such as
+     * encountered in /tags/past
+     *
+     * @param array $conditions
+     * @return array
+     */
+    public function getWithCountsSlowly($conditions) {
+        $results = $this->Event->find('all', array(
+            'conditions' => $conditions,
+            'fields' => array('id'),
+            'contain' => array('Tag' => array('fields' => array('Tag.id', 'Tag.name')))
+        ));
+
+        $tags = array();
+        foreach ($results as $result) {
+            foreach ($result['Tag'] as $tag) {
+                if (isset($tags[$tag['name']])) {
+                    $tags[$tag['name']]['count']++;
+                } else {
+                    $tags[$tag['name']] = array(
+                        'id' => $tag['id'],
+                        'name' => $tag['name'],
+                        'count' => 1
+                    );
+                }
+            }
+        }
+        ksort($tags);
+
+        return $tags;
     }
 
     public function getCategoriesWithTags($direction = 'future') {
