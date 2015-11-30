@@ -21,7 +21,14 @@
 			<tr>
 				<th>Where</th>
 				<td>
-					<?php echo $event['Event']['location']; ?>
+					<?php echo $this->Html->link(
+					   $event['Event']['location'],
+					   array(
+					       'controller' => 'events',
+					       'action' => 'location',
+					       $event['Event']['location']
+                       )
+                    ); ?>
 					<?php if ($event['Event']['location_details']): ?>
 						<br />
 						<?php echo $event['Event']['location_details']; ?>
