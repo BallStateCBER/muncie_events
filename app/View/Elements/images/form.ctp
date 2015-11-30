@@ -13,20 +13,11 @@
 			<a href="#" id="image_select_toggler">Select a previously uploaded image</a>
 		</li>
 		<li>
-			<a href="#" id="image_help_toggler" class="help_toggler">Help</a>
+			<a href="#" id="image_help_toggler" class="help_toggler">Help / Rules</a>
 		</li>
 	</ul>
 
 	<div id="image_upload_container" style="display: none;">
-		<a href="#" id="image_upload_rules_toggler">Rules for uploaded images</a>
-		<div class="notification_message" id="image_upload_rules">
-			Uploaded images must not:
-			<ul>
-				<li>violate copyright</li>
-				<li>include offensive language</li>
-				<li>include nudity or graphic violence</li>
-			</ul>
-		</div>
 		<a href="#" id="image_upload_button">Select image</a>
 	</div>
 
@@ -39,6 +30,7 @@
 			<li>Each file cannot exceed <?php echo $post_max; ?>B</li>
 			<li>You can upload an image once and re-use it in multiple events.</li>
 			<li>By uploading an image, you affirm that you are not violating any copyrights.</li>
+            <li>Images must not include offensive language, nudity, or graphic violence</li>
 		</ul>
 
 		<h3>After selecting images</h3>

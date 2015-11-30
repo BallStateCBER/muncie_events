@@ -208,10 +208,6 @@ var ImageManager = {
 				this.uploadifive('clearQueue');
 			}
 		});
-		$('#image_upload_rules_toggler').click(function(event) {
-			event.preventDefault();
-			$('#image_upload_rules').slideToggle(300);
-		});
 	},
 	
 	// Hide preselected images in the collection of selectable images
