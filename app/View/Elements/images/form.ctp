@@ -1,6 +1,8 @@
 <?php
 	$upload_max = ini_get('upload_max_filesize');
 	$post_max = ini_get('post_max_size');
+    $server_filesize_limit = min($upload_max, $post_max);
+    $manual_filesize_limit = min('10M', $server_filesize_limit);
 	$this->Html->script('image_manager.js', array('inline' => false));
 ?>
 
@@ -27,7 +29,7 @@
 		<h3>Uploading</h3>
 		<ul class="footnote">
 			<li>Images must be .jpg, .jpeg, .gif, or .png.</li>
-			<li>Each file cannot exceed <?php echo $post_max; ?>B</li>
+			<li>Each file cannot exceed <?php echo $manual_filesize_limit; ?>B</li>
 			<li>You can upload an image once and re-use it in multiple events.</li>
 			<li>By uploading an image, you affirm that you are not violating any copyrights.</li>
             <li>Images must not include offensive language, nudity, or graphic violence</li>
@@ -83,7 +85,7 @@
 			token: '".md5(Configure::read('upload_verify_token').time())."',
 			user_id: '".$this->Session->read('Auth.User.id')."',
 			event_id: ".(isset($event_id) ? $event_id : 'null').",
-			post_max: '{$post_max}B',
+			filesize_limit: '{$manual_filesize_limit}B',
 			timestamp: ".time()."
 		});
 		ImageManager.user_id = $user_id;

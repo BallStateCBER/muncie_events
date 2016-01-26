@@ -180,7 +180,7 @@ var ImageManager = {
 			'uploadScript': '/images/upload',
 			'checkScript': '/images/file_exists',
 			'onCheck': false,
-			'fileSizeLimit': params.post_max,
+			'fileSizeLimit': params.filesize_limit,
 			'buttonText': 'Click to select an image to upload',
 			'width': 300,
 			'formData': {
