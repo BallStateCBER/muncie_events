@@ -51,9 +51,8 @@
 		<script>window.jQuery || document.write('<script src="/js/jquery-1.8.3.min.js"><\/script>')</script>
 		*/
 	?>
-	<script src="/js/jquery-1.9.0.min.js"></script>
+	<script src="/js/jquery-3.1.0.min.js"></script>
 	<script src="/jquery_ui/js/jquery-ui-1.10.2.custom.js"></script>
-	<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 	<script src="/js/jquery.watermark.min.js"></script>
 	<script src="/js/script.js"></script>
 	<?php echo $this->fetch('script'); ?>
