@@ -18,7 +18,7 @@
 
 <div id="register">
 	<?php 
-		echo $this->Form->create('User', array('controller' => 'users', 'action' => 'register'));
+		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'register')));
 		echo $this->Form->input('name', array('after' => '<div class="footnote">Your real first and last name, please. (e.g. Jane Smith)</div>'));
 		echo $this->Form->input('email', array('after' => '<div class="footnote">This is what you will use to log in.</div>'));
 		echo $this->Form->input('new_password', array('label' => 'Password', 'type' => 'password'));
