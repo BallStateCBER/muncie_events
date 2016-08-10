@@ -341,4 +341,40 @@ class TestShellTest extends CakeTestCase {
 			);
 		$this->Shell->main();
 	}
+
+/**
+ * Tests that the 'quiet' parameter gets swallowed before calling PHPUnit
+ *
+ * @return void
+ */
+	public function testRunnerOptionsQuiet() {
+		$this->Shell->startup();
+		$this->Shell->args = array('core', 'Basics');
+		$this->Shell->params = array('quiet' => true);
+
+		$this->Shell->expects($this->once())->method('_run')
+			->with(
+				array('app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'),
+				array('--colors')
+			);
+		$this->Shell->main();
+	}
+
+/**
+ * Tests that the '--directive' parameter change to '-d' before calling PHPUnit
+ *
+ * @return void
+ */
+	public function testRunnerOptionsDirective() {
+		$this->Shell->startup();
+		$this->Shell->args = array('core', 'Basics');
+		$this->Shell->params = array('directive' => 'memory_limit=128M');
+
+		$this->Shell->expects($this->once())->method('_run')
+			->with(
+				array('app' => false, 'plugin' => null, 'core' => true, 'output' => 'text', 'case' => 'Basics'),
+				array('-d', 'memory_limit=128M', '--colors')
+			);
+		$this->Shell->main();
+	}
 }
