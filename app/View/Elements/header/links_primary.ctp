@@ -103,12 +103,14 @@
 	</li>
 </ul>
 <?php
-	foreach ($header_vars['populated_dates'] as $month => $days) {
-		$quoted_days = array();
-		foreach ($days as $day) {
-			$quoted_days[] = "'$day'";	
+	if (isset($header_vars['populated_dates'])) {
+		foreach ($header_vars['populated_dates'] as $month => $days) {
+			$quoted_days = array();
+			foreach ($days as $day) {
+				$quoted_days[] = "'$day'";
+			}
+			$this->Js->buffer("muncieEvents.populatedDates['$month'] = [" . implode(',', $quoted_days) . "];");
 		}
-		$this->Js->buffer("muncieEvents.populatedDates['$month'] = [".implode(',', $quoted_days)."];");
 	}
 	$this->Js->buffer("setupHeaderNav();");
 ?>

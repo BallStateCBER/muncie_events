@@ -32,63 +32,67 @@
 		</div>
 	<?php endif; ?>
 
-	<div class="categories">
-		<h2>Categories</h2>
-		<ul>
-			<?php foreach ($header_vars['categories'] as $category): ?>
-				<li>
-					<a href="<?php echo Router::url(array('controller' => 'events', 'action' => 'category', $category['Category']['slug'])); ?>" class="with_icon">
-						<span class="category_name"><?php 
-							echo $category['Category']['name'];
-						 ?></span>
-						<?php
-							$category_id = $category['Category']['id'];
-							if (isset($sidebar_vars['upcoming_event_totals_by_category'][$category_id])) {
-								$upcoming_events_count = $sidebar_vars['upcoming_event_totals_by_category'][$category_id];
-							} else {
-								$upcoming_events_count = 0;
-							}
-							if ($upcoming_events_count):
-								$title = $upcoming_events_count.' upcoming '.__n('event', 'events', $upcoming_events_count);
-						?>
-							<span class="upcoming_events_count" title="<?php echo $title; ?>">
-								<?php echo $upcoming_events_count; ?>
-							</span>
-						<?php endif; ?>
-						<?php echo $this->Icon->category($category['Category']['name']); ?>
-					</a>
-				</li>
-			<?php endforeach; ?>
-		</ul>
-	</div>
-	
-	<div class="locations">
-		<h2>
-			Locations
-		</h2>
-		<?php if (count($sidebar_vars['locations']) > 0): ?>
-			<form id="sidebar_select_location">
-				<select>
-					<option value="">
-						Select a location...
-					</option>
-					<?php foreach ($sidebar_vars['locations'] as $location): ?>
-						<option value="<?php echo $location; ?>">
-							<?php echo $location; ?>
+	<?php if (isset($header_vars['categories'])): ?>
+		<div class="categories">
+			<h2>Categories</h2>
+			<ul>
+				<?php foreach ($header_vars['categories'] as $category): ?>
+					<li>
+						<a href="<?php echo Router::url(array('controller' => 'events', 'action' => 'category', $category['Category']['slug'])); ?>" class="with_icon">
+							<span class="category_name"><?php
+								echo $category['Category']['name'];
+							 ?></span>
+							<?php
+								$category_id = $category['Category']['id'];
+								if (isset($sidebar_vars['upcoming_event_totals_by_category'][$category_id])) {
+									$upcoming_events_count = $sidebar_vars['upcoming_event_totals_by_category'][$category_id];
+								} else {
+									$upcoming_events_count = 0;
+								}
+								if ($upcoming_events_count):
+									$title = $upcoming_events_count.' upcoming '.__n('event', 'events', $upcoming_events_count);
+							?>
+								<span class="upcoming_events_count" title="<?php echo $title; ?>">
+									<?php echo $upcoming_events_count; ?>
+								</span>
+							<?php endif; ?>
+							<?php echo $this->Icon->category($category['Category']['name']); ?>
+						</a>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
+
+	<?php if (isset($sidebar_vars['locations'])): ?>
+		<div class="locations">
+			<h2>
+				Locations
+			</h2>
+			<?php if (count($sidebar_vars['locations']) > 0): ?>
+				<form id="sidebar_select_location">
+					<select>
+						<option value="">
+							Select a location...
 						</option>
-					<?php endforeach; ?>
-					<option value=""></option>
-					<option value="[past events]">
-						Locations of past events...
-					</option>
-				</select>
-			</form>
-		<?php else: ?>
-			<span class="no_results">
-				No locations found for upcoming events.
-			</span>
-		<?php endif; ?>
-	</div>
+						<?php foreach ($sidebar_vars['locations'] as $location): ?>
+							<option value="<?php echo $location; ?>">
+								<?php echo $location; ?>
+							</option>
+						<?php endforeach; ?>
+						<option value=""></option>
+						<option value="[past events]">
+							Locations of past events...
+						</option>
+					</select>
+				</form>
+			<?php else: ?>
+				<span class="no_results">
+					No locations found for upcoming events.
+				</span>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 	
 	<div>
 		<h2>
@@ -97,7 +101,7 @@
 				'controller' => 'tags', 'action' => 'index', 'plugin' => false
 			), array('class' => 'see_all')); ?>
 		</h2>
-		<?php if (count($sidebar_vars['upcoming_tags']) > 0): ?>
+		<?php if (isset($sidebar_vars['upcoming_tags']) && count($sidebar_vars['upcoming_tags']) > 0): ?>
 			<?php echo $this->element('tags/cloud', array(
 				'upcoming_tags' => $sidebar_vars['upcoming_tags']
 			)); ?>
