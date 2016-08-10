@@ -3,7 +3,7 @@
 ?>
 <div id="login">
 	<?php 
-		echo $this->Form->create('User', array('url' => array('controller' => 'user', 'action' => 'login')));
+		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));
 		echo $this->Form->input('email');
 		echo $this->Form->input('password', array(
 			'after' => $password_error.'<br />'.$this->Html->link(
