@@ -52,6 +52,7 @@
 		*/
 	?>
 	<script src="/js/jquery-3.1.0.min.js"></script>
+	<script src="/js/jquery-migrate-3.0.0.min.js"></script>
 	<script src="/jquery_ui/js/jquery-ui-1.10.2.custom.js"></script>
 	<script src="/js/jquery.watermark.min.js"></script>
 	<script src="/js/script.js"></script>
