@@ -9,7 +9,7 @@ app/[Cc]onfig/database.php
 app/webroot/img/events/*
 app/webroot/uploadifive/*
 app/webroot/js/jquery-*
-lib/*
+lib/Cake-*
 
 # Eclipse
 *.pydevproject
