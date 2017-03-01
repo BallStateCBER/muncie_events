@@ -1,0 +1,109 @@
+/* extra small! */
+@media (max-width:576px) {
+  #header_datepicker {
+    width: 280px;
+  }
+  #header_nav_datepicker {
+    max-width: 100%;
+  }
+  #header_nav_datepicker ul {
+    float: none;
+  }
+  #header_nav li {
+    display: block;
+  }
+  #search_form {
+    margin-top: 5px;
+    text-align: center;
+  }
+  ul.event_accordion .images {
+    max-width: 100%;
+    float: none;
+  }
+}
+
+/* small! */
+@media (min-width:576px) and (max-width:768px) {
+  #header_corner .tagline {
+    text-align: center;
+  }
+
+  #header_corner ul {
+    text-align: center;
+  }
+
+  #header_nav {
+    margin-top: 2%;
+  }
+
+  #search_form {
+    text-align: center;
+  }
+}
+
+/* medium! */
+@media (min-width:768px) and (max-width:992px) {
+  #header_corner .tagline {
+    text-align: center;
+  }
+
+  #header_corner ul {
+    text-align: center;
+  }
+
+  #header_nav {
+    margin-top: 2%;
+  }
+
+  #header_nav li {
+    margin-left: 40px;
+  }
+}
+
+/* large! */
+@media (min-width:992px) and (max-width:1200px) {
+  #header_corner .tagline {
+    text-align: left;
+  }
+
+  #header_corner ul {
+    text-align: left;
+    margin-left: -15px;
+  }
+
+  #header h1 a {
+    margin-left: 5px;
+  }
+
+  #header_nav {
+    margin-top: 5%;
+  }
+
+  #header_nav li {
+    margin-left: 40px;
+  }
+}
+
+/* extra large! */
+@media (min-width:1200px) {
+  #header_corner .tagline {
+    text-align: left;
+  }
+
+  #header_corner ul {
+    text-align: left;
+    margin-left: -15px;
+  }
+
+  #header h1 a {
+    margin-left: 5px;
+  }
+
+  #header_nav {
+    margin-top: 5%;
+  }
+
+  #header_nav li {
+    margin-left: 40px;
+  }
+}
