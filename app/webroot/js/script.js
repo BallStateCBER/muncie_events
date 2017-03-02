@@ -1,19 +1,19 @@
 var muncieEvents = {
 	// Prevent header dropdown menus from closing
 	keepOpenMenus: {categories: false, datepicker: false},
-	
-	// Store event filters for the current request (e.g. only a specific category) 
+
+	// Store event filters for the current request (e.g. only a specific category)
 	requestEventFilters: {
 		category: null,
 		tag: null
 	},
-	
+
 	paginationPrepared: false,
-	
+
 	imagePopups: {
 		groups_processed: []
 	},
-	
+
 	// Used by the datePicker in the header
 	populatedDates: {}
 };
@@ -47,7 +47,7 @@ function setupHeaderNav() {
 			}
 			var year = date.getFullYear().toString();
 			var month_year = month+'-'+year;
-			
+
 			if (muncieEvents.populatedDates.hasOwnProperty(month_year)) {
 				var selectable = muncieEvents.populatedDates[month_year].indexOf(day) != -1;
 				var class_name = selectable ? 'has_events' : 'no_events';
@@ -57,11 +57,11 @@ function setupHeaderNav() {
 				var class_name = 'has_events';
 				var tooltip = 'tooltip text?';
 			}
-			
+
 			return [selectable, class_name, tooltip];
 		},
 		onChangeMonthYear: function(year, month) {
-			
+
 		}
 	}).change(function(event) {
 		var date = $(this).val();
@@ -98,7 +98,7 @@ function setupSidebar() {
 
 function setupSubmenus() {
 	// Set up submenus
-	$('#header_nav .opener').each(function() {		
+	$('#header_nav .opener').each(function() {
 		var submenu = $(this).next('.submenu');
 		var submenu_name = submenu.attr('id').replace('header_nav_', '');
 		submenu.mouseover(function() {
@@ -107,7 +107,7 @@ function setupSubmenus() {
 			muncieEvents.keepOpenMenus[submenu_name] = false;
 			closeSubmenu(submenu_name);
 		});
-		
+
 		var link = $(this);
 		link.click(function (event) {
 			event.preventDefault();
@@ -125,7 +125,7 @@ function setupSubmenus() {
 			muncieEvents.keepOpenMenus[submenu_name] = false;
 			closeSubmenu(submenu_name);
 		}); */
-		
+
 		var container = link.parent('li');
 		container.mouseover(function () {
 			muncieEvents.keepOpenMenus[submenu_name] = true;
@@ -134,7 +134,7 @@ function setupSubmenus() {
 			muncieEvents.keepOpenMenus[submenu_name] = false;
 			closeSubmenu(submenu_name);
 		});
-		
+
 		var submenu_links = submenu.find('a');
 		submenu_links.focus(function () {
 			muncieEvents.keepOpenMenus[submenu_name] = true;
@@ -173,7 +173,7 @@ function setupSearch() {
 		event.preventDefault();
 		$('#search_options').slideToggle(200);
 	});
-	
+
 	var input_field = $('#EventFilter');
 	input_field.focus(function() {
 		var options = $('#search_options');
@@ -278,7 +278,7 @@ function setupCategoriesApplyButton() {
 						},
 						error: function(transport) {
 							$('#event_accordion_loading_indicator').hide();
-							alert('There was an error displaying events according to your selection. Please try again.'); 
+							alert('There was an error displaying events according to your selection. Please try again.');
 						}
 					});
 					$.ajax({
@@ -299,13 +299,13 @@ function setupCategoriesApplyButton() {
 					$('#apply_changed_event_categories_indicator').hide();
 					alert('Your preferences could not be saved. Please try again.');
 				}
-			});	
+			});
 		} else {
 			alert('Please select at least one category.');
 		}
 	});
 }
-	
+
 function setupCategoriesChangeButton() {
 	$('#change_event_categories').click(function(event) {
 		event.preventDefault();
@@ -343,7 +343,7 @@ var muncieEventsFeed = {
 	xfbml_parsed: new Array(),
 	no_more_events: false
 };
-/**Sets the date that the next "page" of events will start at 
+/**Sets the date that the next "page" of events will start at
  * @param date A string in 'YYYY-MM-DD' format
  */
 function setNextStartDate(date) {
@@ -358,7 +358,7 @@ function setupEventAccordion() {
 	$('ul.event_accordion').each(function() {
 		var accordion_id = this.id;
 		// Prepared <ul>s are given IDs.
-		// <ul>s without IDs or with IDs not in muncieEventsFeed.accordions_prepared need to be prepared.  
+		// <ul>s without IDs or with IDs not in muncieEventsFeed.accordions_prepared need to be prepared.
 		if (! accordion_id || muncieEventsFeed.accordions_prepared.indexOf(accordion_id) == -1) {
 			if (! accordion_id) {
 				this.id = 'event_accordion_'+(muncieEventsFeed.accordions_prepared.length + 1);
@@ -370,22 +370,22 @@ function setupEventAccordion() {
 				var more_info = toggler.next('.more_info');
 				var thumbnail = toggler.siblings('.tiny_thumbnails').children('a.thumbnail:first-child');
 				if (thumbnail.length > 0) {
-					if (more_info.is(':visible')) {
+					if (more_info.is(':visible') && more_info.css('height') != '0px') {
 						thumbnail.fadeIn(200);
 					} else {
 						thumbnail.fadeOut(200);
 					}
 				}
-				
+
 				/* Initially, div.more_info needs to be visible (display: block) but height: 0
 				 * so that its Facebook widgets will properly load. After first opening this
-				 * container, it switches back to a normal slideToggle */ 
+				 * container, it switches back to a normal slideToggle */
 				if (more_info.is(':visible') && more_info.css('height') == '0px') {
 					more_info.hide();
 					more_info.css('height', '');
 				}
 				more_info.slideToggle(200);
-				
+
 				toggler.find('.address').slideToggle(200);
 				toggler.find('.location_details').slideToggle(200);
 				var more_info_id = 'more_info_'+event_id;
@@ -407,7 +407,7 @@ function setupEventAccordion() {
 function setupEventActions(container_selector) {
 	$(container_selector).find('.export_options_toggler').click(function(event) {
 		event.preventDefault();
-		var link = $(this); 
+		var link = $(this);
 		link.parent('div').toggleClass('open');
 		link.next('.export_options').slideToggle(300);
 	});
@@ -423,7 +423,7 @@ function loadMoreEvents() {
 	} else if (muncieEvents.requestEventFilters.tag) {
 		more_events_url += 'tag:'+muncieEvents.requestEventFilters.tag;
 	}
-	
+
 	$.ajax({
 		url: more_events_url,
 		beforeSend: function() {
@@ -540,7 +540,7 @@ function prepareImagePopups() {
 		};
 		var caption = link.attr('title');
 		var rel = link.attr('rel');
-		
+
 		// Single image
 		if (rel == 'popup') {
 			options.key = 'single_image';
@@ -550,15 +550,15 @@ function prepareImagePopups() {
 				options.key += '_no_caption';
 			}
 			link.magnificPopup(options);
-			
+
 		// Group together all images with this value for rel
 		} else if (rel.indexOf('popup[') == 0) {
-			
+
 			// Skip a group that's already been processed
 			if (muncieEvents.imagePopups.groups_processed.indexOf(rel) != -1) {
 				return;
 			}
-			
+
 			options.key = 'multiple_images';
 			options.delegate = 'a[rel=\"'+rel+'\"]';
 			options.gallery = {
