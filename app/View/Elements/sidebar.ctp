@@ -3,7 +3,7 @@
 	$user_role = $this->Session->read('Auth.User.role');
 	$this->Js->buffer("setupSidebar();");
 ?>
-<div id="sidebar" class="col-md-4">
+<div id="sidebar" class="col-md-3">
 
 	<?php if ($logged_in && $user_role == 'admin'): ?>
 		<div>
