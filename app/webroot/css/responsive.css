@@ -94,6 +94,11 @@
     margin-left: 15px;
   }
 
+  #header_nav_datepicker {
+    left: auto;
+    right: 0;
+  }
+
   #search_form {
     text-align: center;
   }
@@ -108,6 +113,10 @@
 @media (min-width:992px) and (max-width:1200px) {
   #header_nav {
     margin-top: 10px;
+  }
+
+  #header_nav_datepicker {
+    left: -50px;
   }
 
   #header_nav li {
