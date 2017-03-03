@@ -1,11 +1,11 @@
-<fieldset>
+<fieldset class="col-md-6">
 	<legend>Frequency</legend>
 	<?php echo $this->Form->input(
 		'frequency',
 		array(
 			'type' => 'radio',
 			'options' => array(
-				'weekly' => 'Weekly <span class="note">(Every Thursday, upcoming week\'s events)</span>',	
+				'weekly' => 'Weekly <span class="note">(Every Thursday, upcoming week\'s events)</span>',
 				'daily' => 'Daily <span class="note">(Every morning, today\'s events)</span>',
 				'custom' => 'Custom'
 			),

@@ -1,6 +1,6 @@
-<fieldset>
+<fieldset class="col-md-6">
 	<legend>Event Types</legend>
-	
+
 	<?php echo $this->Form->input(
 		'event_categories',
 		array(
@@ -13,7 +13,7 @@
 			'legend' => false
 		)
 	); ?>
-	
+
 	<div id="custom_event_type_options" style="display: none;">
 		<?php if (isset($categories_error)): ?>
 			<div class="error">
