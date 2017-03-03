@@ -808,7 +808,8 @@ body {
 }
 
 #header_nav_datepicker .ui-widget-content {
-    border: 0
+    border: 0;
+    width: 100%;
 }
 
 #header_datepicker {
@@ -903,6 +904,7 @@ body {
     box-shadow: -4px 4px 5px rgba(50, 50, 50, .5);
     background-color: #fff;
     height: 100%;
+    margin-bottom: 15px;
 }
 
  #content {
@@ -1146,6 +1148,7 @@ form .footnote {
     font-weight: 400;
     padding: 0;
     margin: 0
+    word-break: break-word;
 }
 
 fieldset {
@@ -1572,7 +1575,7 @@ ul.event_accordion .description {
     line-height: 1.6em;
     margin: 15px;
     overflow: hidden;
-    padding: 10px
+    padding: 10px;
     word-break: break-word;
 }
 
@@ -2892,7 +2895,7 @@ div#custom_event_type_options img {
     border: 1px solid #999;
     color: #999;
     display: inline-block;
-    height: 22px;
+    height: 30px;
     margin: 0;
     min-width: 24px;
     padding: 3px;
@@ -2941,4 +2944,12 @@ div#custom_event_type_options img {
 .sql_dump {
     margin: 20px auto auto;
     width: 1000px
+}
+
+tr.cost {
+  font-size: 20px;
+}
+
+.cost>td {
+    vertical-align: middle;
 }
