@@ -21,13 +21,13 @@
     padding-left: 0px;
   }
 
+  #custom_tag_input {
+    width: 50% !important;
+  }
+
   .event>i {
     visibility: visible;
     display: block
-  }
-
-  .event_form #EventTitle, .event_form #EventSeriesTitle, .event_form #EventLocation, .event_form #EventLocationDetails, .event_form #EventAddress, .event_form #EventCost, .event_form #EventAgeRestriction, .event_form #EventSource {
-    width: auto !important;
   }
 
   .event_form>tbody>tr>th, .event_form>tbody>tr>td {
@@ -75,6 +75,10 @@
     margin-right: 0px;
   }
 
+  #selected_images input.caption {
+    width: auto;
+  }
+
   table.calendar a {
     visibility: collapse;
   }
@@ -105,11 +109,11 @@
 
 /* small! */
 @media (min-width:576px) and (max-width:768px) {
-  #EventDescription_tbl {
-    width: auto !important;
+  #custom_tag_input {
+    width: 50% !important;
   }
 
-  .event_form #EventTitle, .event_form #EventSeriesTitle, .event_form #EventLocation, .event_form #EventLocationDetails, .event_form #EventAddress, .event_form #EventCost, .event_form #EventAgeRestriction, .event_form #EventSource {
+  #EventDescription_tbl {
     width: auto !important;
   }
 
@@ -134,6 +138,10 @@
     margin-top: 2%;
   }
 
+  #header_nav li {
+    margin-left: 40px;
+  }
+
   #header_nav_datepicker {
     left: 0px;
     right: -330px;
@@ -146,6 +154,10 @@
 
   #search_form {
     text-align: center;
+  }
+
+  #selected_images input.caption {
+    width: auto;
   }
 }
 

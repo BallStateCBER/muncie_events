@@ -1147,7 +1147,7 @@ form .error, form .error-message {
 form .footnote {
     font-weight: 400;
     padding: 0;
-    margin: 0
+    margin: 0;
     word-break: break-word;
 }
 
@@ -2226,7 +2226,7 @@ a.calendar_controls {
 }
 
 .event_form #EventTitle, .event_form #EventSeriesTitle, .event_form #EventLocation, .event_form #EventLocationDetails, .event_form #EventAddress, .event_form #EventCost, .event_form #EventAgeRestriction, .event_form #EventSource {
-    width: 400px
+    width: 100%;
 }
 
 .event_form #eventform_timestart_div {
@@ -2250,7 +2250,7 @@ a.calendar_controls {
 
 .event_form #datepicker {
     margin-bottom: 0;
-    padding: 0
+    padding: 0;
 }
 
 .event_form #datepicker>div {
@@ -2511,12 +2511,13 @@ div#custom_event_type_options img {
 
 #tag_editing img.expand_collapse, #tag_editing img.leaf {
     margin-left: -15px;
-    padding-right: 8px
+    margin-right: 5px;
 }
 
 #available_tags_container {
     border: 1px solid #aaa;
-    padding: 5px
+    padding: 5px;
+    width: 50%;
 }
 
 #available_tags_container>div {
