@@ -25,8 +25,8 @@
 			)
 		); ?>
 	</div>
-	
-	<div id="custom_options" style="display: none;">
+
+	<div id="custom_options" style="display: none;" class="row">
 		<?php echo $this->element('mailing_list/frequency_options'); ?>
 		<?php echo $this->element('mailing_list/category_options'); ?>
 	</div>
