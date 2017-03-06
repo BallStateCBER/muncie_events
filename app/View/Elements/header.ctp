@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-xs-12 col-md-5 col-lg-4 col-xl-3">
+	<div class="col-xs-12 col-md-5 col-lg-4 col-xl-3 no-padding">
 		<h1>
 			<a href="/">
 				<i class="icon-me-logo"></i>
@@ -7,7 +7,7 @@
 			</a>
 		</h1>
 	</div>
-	<div class="col-xs-12 col-md-7 col-lg-8 col-xl-9">
+	<div class="col-xs-12 col-md-7 col-lg-8 col-xl-9 no-padding">
 		<div id="header_corner" class="col-sm-12">
 			<span class="tagline">
 				<?php echo $this->element('header/tagline'); ?>
