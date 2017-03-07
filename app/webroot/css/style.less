@@ -427,7 +427,8 @@ body {
 			float: none;
 		}
 		&[type=submit] {
-			font-size: 90%;
+			font-size: 12px;
+    	margin-left: 5px;
 		}
 	}
 	label {
@@ -1186,10 +1187,6 @@ ul.event_accordion {
 		font-size: 80%;
 		margin-left: 0px;
 		text-align: center;
-		@media @x-large {
-				margin-left: 25px;
-			text-align: left;
-		}
 		> a,
 		> div {
 			vertical-align: top;
@@ -1618,10 +1615,17 @@ table.calendar {
 	background-repeat: no-repeat;
 	border-style: solid;
 	border-width: 1px;
-	padding: 5px 5px 5px 25px;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
+	p {
+		margin-bottom: 0px;
+	}
+}
+.success {
+	background-color: #dff0d8;
+  border-color: #d0e9c6;
+  color: #3c763d;
 }
 
 /* EVENT ADDING/EDITING */
@@ -2548,12 +2552,4 @@ iframe.widgets {
 .sql_dump {
 	margin: 20px auto auto;
 	width: 1000px;
-}
-tr.cost {
-	font-size: 20px
-}
-.cost {
-	td {
-		vertical-align: middle;
-	}
 }
