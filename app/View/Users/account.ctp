@@ -2,7 +2,7 @@
 	<h1 class="page_title">
 		<?php echo $title_for_layout; ?>
 	</h1>
-	
+
 	<ul>
 		<li>
 			<?php echo $this->Html->link('Change Password', array('controller' => 'users', 'action' => 'change_pass')); ?>
@@ -10,7 +10,7 @@
 		<?php if ($mailing_list_id): ?>
 			<li>
 				<?php echo $this->Html->link(
-					'Update Mailing List Settings', 
+					'Update Mailing List Settings',
 					Router::url(array(
 						'controller' => 'mailing_list',
 						'action' => 'settings',
@@ -23,12 +23,12 @@
 		<?php if ($facebook): ?>
 			<li>
 				<?php echo $this->Form->postLink(
-					'Remove sync with Facebook', 
+					'Remove sync with Facebook',
 					array(
 						'controller' => 'users',
 						'action' => 'facebook_unsync'
-					), 
-					null, 
+					),
+					null,
 					'You will be logged out and will need to log back in. Are you sure?'
 				); ?>
 				<br />
@@ -51,19 +51,19 @@
 			</li>
 		<?php endif; ?>
 	</ul>
-	
+
 	<?php echo $this->Form->create('User', array(
 		'url' => array(
-			'controller' => 'users', 
+			'controller' => 'users',
 			'action' => 'account'
 		)
 	)); ?>
 	<?php echo $this->Form->input('name', array(
-		'label' => 'Name', 
+		'label' => 'Name',
 		'after' => '<div class="footnote">Your first and last actual name, please</div>'
 	)); ?>
 	<?php echo $this->Form->input('email', array(
 		'label' => 'Email'
 	)); ?>
-	<?php echo $this->Form->end('Update'); ?>
+	<?php echo $this->Form->submit(__('Update'), array('class'=>'btn btn-secondary btn-sm')); ?>
 </div>
