@@ -3,7 +3,7 @@
 </h1>
 
 <p style="clear: both;">
-	<?php echo $this->Html->link('&larr; Back to Upcoming Event Tags', 
+	<?php echo $this->Html->link('&larr; Back to Upcoming Event Tags',
 		array('controller' => 'events', 'action' => 'upcoming_tags'),
 		array('escape' => false)
 	); ?>
@@ -12,7 +12,7 @@
 <div id="events">
 	<div class="basic_info_col">
 		<?php if (empty($events)): ?>
-			<p class="notification_message">
+			<p class="alert alert-info">
 				Sorry, as far as we know, nothing is happening in Muncie on this date. :(
 				<br />
 				If you know of an event that we left out, be a pal and
