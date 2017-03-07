@@ -1,4 +1,4 @@
-// out: style.css
+// out: style.css, compress: true
 
 @import "include/html5boilerplate";
 @import "include/icons";
@@ -274,7 +274,7 @@ body {
 		margin-top: 10px;
 	}
 	@media @x-large {
-    margin-top: 30px;
+    margin-top: 63px;
     float: left;
 	}
 	ul {
@@ -409,11 +409,9 @@ body {
 #search_form {
 	float: right;
 	text-align: center;
-	@media @x-small {
-		margin-top: 5px;
-	}
+	margin-top: 10px;
 	@media @x-large {
-		margin-top: 15px;
+		margin-top: 46px;
 		text-align: left;
 	}
 	div.input {
@@ -446,9 +444,6 @@ body {
 	@media @x-small {
 		margin-right: 0px;
 	}
-	@media @x-large {
-		float: right;
-	}
 	&:hover,
 	&:focus {
 		text-decoration: underline;
@@ -469,6 +464,9 @@ body {
 	@media (max-width:325px) {
 	   top: 60px;
 	}
+	@media @x-small {
+		right: 40px;
+	}
 	@media @medium {
 		margin: 0px;
 		left: auto;
@@ -478,7 +476,6 @@ body {
     left: auto;
 	}
 	@media @x-large {
-	  margin-right: 80px;
 	  right: 0;
 	}
 	> div {
@@ -948,7 +945,6 @@ div.event_accordion,
 }
 #EventSearchForm {
 	@media @x-large {
-		margin-left: 53px;
 	}
 }
 hgroup.event_accordion {
@@ -956,7 +952,10 @@ hgroup.event_accordion {
 	font-size: 120%;
 	letter-spacing: 3px;
 	margin-top: 10px;
-
+	text-align: center;
+	@media @x-large {
+		text-align: left;
+	}
 	h2 {
 		font-size: 120%;
 		font-weight: normal;
@@ -996,9 +995,7 @@ ul.event_accordion {
 					display: block;
 				}
 				img {
-					margin-top: 2px;
-					margin-right: 2px;
-					margin-left: 5px;
+					margin: 5px;
 					float: right;
 				}
 			}
@@ -1045,6 +1042,7 @@ ul.event_accordion {
 	}
 	img.thumbnail {
 		display: inline-block;
+		margin: 2px !important;
 	}
 	i.icon {
 		color: @IconLightColor;
@@ -1186,19 +1184,24 @@ ul.event_accordion {
 	}
 	.actions {
 		font-size: 80%;
-		margin-right: 15px;
-		text-align: right;
-		@media @x-small {
-			margin-right: 0px;
+		margin-left: 0px;
+		text-align: center;
+		@media @x-large {
+				margin-left: 25px;
+			text-align: left;
 		}
 		> a,
 		> div {
-			margin-left: 15px;
 			vertical-align: top;
 		}
 		a {
+			margin-left: 15px;
 			vertical-align: top;
-
+			font-size: 20px;
+			@media @x-small {
+				font-size: 15px;
+				margin-left: 0px;
+			}
 			&:last-child {
 				margin-right: 0;
 			}
@@ -1206,12 +1209,15 @@ ul.event_accordion {
 		img {
 			margin-right: 5px;
 			vertical-align: text-bottom;
+			float: none !important;
 		}
 		iframe {
 			vertical-align: bottom;
 		}
 		.fb_iframe_widget {
 			vertical-align: top;
+			margin: 3px;
+			display: inline-block;
 		}
 		.open {
 			background-color: #fff;
@@ -1533,21 +1539,7 @@ table.calendar {
 	}
 }
 
-
-
 /* NOTIFICATION MESSAGES */
-@notificationBorderColor: #00006F;
-@notificationBgColor: #CFE5FF;
-@notificationTextColor: #00006F;
-
-@successBorderColor: #004F00;
-@successBgColor: #AFFFBA;
-@successTextColor: #004F00;
-
-@errorBorderColor: #7F0000;
-@errorBgColor: #FFCBAF;
-@errorTextColor: #7F0000;
-
 #flash_messages {
 	bottom: 0px;
 	left: 20px;
@@ -1592,18 +1584,14 @@ table.calendar {
 		padding: 0px;
 
 		li {
-			/* Default "notification" mode, overridden by .error and .success */
-			background-color: @notificationBgColor;
 			background-image: url('/img/icons/information.png');
 			background-position: 5px 7px;
 		    background-repeat: no-repeat;
-			border-color: @notificationBorderColor;
 			border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
 			box-shadow: 2px 2px 2px rgba(0, 0, 0, .3); -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, .3); -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .3);
 			border-style: solid;
 		    border-width: 1px;
 		    clear: left;
-			color: @notificationTextColor;
 		    display: inline-block;
 		    float: left;
 		    list-style-type: none;
@@ -1618,18 +1606,6 @@ table.calendar {
 			&:first-child {
 				border-top-width: 1px;
 			}
-			&.error {
-				background-color: @errorBgColor;
-				background-image: url('/img/icons/cross-circle.png');
-				border-color: @errorBorderColor;
-				color: @errorTextColor;
-			}
-			&.success {
-				background-color: @successBgColor;
-				background-image: url('/img/icons/tick-circle.png');
-				border-color: @successBorderColor;
-				color: @successTextColor;
-			}
 			img {
 				margin-right: 10px;
 				vertical-align: text-top;
@@ -1637,9 +1613,7 @@ table.calendar {
 		}
 	}
 }
-.error_message,
-.success_message,
-.notification_message {
+.alert {
 	background-position: 5px 5px;
 	background-repeat: no-repeat;
 	border-style: solid;
@@ -1649,26 +1623,6 @@ table.calendar {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
-.error_message {
-	background-color: @errorBgColor;
-	background-image: url('/img/icons/cross-circle.png');
-	border-color: @errorBorderColor;
-	color: @errorTextColor;
-}
-.success_message {
-	background-color: @successBgColor;
-	background-image: url('/img/icons/tick-circle.png');
-	border-color: @successBorderColor;
-	color: @successTextColor;
-}
-.notification_message {
-	background-color: @notificationBgColor;
-	background-image: url('/img/icons/information.png');
-	border-color: @notificationBorderColor;
-	color: @notificationTextColor;
-}
-
-
 
 /* EVENT ADDING/EDITING */
 #image_tab_selected {
@@ -2139,8 +2093,10 @@ div#custom_event_type_options {
 #available_tags_container {
 	border: 1px solid #aaa;
 	padding: 5px;
-	width: 50%;
-
+	width: 100%;
+	@media @x-large {
+		width: 50%;
+	}
 	> div {
 		width: 100%;
 	}
@@ -2171,17 +2127,8 @@ div#custom_event_type_options {
 		}
 	}
 }
-
-#custom_tag_input {
-	@media @small {
-		width: 50% !important;
-	}
-}
 #custom_tag_input_wrapper {
 	margin-top: 15px;
-	@media (max-width:576px) {
-		width: 50% !important;
-	}
 }
 #selected_tags_container {
 	margin-top: 15px;
