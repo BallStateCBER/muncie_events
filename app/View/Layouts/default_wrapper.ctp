@@ -20,7 +20,6 @@
 		echo $this->Html->css('/magnific-popup/magnific-popup.css');
 		echo $this->Html->css('/jquery_ui/css/smoothness/jquery-ui-1.10.2.custom.min.css');
 		echo $this->Html->css('style');
-		echo $this->Html->css('responsive');
 		echo $this->fetch('css');
 	?>
 
