@@ -1,23 +1,23 @@
-<?php 
+<?php
 	/* TO DO:
 	 * 		If event->delete is checked, have confirmation dialogue box pop up upon hitting submit
 	 * 		Add (functionally useless) [done] buttons to compliment [edit] buttons
-	 */ 
+	 */
 ?>
 <h1 class="page_title">
 	<?php echo $title_for_layout; ?>
 </h1>
 
-<p class="notification_message">
-	Here, you can edit the name of your event series and edit basic information about each event. 
-	To edit other details of 
+<p class="alert alert-info">
+	Here, you can edit the name of your event series and edit basic information about each event.
+	To edit other details of
 	<?php echo $this->Html->link(
 		'your events',
 		array(
 			'controller' => 'events',
 			'action' => 'mine'
 		)
-	); ?>, you'll have to go to each event's individual edit page.  
+	); ?>, you'll have to go to each event's individual edit page.
 </p>
 
 <?php echo $this->Form->create('EventSeries', array('url' => array(
@@ -29,7 +29,7 @@
 			<th>Series</th>
 			<td><?php
 				echo $this->Form->input('title', array(
-					'label' => false, 
+					'label' => false,
 					'div' => false,
 				));
 			?></td>
@@ -74,8 +74,8 @@
 														'div' => false,
 														'label' => false,
 														'type' => 'date',
-														'dateFormat' => 'MDY', 
-														'minYear' => min(date('Y'), substr($event['date'], 0, 4)), 
+														'dateFormat' => 'MDY',
+														'minYear' => min(date('Y'), substr($event['date'], 0, 4)),
 														'maxYear' => date('Y') + 1,
 														'default' => $event['date']
 													)); ?>
@@ -85,7 +85,7 @@
 												<th>Time</th>
 												<td>
 													<?php echo $this->Form->input('Event.'.$event['id'].'.time_start', $options = array(
-														'label' => false, 
+														'label' => false,
 														'interval' => 5,
 														'div' => false,
 														'default' => $event['time_start']
@@ -97,8 +97,8 @@
 												<td>
 													<?php echo $this->Form->input('Event.'.$event['id'].'.title', array(
 														'div' => false,
-														'label' => false, 
-														'style' => 'width: 150px;', 
+														'label' => false,
+														'style' => 'width: 150px;',
 														'default' => $event['title'],
 														//'maxLength' => 100
 													)); ?>
@@ -110,7 +110,7 @@
 												</th>
 												<td>
 													<?php echo $this->Form->checkbox('Event.'.$event['id'].'.delete', array(
-														'id' => 'eventinseries_delete_'.$event['id'], 
+														'id' => 'eventinseries_delete_'.$event['id'],
 														'class' => 'delete_event',
 														'data-event-id' => $event['id']
 													)); ?>
