@@ -23,7 +23,8 @@
 			'checked' => true
 		));
 		echo $this->Form->submit('Login', array(
-			'after' => ''
+			'after' => '',
+			'class' => 'btn btn-secondary btn-sm'
 		));
 		echo $this->Form->end();
 	?>
