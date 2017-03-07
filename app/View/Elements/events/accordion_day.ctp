@@ -25,7 +25,7 @@
 					?>
 				</span>
 			<?php endif; ?>
-			<a href="<?php echo $url; ?>" title="Click for more info" class="more_info_handle" id="more_info_handle_<?php echo $event['Event']['id']; ?>" data-event-id="<?php echo $event['Event']['id']; ?>">
+			<a data-toggle="collapse" data-target="#more_info_<?php echo $event['Event']['id']; ?>" href="<?php echo $url; ?>" title="Click for more info" class="more_info_handle" id="more_info_handle_<?php echo $event['Event']['id']; ?>" data-event-id="<?php echo $event['Event']['id']; ?>">
 				<?php echo $this->Icon->category($event['Category']['name']); ?>
 				<span class="title">
 					<?php echo $event['Event']['title']; ?>
@@ -48,29 +48,11 @@
 					<?php endif; ?>
 				</span>
 			</a>
-			<div class="more_info" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="height: 0;"<?php endif; ?>>
-				<div>
-					<?php echo $this->element('events/actions', compact('event')); ?>
-
-					<?php if ($event['Event']['cost'] || $event['Event']['age_restriction']): ?>
-						<div class="details">
-							<table>
-								<?php if ($event['Event']['cost']): ?>
-									<tr class="cost">
-										<th>Cost:</th>
-										<td><?php echo $event['Event']['cost']; ?></td>
-									</tr>
-								<?php endif; ?>
-								<?php if ($event['Event']['age_restriction']): ?>
-									<tr class="age_restriction detail" id="age_restriction_<?php echo $event['Event']['id']; ?>">
-										<th>Ages:</th>
-										<td><?php echo $event['Event']['age_restriction']; ?></td>
-									</tr>
-								<?php endif; ?>
-							</table>
-						</div>
-					<?php endif; ?>
-
+			<div class="collapse more_info" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="height: 0;"<?php endif; ?>>
+				<div class="card">
+					<div class="card-header">
+						<?php echo $this->element('events/actions', compact('event')); ?>
+					</div>
 					<div class="description">
 						<?php if (! empty($event['EventsImage'])): ?>
 							<div class="images">
@@ -91,54 +73,73 @@
 						<?php if ($event['Event']['description']): ?>
 							<?php echo $this->Text->autolink($event['Event']['description'], array('escape' => false)); ?>
 						<?php endif; ?>
+						<?php if ($event['Event']['cost'] || $event['Event']['age_restriction']): ?>
+							<div class="details">
+								<table>
+									<?php if ($event['Event']['cost']): ?>
+										<tr class="cost">
+											<th>Cost:</th>
+											<td><?php echo $event['Event']['cost']; ?></td>
+										</tr>
+									<?php endif; ?>
+									<?php if ($event['Event']['age_restriction']): ?>
+										<tr class="age_restriction detail" id="age_restriction_<?php echo $event['Event']['id']; ?>">
+											<th>Ages:</th>
+											<td><?php echo $event['Event']['age_restriction']; ?></td>
+										</tr>
+									<?php endif; ?>
+								</table>
+							</div>
+						<?php endif; ?>
 					</div>
-
-					<table class="details">
-						<?php if (! empty($event['Tag'])): ?>
-							<tr class="tags">
-								<th>Tags:</th>
+					<div class="card-footer">
+						<table class="details">
+							<?php if (! empty($event['Tag'])): ?>
+								<tr class="tags">
+									<th>Tags:</th>
+									<td>
+										<?php echo $this->Calendar->eventTags($event); ?>
+									</td>
+								</tr>
+							<?php endif; ?>
+							<?php if (! empty($event['Event']['series_id']) && ! empty($event['EventSeries']['title'])): ?>
+								<tr class="tags">
+									<th>Series:</th>
+									<td>
+										<?php echo $this->Html->link($event['EventSeries']['title'], array(
+											'controller' => 'event_series',
+											'action' => 'view',
+											'id' => $event['EventSeries']['id']
+										)); ?>
+									</td>
+								</tr>
+							<?php endif; ?>
+							<?php if ($event['Event']['source']): ?>
+								<tr class="source">
+									<th>Source:</th>
+									<td><?php echo $this->Text->autoLink($event['Event']['source']); ?></td>
+								</tr>
+							<?php endif; ?>
+							<tr class="link">
+								<th>Link:</th>
 								<td>
-									<?php echo $this->Calendar->eventTags($event); ?>
+									<?php echo $this->Html->link($url, $url); ?>
 								</td>
 							</tr>
-						<?php endif; ?>
-						<?php if (! empty($event['Event']['series_id']) && ! empty($event['EventSeries']['title'])): ?>
-							<tr class="tags">
-								<th>Series:</th>
-								<td>
-									<?php echo $this->Html->link($event['EventSeries']['title'], array(
-										'controller' => 'event_series',
-										'action' => 'view',
-										'id' => $event['EventSeries']['id']
-									)); ?>
-								</td>
-							</tr>
-						<?php endif; ?>
-						<?php if ($event['Event']['source']): ?>
-							<tr class="source">
-								<th>Source:</th>
-								<td><?php echo $this->Text->autoLink($event['Event']['source']); ?></td>
-							</tr>
-						<?php endif; ?>
-						<tr class="link">
-							<th>Link:</th>
-							<td>
-								<?php echo $this->Html->link($url, $url); ?>
-							</td>
-						</tr>
-						<?php if (isset($event['User']['name']) && $event['User']['name']): ?>
-							<tr class="author">
-								<th>
-									Author:
-								</th>
-								<td>
-									 <?php echo $this->Html->link($event['User']['name'],
-									 	array('controller' => 'users', 'action' => 'view', 'id' => $event['User']['id'])
-									 ); ?>
-								</td>
-							</tr>
-						<?php endif; ?>
-					</table>
+							<?php if (isset($event['User']['name']) && $event['User']['name']): ?>
+								<tr class="author">
+									<th>
+										Author:
+									</th>
+									<td>
+										 <?php echo $this->Html->link($event['User']['name'],
+											array('controller' => 'users', 'action' => 'view', 'id' => $event['User']['id'])
+										 ); ?>
+									</td>
+								</tr>
+							<?php endif; ?>
+						</table>
+					</div>
 				</div>
 			</div>
 		</li>
