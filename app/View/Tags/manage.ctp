@@ -22,7 +22,7 @@
 				Tags with no associated events are in <span style="color: red;">red</span>.
 			</li>
 			<li>
-				Do not move or edit the 'Delete' and 'Unlisted' groups. You may, however, move tags into and out of them. 
+				Do not move or edit the 'Delete' and 'Unlisted' groups. You may, however, move tags into and out of them.
 			</li>
 			<li>
 				The 'Unlisted' group is where new tags created by users automatically go.
@@ -32,12 +32,12 @@
 			<li>
 				PROTIP: Move a tag by clicking to the right of it and dragging
 				it to the right of another tag, rather than clicking on its name and
-				dragging it on top of another tag's name. For some reason, this 
+				dragging it on top of another tag's name. For some reason, this
 				is the only way to do it when root-level tags are involved.
 			</li>
 		</ul>
 	</div>
-	
+
 	<div id="tab-add">
 		<?php echo $this->Form->create('Tag', array('url' => array('controller' => 'tags', 'action' => 'add'))); ?>
 		<strong>Tag</strong>(s)<br />
@@ -55,12 +55,12 @@ Vegetables
 			All tags will be created as both listed and selectable.
 		</p>
 		<?php echo $this->Form->end('Add'); ?>
-		
+
 		<div id="add_results"></div>
 	</div>
-	
+
 	<div id="tab-remove">
-		<p class="notification_message">
+		<p class="alert alert-info">
 			Warning: If a tag is removed, all child-tags will also be removed. This cannot be undone.
 		</p>
 		<?php echo $this->Html->link('Remove all tags in the "Delete" group', array(
@@ -75,7 +75,7 @@ Vegetables
 		</form>
 		<div class="results"></div>
 	</div>
-	
+
 	<div id="tab-edit">
 		<p>
 			Start typing a tag name:
@@ -89,24 +89,24 @@ Vegetables
 		</div>
 		<div class="results" id="edit_results"></div>
 	</div>
-	
+
 	<div id="tab-merge">
 		<p>
 			Start typing tag names:
 		</p>
 		<form id="tag_merge_form">
-			Merge 
+			Merge
 			<input type="text" id="tag_merge_from_field" class="search_field"/>
 			into
 			<input type="text" id="tag_merge_into_field" class="search_field"/>
-			
+
 			<span class="footnote">(The first tag will be <strong>removed</strong>.)</span>
 			<br />
 			<input type="submit" value="Merge" />
 		</form>
 		<div class="results" id="merge_results"></div>
 	</div>
-	
+
 	<div id="tab-find">
 		<p>
 			Start typing a tag name:
@@ -120,11 +120,11 @@ Vegetables
 		</div>
 		<div class="results" id="trace_results"></div>
 	</div>
-	
+
 	<div id="tab-fix">
 		<p>
 			These functions are safe to use at any time, and should be used to fix relevant problems
-			that come up. But these were initially only set up to assist in the transition from 
+			that come up. But these were initially only set up to assist in the transition from
 			The Muncie Scene's tag system to the new system.
 		</p>
 		<ul>

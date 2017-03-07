@@ -115,7 +115,7 @@
 
 <div id="tag_index_cloud">
 	<?php if (empty($tags)): ?>
-		<p class="notification_message">
+		<p class="alert alert-info">
 			No tags found for any <?php echo $direction_adjective; ?> events.
 		</p>
 	<?php else: ?>
