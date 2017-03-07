@@ -1,8 +1,8 @@
 <?php
-	$password_error = isset($password_error) ? '<div class="error-message">'.$password_error.'</div>' : '';
+	$password_error = isset($password_error) ? '<div class="alert alert-danger">'.$password_error.'</div>' : '';
 ?>
 <div id="login">
-	<?php 
+	<?php
 		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));
 		echo $this->Form->input('email');
 		echo $this->Form->input('password', array(
@@ -15,9 +15,9 @@
 			)
 		));
 		echo $this->Form->input('remember_me', array(
-			'type' => 'checkbox', 
+			'type' => 'checkbox',
 			'label' => array(
-				'text' => ' Remember me', 
+				'text' => ' Remember me',
 				'style' => 'display: inline;'
 			),
 			'checked' => true
@@ -36,7 +36,7 @@
 	)); ?>
 </div>
 
-Don't have an account yet? 
+Don't have an account yet?
 
 <?php echo $this->Html->link(
 	'Register',

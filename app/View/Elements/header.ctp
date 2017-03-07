@@ -17,7 +17,7 @@
 		<div id="header_nav" class="col-xl-8">
 			<?php echo $this->element('header/links_primary'); ?>
 		</div>
-		<div id="search_form" class="col-sm-12 col-xl-4">
+		<div id="search_form" class="col-sm-12 col-xl-4 no-padding">
 			<?php echo $this->element('header/search'); ?>
 		</div>
 	</div>
