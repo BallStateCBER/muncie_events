@@ -1,6 +1,6 @@
-<?php 
+<?php
 	// This element has $available_tags and (optionally) $selected_tags passed into it
-	
+
 	// Counters CakePHP's variable-renaming weirdness
 	if (! isset($available_tags)) {
 		$available_tags = isset($availableTags) ? $availableTags : array();
@@ -11,7 +11,7 @@
 	if (! isset($hide_label)) {
 		$hide_label = false;
 	}
-	
+
 	$this->Html->script('tag_manager.js', array('inline' => false));
 ?>
 
@@ -31,8 +31,8 @@
 		<div id="popular_tags"></div>
 	</div>
 	<div class="footnote">
-		Click <img src="/img/icons/menu-collapsed.png" /> to expand groups. 
-		Click 
+		Click <img src="/img/icons/menu-collapsed.png" /> to expand groups.
+		Click
 		<a href="#" title="Selectable tags will appear in blue" id="example_selectable_tag">selectable tags</a>
 		to select them.
 		<?php
@@ -43,7 +43,7 @@
 			");
 		?>
 	</div>
-	
+
 	<div id="selected_tags_container" style="display: none;">
 		<span class="label">
 			Selected tags:
@@ -53,7 +53,7 @@
 			Click on a tag to unselect it.
 		</div>
 	</div>
-	
+
 	<?php if ($allow_custom): ?>
 		<div id="custom_tag_input_wrapper">
 			<label for="custom_tag_input">
@@ -62,22 +62,22 @@
 					<img src="/img/loading_small.gif" alt="Working..." title="Working..." style="vertical-align:top;" />
 				</span>
 			</label>
-			<?php 
+			<?php
 				echo $this->Form->input('custom_tags', array(
-					'label' => false, 
-					'style' => 'margin-right: 5px; width: 100%; display: block;', 
+					'label' => false,
+					'style' => 'margin-right: 5px; width: 100%; display: block;',
 					'after' => '<div class="footnote">Write out tags, separated by commas. <a href="#" id="new_tag_rules_toggler">Rules for creating new tags</a></div>',
 					'id' => 'custom_tag_input'
-				)); 
+				));
 			?>
 			<?php $this->Js->buffer("TagManager.setupCustomTagInput();"); ?>
-			<div id="new_tag_rules" class="notification_message" style="display: none;">
+			<div id="new_tag_rules" class="alert alert-info" style="display: none;">
 				<p>
 					Before entering new tags, please search for existing tags that meet your needs.
 					Once you start typing, please select any appropriate suggestions that appear below the input field.
 					Doing this will make it more likely that your event will be linked to popular tags that are viewed by more visitors.
 				</p>
-				
+
 				<p>
 					New tags must:
 				</p>
@@ -89,7 +89,7 @@
 						be general enough to also apply to other events (including events outside of a series)
 					</li>
 				</ul>
-				
+
 				<p>
 					Must not:
 				</p>
@@ -106,7 +106,7 @@
 				</ul>
 			</div>
 		</div>
-	<?php endif; ?>	
+	<?php endif; ?>
 </div>
 
 <?php echo $this->Tag->setup($available_tags, 'available_tags', $selected_tags); ?>
