@@ -20,4 +20,4 @@
 <?php if (! $this->Session->read('Auth.User.id')): ?>
 	<?php echo $this->element('recaptcha', array('label' => false)); ?>
 <?php endif; ?>
-<?php echo $this->Form->end('Send'); ?>
+<?php echo $this->Form->submit('Send', array('class'=>'btn btn-secondary btn-sm')); ?>
