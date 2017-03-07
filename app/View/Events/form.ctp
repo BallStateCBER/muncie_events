@@ -336,7 +336,7 @@
 							$label = 'Update Series';
 							break;
 					}
-					echo $this->Form->end($label);
+					echo $this->Form->submit($label, array('class'=>'btn btn-secondary btn-sm'));
 				?>
 			</td>
 		</tr>
