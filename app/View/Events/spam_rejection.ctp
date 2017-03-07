@@ -2,7 +2,7 @@
 	<?php echo $title_for_layout; ?>
 </h1>
 
-<div class="error_message">
+<div class="alert alert-danger">
 	<p>
 		Sorry, your event appears to be spam because its title includes the word <strong>"<?php echo $spammy_word ?>"</strong>.
 	</p>
