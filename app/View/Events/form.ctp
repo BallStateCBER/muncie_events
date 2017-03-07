@@ -12,12 +12,12 @@
 	Rules for Posting Events
 </a>
 
-<div id="posting_rules" class="notification_message" style="display: none;">
+<div id="posting_rules" class="alert alert-info" style="display: none;">
 	<?php echo $this->element('rules'); ?>
 </div>
 
 <?php if (! $logged_in): ?>
-	<div class="notification_message">
+	<div class="alert alert-info">
 		<p>
 			<strong>You're not currently logged in</strong>. You can still submit this event, but...
 		</p>
@@ -41,7 +41,7 @@
 		</p>
 	</div>
 <?php elseif ($this->action == 'add' && ! $autopublish): ?>
-	<div class="notification_message">
+	<div class="alert alert-info">
 		<p>
 			<strong>Thanks for registering an account!</strong> Unfortunately, to combat spam, your first event will need to be
 			approved by an administrator before it gets published. This typically happens in less than 24 hours. But after that,
@@ -138,7 +138,7 @@
 					</div>
 				<?php endif; ?>
 				<?php if (isset($this->validationErrors['Event']['date'][0])): ?>
-					<div class="error-message">
+					<div class="alert alert-danger">
 						<?php echo $this->validationErrors['Event']['date'][0]; ?>
 					</div>
 				<?php endif; ?>
@@ -313,32 +313,6 @@
 				)); ?>
 			</td>
 		</tr>
-
-		<?php if ($has['series'] && $this->action == 'edit'): ?>
-			<tr id="series_editing_options">
-				<th>
-					Series Editing
-				</th>
-				<td>
-					<?php echo $this->Form->radio(
-						'update_series',
-						array(
-							'0' => 'Only update <strong>this event</strong>',
-							'future' => 'Update <strong>this and future events</strong> in this series',
-							'all' => 'Update <strong>all events</strong> in this series'
-						),
-						array(
-							'legend' => false
-						)
-					); ?>
-					<p id="series_editing_warning">
-						Warning: All event information will be copied from this event to other events in this series,
-						overwriting any changes that you may have made to those events since first posting them.
-					</p>
-				</td>
-			</tr>
-		<?php endif; ?>
-
 		<?php if ($this->action == 'add' && ! $this->Session->read('Auth.User.id')): ?>
 			<tr>
 				<th>Spam Protection</th>
