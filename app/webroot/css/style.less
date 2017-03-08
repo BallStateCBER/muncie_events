@@ -86,10 +86,6 @@ a {
 .light_text {
 	color: #666;
 }
-.footnote {
-	color: #555;
-	font-size: 80%;
-}
 .ui-tooltip {
 	font-size: 80%;
 	padding: 5px;
@@ -346,13 +342,12 @@ body {
 	border: @LayoutBorderWidth solid @LayoutPrimaryColor;
 	border-radius: @LayoutBorderRadius;
 	box-shadow: @LayoutBoxShadow;
-	display: block;
 	font-weight: normal;
 	left: 0;
 	padding: 0;
 	position: absolute;
 	top: 25px;
-	width: 480px;
+	width: 350px;
 	z-index: 4;
 	@media @x-small {
 		max-width: 100%;
@@ -360,7 +355,6 @@ body {
 	@media @small {
 		left: 0px;
 		right: -330px;
-		width: auto;
 	}
 	@media @medium {
 		left: auto;
@@ -398,6 +392,7 @@ body {
 	}
 	.ui-widget-content {
 		border: none;
+		width: 100%;
 	}
 }
 #header_datepicker {
@@ -419,12 +414,9 @@ body {
 	}
 	input{
 		&[type=text] {
-			font-size: 90%;
-			padding: 0;
+			display: inline-block;
+			padding: 2px;
 			width: 120px;
-		}
-		&[type=radio] {
-			float: none;
 		}
 		&[type=submit] {
 			font-size: 12px;
@@ -440,8 +432,7 @@ body {
 	visibility: hidden;
 }
 #search_options_toggler {
-	color: #fff;
-	font-size: 80%;
+	font-size: 70%;
 	@media @x-small {
 		margin-right: 0px;
 	}
@@ -455,10 +446,10 @@ body {
 	border: @LayoutBorderWidth solid @LayoutPrimaryColor;
 	border-radius: @LayoutBorderRadius;
 	box-shadow: @LayoutBoxShadow;
-	display: block;
 	font-weight: normal;
 	padding: 0;
 	position: absolute;
+	left: inherit;
 	right: 135px;
 	top: 25px;
 	z-index: 3;
@@ -597,9 +588,6 @@ h1.page_title {
 			}
 		}
 		&.locations {
-			select {
-				width: 100%;
-			}
 			h2.loading {
 				background-image: url('/img/loading_small.gif');
 				background-position: right center;
@@ -729,19 +717,7 @@ form {
 		padding-left: 4px;
 		padding-right: 0;
 	}
-	.error,
-	.error-message {
-		color: #9E2424;
-		font-weight: bold;
-		-webkit-box-shadow: none;
-		-moz-box-shadow: none;
-		-ms-box-shadow: none;
-		-o-box-shadow: none;
-		box-shadow: none;
-		text-shadow: none;
-	}
-	.footnote {
-		font-weight: normal;
+	.text-muted {
 		padding: 0;
 		margin: 0;
 	}
@@ -770,7 +746,7 @@ fieldset {
 	}
 }
 label {
-	display: block;
+	display: inline-block;
 	margin-bottom: 3px;
 }
 select {
@@ -787,26 +763,17 @@ input {
 	&[type=checkbox] {
 		margin: 0px 6px 7px 2px;
 		width: auto;
+		display: inline-block;
 	}
 	&[type=radio] {
-		float: left;
 		line-height: 26px;
 		margin: 6px 0;
 		padding: 0;
 		width: auto;
 	}
-	&[type=submit] {
-		display: inline;
-		font-size: 110%;
-		width: auto;
-	}
 }
 div.checkbox label {
 	display: inline;
-}
-.radio label {
-	line-height: 26px;
-	margin: 0 0 6px 20px;
 }
 #recaptcha_widget_div {
 	margin-bottom: 0;
@@ -854,9 +821,7 @@ div.checkbox label {
 		}
 	}
 	div.password a,
-	div.submit,
 	div.checkbox,
-	.footnote,
 	.error-message {
 		.LoginIndented;
 	}
@@ -879,7 +844,6 @@ div.checkbox label {
 	}
 	div.submit,
 	div.checkbox,
-	.footnote,
 	.error-message {
 		.RegisterIndented;
 	}
@@ -889,7 +853,7 @@ div.checkbox label {
 		label {
 			display: none;
 		}
-		.footnote {
+		.text-muted {
 			margin-left: 0;
 		}
 	}
@@ -989,8 +953,8 @@ ul.event_accordion {
 		position: relative;
 
 		&.with_images {
-			/* a.tn_tiny {
-				display: none; */
+			 a.tn_tiny {
+				display: none;
 
 				&:first-child {
 					display: block;
@@ -1021,7 +985,7 @@ ul.event_accordion {
 				margin-top: 0px;
 			}
 		}
-
+	}
 	a.more_info_handle {
 		color: #000;
 		cursor: pointer;
@@ -1205,8 +1169,7 @@ ul.event_accordion {
 		}
 		img {
 			margin-right: 5px;
-			vertical-align: text-bottom;
-			float: none !important;
+			vertical-align: -webkit-baseline-middle;
 		}
 		iframe {
 			vertical-align: bottom;
@@ -1535,6 +1498,10 @@ table.calendar {
 		vertical-align: top;
 	}
 }
+.event_time_form {
+	display: inline-block;
+	width: auto;
+}
 
 /* NOTIFICATION MESSAGES */
 #flash_messages {
@@ -1798,16 +1765,8 @@ table.calendar {
 			}
 		}
 	}
-	#eventform_hasendtime {
-		float: left;
-		padding-left: 0;
-
-		select:first-child {
-			margin-left: 10px;
-		}
-	}
 	#add_end_time {
-		margin-left: 10px;
+		display: block;
 	}
 	.toggler {
 		font-size: 80%;
@@ -1828,14 +1787,15 @@ table.calendar {
 	#EventSource {
 		width: 100%;
 	}
-	#eventform_timestart_div {
+	#eventform_timestart_div,
+	#eventform_hasendtime {
 		float: left;
 		margin-bottom: 0;
 		margin-right: 10px;
+		color: #fff;
 	}
 	#EventDescription {
-		height: 200px;
-		width: 400px;
+		width: 100%;
 	}
 	.in_series a {
 		font-size: 80%;
@@ -1884,6 +1844,7 @@ table.calendar {
 	.AddressLoadingIndicator;
 }
 #EventDescription_tbl {
+	border-radius: .25rem;
 	@media @x-small {
 		width: auto !important;
 	}
@@ -2091,16 +2052,14 @@ div#custom_event_type_options {
 	img.expand_collapse,
 	img.leaf {
 		margin-left: -15px;
-		padding-right: 5px;
+    margin-right: 5px;
 	}
 }
 #available_tags_container {
-	border: 1px solid #aaa;
+	border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
 	padding: 5px;
 	width: 100%;
-	@media @x-large {
-		width: 50%;
-	}
 	> div {
 		width: 100%;
 	}
@@ -2248,7 +2207,6 @@ iframe.widgets {
 			margin-top: 15px;
 		}
 		&[type=radio] {
-			float: none;
 			line-height: inherit;
 			margin: 0;
 			padding: 0;
@@ -2320,8 +2278,11 @@ iframe.widgets {
 		margin-right: -15px;
 		max-height: 200px;
 		overflow: auto;
-		padding-right: 15px;
-		text-align: left;
+		a {
+			li {
+				border: 0px;
+			}
+		}
 	}
 }
 #tag_view_options {
@@ -2380,14 +2341,8 @@ iframe.widgets {
 	}
 }
 .tag_cloud {
-	line-height: 120%;
-	text-align: justify;
-
 	a {
 		color: @LinkColor;
-		display: block;
-		vertical-align: middle;
-
 		&:nth-child(even) {
 			.alternate_tag_link_color;
 		}
