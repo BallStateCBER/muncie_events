@@ -1,20 +1,20 @@
 <ul>
-	<li><?php 
+	<li><?php
 		echo $this->Html->link('Home', array(
-			'plugin' => false, 
-			'controller' => 
-			'pages', 
+			'plugin' => false,
+			'controller' =>
+			'pages',
 			'action' => 'home'
-		)); 
+		));
 	?></li>
 	<li>
-		<a href="#" id="date_picker_toggler" class="opener">Go to Date...</a>
+		<a href="#" id="date_picker_toggler" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">Go to Date...</a>
 		<?php
 			if (! isset($default)) {
 				$default = date('m/d/Y');
 			}
 		?>
-		<div id="header_nav_datepicker" class="submenu" style="display: none;">
+		<div id="header_nav_datepicker" class="submenu dropdown-menu" aria-labelledby="date-picker-toggler" aria-expanded="false">
 			<div>
 				<?php
 					$day_links = array();
@@ -28,25 +28,25 @@
 						$day = date('d', $timestamp);
 						$pop_dates_in_month = $header_vars['populated_dates'][$month_year];
 						if (! in_array($day, $pop_dates_in_month)) {
-							continue;	
+							continue;
 						}
-						
+
 						// Today
 						if ($n == 0) {
 							$day_links[] = $this->Html->link('Today', array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'today'
 							));
 						// Tomorrow
 						} elseif ($n == 1) {
 							$day_links[] = $this->Html->link('Tomorrow', array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'tomorrow'
 							));
 						// Monday, Tuesday, etc.
 						} elseif ($n < 7) {
 							$day_links[] = $this->Html->link(date('l', $timestamp), array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'day',
 								date('m', $timestamp),
 								date('d', $timestamp),
@@ -55,7 +55,7 @@
 						// A week or more in the future
 						} else {
 							$day_links[] = $this->Html->link(date('D, M j', $timestamp), array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'day',
 								date('m', $timestamp),
 								date('d', $timestamp),
