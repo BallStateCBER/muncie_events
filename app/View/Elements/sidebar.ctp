@@ -71,7 +71,7 @@
 			</h2>
 			<?php if (count($sidebar_vars['locations']) > 0): ?>
 				<form id="sidebar_select_location">
-					<select>
+					<select class='form-control'>
 						<option value="">
 							Select a location...
 						</option>
@@ -103,7 +103,8 @@
 		</h2>
 		<?php if (isset($sidebar_vars['upcoming_tags']) && count($sidebar_vars['upcoming_tags']) > 0): ?>
 			<?php echo $this->element('tags/cloud', array(
-				'upcoming_tags' => $sidebar_vars['upcoming_tags']
+				'upcoming_tags' => $sidebar_vars['upcoming_tags'],
+				'class' => 'form-control'
 			)); ?>
 		<?php else: ?>
 			<span class="no_results">

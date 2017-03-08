@@ -4,7 +4,12 @@
 <div id="login">
 	<?php
 		echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'login')));
-		echo $this->Form->input('email');
+		echo $this->Form->input('email', array(
+			'class' => 'form-control',
+			'div' => array(
+				'class'=>'form-group col-lg-4 col-xs-12'
+			)
+		));
 		echo $this->Form->input('password', array(
 			'after' => $password_error.'<br />'.$this->Html->link(
 				'Forgot password?',
@@ -12,6 +17,10 @@
 					'controller' => 'users',
 					'action' => 'forgot_password'
 				)
+			),
+			'class' => 'form-control',
+			'div' => array(
+				'class'=>'form-group col-lg-4 col-xs-12'
 			)
 		));
 		echo $this->Form->input('remember_me', array(
@@ -20,7 +29,10 @@
 				'text' => ' Remember me',
 				'style' => 'display: inline;'
 			),
-			'checked' => true
+			'checked' => true,
+			'div' => array(
+				'class'=>'form-group col-lg-4 col-xs-12'
+			)
 		));
 		echo $this->Form->submit('Login', array(
 			'after' => '',
