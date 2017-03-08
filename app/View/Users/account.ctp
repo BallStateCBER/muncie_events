@@ -60,10 +60,18 @@
 	)); ?>
 	<?php echo $this->Form->input('name', array(
 		'label' => 'Name',
-		'after' => '<div class="footnote">Your first and last actual name, please</div>'
+		'class' => 'form-control',
+		'div' => array(
+			'class'=>'form-group col-lg-8 col-xs-12'
+		),
+		'after' => '<div class="text-muted">Your first and last actual name, please</div>'
 	)); ?>
 	<?php echo $this->Form->input('email', array(
-		'label' => 'Email'
+		'label' => 'Email',
+		'class' => 'form-control',
+		'div' => array(
+			'class'=>'form-group col-lg-8 col-xs-12'
+		)
 	)); ?>
 	<?php echo $this->Form->submit(__('Update'), array('class'=>'btn btn-secondary btn-sm')); ?>
 </div>
