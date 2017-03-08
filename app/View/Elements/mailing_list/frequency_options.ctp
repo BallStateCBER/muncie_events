@@ -9,11 +9,11 @@
 				'daily' => 'Daily <span class="note">(Every morning, today\'s events)</span>',
 				'custom' => 'Custom'
 			),
-			'class' => 'frequency_options',
+			'class' => 'frequency_options form-control',
 			'legend' => false
 		)
 	); ?>
-	<div id="custom_frequency_options" style="display: none;">
+	<div id="custom_frequency_options">
 		<?php if (isset($frequency_error)): ?>
 			<div class="error">
 				<?php echo $frequency_error; ?>

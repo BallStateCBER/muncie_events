@@ -9,12 +9,12 @@
 				'all' => 'All Events',
 				'custom' => 'Custom'
 			),
-			'class' => 'category_options',
+			'class' => 'category_options form-control',
 			'legend' => false
 		)
 	); ?>
 
-	<div id="custom_event_type_options" style="display: none;">
+	<div id="custom_event_type_options">
 		<?php if (isset($categories_error)): ?>
 			<div class="error">
 				<?php echo $categories_error; ?>
