@@ -67,10 +67,6 @@ function setupHeaderNav() {
 		var date = $(this).val();
 		window.location.href = '/events/day/'+date;
 	});
-	$('#date_picker_toggler').click(function (event) {
-		event.preventDefault();
-		$('#header_nav_datepicker').slideToggle(200);
-	});
 }
 
 function setupSidebar() {
@@ -168,10 +164,6 @@ function setupSearch() {
 			return false;
 		}
 		return true;
-	});
-	$('#search_options_toggler').click(function (event) {
-		event.preventDefault();
-		$('#search_options').slideToggle(200);
 	});
 
 	var input_field = $('#EventFilter');
@@ -367,10 +359,10 @@ function setupEventAccordion() {
 				event.preventDefault();
 				var toggler = $(this);
 				var event_id = toggler.data('eventId');
-				var more_info = toggler.next('.more_info');
+				var collapse = toggler.next('.collapse');
 				var thumbnail = toggler.siblings('.tiny_thumbnails').children('a.thumbnail:first-child');
 				if (thumbnail.length > 0) {
-					if (more_info.is(':visible') && more_info.css('height') != '0px') {
+					if (collapse.is(':visible') && collapse.css('height') != '0px') {
 						thumbnail.fadeIn(200);
 					} else {
 						thumbnail.fadeOut(200);
