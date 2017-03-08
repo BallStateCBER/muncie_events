@@ -26,11 +26,11 @@
 		</li>
 	</ul>
 	*/ ?>
-	<div id="available_tags_container">
+	<div id="available_tags_container" class="form-control">
 		<div id="available_tags"></div>
 		<div id="popular_tags"></div>
 	</div>
-	<div class="footnote">
+	<div class="text-muted">
 		Click <img src="/img/icons/menu-collapsed.png" /> to expand groups.
 		Click
 		<a href="#" title="Selectable tags will appear in blue" id="example_selectable_tag">selectable tags</a>
@@ -49,7 +49,7 @@
 			Selected tags:
 		</span>
 		<span id="selected_tags"></span>
-		<div class="footnote">
+		<div class="text-muted">
 			Click on a tag to unselect it.
 		</div>
 	</div>
@@ -65,13 +65,12 @@
 			<?php
 				echo $this->Form->input('custom_tags', array(
 					'label' => false,
-					'style' => 'margin-right: 5px; width: 100%; display: block;',
-					'after' => '<div class="footnote">Write out tags, separated by commas. <a href="#" id="new_tag_rules_toggler">Rules for creating new tags</a></div>',
+					'class' => 'form-control',
+					'after' => '<div class="text-muted">Write out tags, separated by commas. <a href="#" data-toggle="collapse" data-target="#new_tag_rules">Rules for creating new tags</a></div>',
 					'id' => 'custom_tag_input'
 				));
 			?>
-			<?php $this->Js->buffer("TagManager.setupCustomTagInput();"); ?>
-			<div id="new_tag_rules" class="alert alert-info" style="display: none;">
+			<div id="new_tag_rules" class="alert alert-info collapse">
 				<p>
 					Before entering new tags, please search for existing tags that meet your needs.
 					Once you start typing, please select any appropriate suggestions that appear below the input field.
