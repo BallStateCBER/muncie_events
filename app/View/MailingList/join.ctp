@@ -8,9 +8,13 @@
 	)); ?>
 	<?php echo $this->Form->input('email', array(
 		'label' => 'Email: ',
+		'class' => 'form-control',
+		'div' => array(
+			'class'=>'form-group col-lg-8 col-xs-12'
+		),
 		'value' => isset($default_email) ? $default_email : null
 	)); ?>
-	<div id="mailing_list_basic_options">
+	<div class="form-group col-lg-8 col-xs-12">
 		<?php echo $this->Form->input(
 			'settings',
 			array(
@@ -20,17 +24,20 @@
 					'custom' => 'Custom'
 				),
 				'default' => 'default',
-				'class' => 'settings_options',
-				'legend' => false
+				'class' => 'settings_options form-control',
+				'legend' => false,
+				'div' => array(
+					'id' => "mailing_list_basic_options"
+				)
 			)
 		); ?>
 	</div>
-
 	<div id="custom_options" style="display: none;" class="row">
 		<?php echo $this->element('mailing_list/frequency_options'); ?>
 		<?php echo $this->element('mailing_list/category_options'); ?>
 	</div>
 	<?php echo $this->Form->submit('Join Event Mailing List', array(
+		'class' => 'btn btn-secondary btn-sm',
 		'url' => array(
 			'controller' => 'mailing_list',
 			'action' => 'join'
