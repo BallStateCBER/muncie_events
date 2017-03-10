@@ -14,21 +14,35 @@
 		),
 		'value' => isset($default_email) ? $default_email : null
 	)); ?>
-	<div class="form-group col-lg-8 col-xs-12">
+	<div id="mailing_list_basic_options" class="form-group col-lg-8 col-xs-12">
 		<?php echo $this->Form->input(
 			'settings',
 			array(
 				'type' => 'radio',
 				'options' => array(
 					'default' => 'Default Settings',
+				),
+				'default' => 'default',
+				'class' => 'settings_options',
+				'div' => array(
+					'class'=>'form-control mailing-options'
+				),
+				'legend' => false
+			)
+		); ?>
+		<?php echo $this->Form->input(
+			'settings',
+			array(
+				'type' => 'radio',
+				'options' => array(
 					'custom' => 'Custom'
 				),
 				'default' => 'default',
-				'class' => 'settings_options form-control',
-				'legend' => false,
+				'class' => 'settings_options',
 				'div' => array(
-					'id' => "mailing_list_basic_options"
-				)
+					'class'=>'form-control mailing-options'
+				),
+				'legend' => false
 			)
 		); ?>
 	</div>
