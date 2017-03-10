@@ -8,13 +8,13 @@
 		));
 	?></li>
 	<li>
-		<a href="#" id="date_picker_toggler" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true">Go to Date...</a>
+		<a id="date_picker_toggler" data-toggle="collapse" href="#header_nav_datepicker" aria-expanded="false" aria-controls="header_nav_datepicker">Go to Date...</a>
 		<?php
 			if (! isset($default)) {
 				$default = date('m/d/Y');
 			}
 		?>
-		<div id="header_nav_datepicker" class="submenu dropdown-menu" aria-labelledby="date-picker-toggler" aria-expanded="false">
+		<div id="header_nav_datepicker" class="collapse" aria-labelledby="date_picker_toggler">
 			<div>
 				<?php
 					$day_links = array();
@@ -80,21 +80,6 @@
 			</div>
 		</div>
 	</li>
-	<?php /* Retained as an example of a drop-down menu
-		<li>
-			<a href="#" class="opener">Categories</a>
-			<ul id="header_nav_categories" class="submenu">
-				<?php foreach ($header_vars['categories'] as $category): ?>
-					<li>
-						<a href="<?php echo Router::url(array('controller' => 'events', 'action' => 'category', Inflector::slug(strtolower($category['Category']['slug'])))); ?>" class="with_icon">
-							<img src="<?php echo $category['Category']['icon']; ?>" height="16" />
-							<span><?php echo $category['Category']['name']; ?></span>
-						</a>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-	*/ ?>
 	<li>
 		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add')); ?>
 	</li>
