@@ -45,7 +45,7 @@
 							<?php foreach ($this->request->data['Event'] as $event): ?>
 								<tr class="display" id="eventinseries_display_<?php echo $event['id']; ?>">
 									<td class="action">
-										<a href="#" class="toggler" data-event-id="<?php echo $event['id']; ?>">
+										<a href="#" data-event-id="<?php echo $event['id']; ?>">
 											Edit
 										</a>
 									</td>
@@ -61,7 +61,7 @@
 								</tr>
 								<tr class="edit" id="eventinseries_edit_<?php echo $event['id']; ?>" style="display: none;">
 									<td class="action">
-										<a class="toggler" href="#" data-event-id="<?php echo $event['id']; ?>">
+										<a href="#" data-event-id="<?php echo $event['id']; ?>">
 											Done
 										</a>
 									</td>
