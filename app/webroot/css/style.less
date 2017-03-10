@@ -281,35 +281,6 @@ body {
 		@media @x-large {
 	    text-align: left;
 		}
-		ul.submenu {
-			border: @LayoutBorderWidth solid @LayoutPrimaryColor;
-			border-radius: @LayoutBorderRadius;
-			box-shadow: @LayoutBoxShadow;
-			display: none;
-			font-weight: normal;
-			left: 0;
-			padding: 0;
-			position: absolute;
-			top: 25px;
-			z-index: 3;
-			.ContentArea;
-
-			li {
-				display: block;
-				margin: 0;
-				padding: 2px 5px;
-				white-space: nowrap;
-				&:last-child {
-					border-bottom: 0;
-				}
-				&:nth-child(even) {
-					background-color: #eee;
-				}
-				a {
-					display: block;
-				}
-			}
-		}
 	}
 	li {
 		display: inline;
@@ -760,14 +731,10 @@ option {
 	padding: 0 3px;
 }
 input {
-	&[type=checkbox] {
-		margin: 0px 6px 7px 2px;
-		width: auto;
-		display: inline-block;
-	}
+	&[type=checkbox],
 	&[type=radio] {
 		line-height: 26px;
-		margin: 6px 0;
+		margin: 5px;
 		padding: 0;
 		width: auto;
 	}
@@ -1071,12 +1038,7 @@ ul.event_accordion {
 		display: inline-block;
 		padding-left: 5px;
 	}
-	.location_details {
-		color: #333;
-		display: block;
-		max-width: 600px;
-		overflow: auto;
-	}
+	.location_details,
 	.address {
 		color: #333;
 		display: block;
@@ -1226,11 +1188,6 @@ a.thumbnail {
 	color: #66666F;
 	padding: 3px;
 	text-align: center;
-}
-.note {
-	color: #666;
-	font-size: 90%;
-	margin: 0 0 5px 0;
 }
 a.calendar_controls {
 	font-weight: bold;
@@ -1578,13 +1535,6 @@ table.calendar {
 	}
 }
 .alert {
-	background-position: 5px 5px;
-	background-repeat: no-repeat;
-	border-style: solid;
-	border-width: 1px;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
 	p {
 		margin-bottom: 0px;
 	}
@@ -1622,10 +1572,6 @@ table.calendar {
 		}
 	}
 	img {
-		&.selected_image {
-			float: left;
-			margin-left: -55px;
-		}
 		&.handle {
 			float: left;
 			margin-left: -75px;
@@ -1749,6 +1695,7 @@ table.calendar {
 
 /* EVENT FORM */
 .event_form {
+	width: 100%;
 	> tbody {
 		> tr {
 			> th,
@@ -1767,9 +1714,6 @@ table.calendar {
 	}
 	#add_end_time {
 		display: block;
-	}
-	.toggler {
-		font-size: 80%;
 	}
 	#eventform_tags .input {
 		margin: 0;
@@ -2008,6 +1952,9 @@ table.calendar {
 		vertical-align: middle;
 	}
 }
+.mailing-options {
+	border: none;
+}
 div#custom_event_type_options {
 	margin-left: 20px;
 
@@ -2072,10 +2019,6 @@ div#custom_event_type_options {
 		margin: 0;
 		padding-left: 15px;
 		text-transform: capitalize;
-
-		.submenu_handle {
-			cursor: pointer;
-		}
 	}
 	li {
 		list-style-type: none;
@@ -2211,10 +2154,6 @@ iframe.widgets {
 			margin: 0;
 			padding: 0;
 		}
-	}
-	.note {
-		color: #666;
-		font-size: 90%;
 	}
 	.text label,
 	.text input,
@@ -2422,9 +2361,6 @@ iframe.widgets {
 		display: inline-block;
 		margin: 0;
 	}
-	.note {
-		color: #666;
-	}
 }
 
 
@@ -2455,35 +2391,20 @@ iframe.widgets {
 	}
 }
 
-
-
 /* MISC */
+.paginator_select {
+	border-radius: 0px;
+  border-left: none;
+}
 .pagination {
-	margin: 15px 0;
-	text-align: center;
-
-	> span {
-		border: 1px solid #999;
-		color: #999;
-		display: inline-block;
-		height: 30px;
-		margin: 0;
-		min-width: 24px;
-		padding: 3px;
-		text-align: center;
+	width: 41%;
+	margin: 0 auto;
+	@media @x-small {
+		width: 100%;
+		font-size: .78em;
 	}
-	a {
-		display: inline-block;
-		height: 22px;
-		margin: -3px;
-		min-width: 24px;
-		padding: 3px;
-		text-decoration: none;
-	}
-	select {
-		height: 30px;
-		padding: 3px;
-		vertical-align: bottom;
+	@media @small {
+		width: 71%;
 	}
 }
 #noscript {
