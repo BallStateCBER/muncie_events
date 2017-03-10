@@ -5,11 +5,40 @@
 		array(
 			'type' => 'radio',
 			'options' => array(
-				'weekly' => 'Weekly <span class="note">(Every Thursday, upcoming week\'s events)</span>',
-				'daily' => 'Daily <span class="note">(Every morning, today\'s events)</span>',
+				'weekly' => 'Weekly <span class="text-muted">(Thursday, next week\'s events)</span>'
+			),
+			'class' => 'frequency_options',
+			'div' => array(
+				'class'=>'form-control mailing-options'
+			),
+			'legend' => false
+		)
+	); ?>
+	<?php echo $this->Form->input(
+		'frequency',
+		array(
+			'type' => 'radio',
+			'options' => array(
+				'daily' => 'Daily <span class="text-muted">(Every morning, today\'s events)</span>'
+			),
+			'class' => 'frequency_options',
+			'div' => array(
+				'class'=>'form-control mailing-options'
+			),
+			'legend' => false
+		)
+	); ?>
+	<?php echo $this->Form->input(
+		'frequency',
+		array(
+			'type' => 'radio',
+			'options' => array(
 				'custom' => 'Custom'
 			),
-			'class' => 'frequency_options form-control',
+			'class' => 'frequency_options',
+			'div' => array(
+				'class'=>'form-control mailing-options'
+			),
 			'legend' => false
 		)
 	); ?>
