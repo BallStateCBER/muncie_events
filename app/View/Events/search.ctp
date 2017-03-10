@@ -52,7 +52,7 @@
 				echo $this->Html->link($link_label, $url);
 
 			} else {
-				echo '<span class="note">';
+				echo '<span class="text-muted">';
 				echo 'No matching ';
 				echo ($direction == 'future') ? 'past' : 'upcoming';
 				echo ' events found.';

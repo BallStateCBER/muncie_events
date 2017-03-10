@@ -8,11 +8,11 @@
 	<?php echo $title_for_layout; ?>
 </h1>
 
-<a href="#" id="posting_rules_toggler">
+<a href="#posting_rules" id="posting_rules_toggler" data-toggle="collapse">
 	Rules for Posting Events
 </a>
 
-<div id="posting_rules" class="alert alert-info" style="display: none;">
+<div id="posting_rules" class="alert alert-info collapse" aria-expanded="false">
 	<?php echo $this->element('rules'); ?>
 </div>
 
@@ -183,7 +183,7 @@
 							'class'=>'form-group col-md-8 col-xs-12'
 						),
 						'class' => 'form-control event_time_form',
-						'after' => '<span id="eventform_noendtime" '.($has['end_time'] ? 'style="display: none;"' : '').'><a class="toggler" id="add_end_time" href="#">Add end time</a></span>'
+						'after' => '<span id="eventform_noendtime" '.($has['end_time'] ? 'style="display: none;"' : '').'><a id="add_end_time" href="#">Add end time</a></span>'
 					));
 				?>
 				<div id="eventform_hasendtime" class="form-group col-md-8 col-xs-12" <?php if (! $has['end_time']): ?>style="display: none;"<?php endif; ?>>
@@ -211,7 +211,7 @@
 						'id' => 'eventform_hasendtime_boolinput',
 					 	'value' => $has['end_time'] ? 1 : 0
 					)); ?>
-					<a class="toggler" href="#" id="remove_end_time">Remove end time</a>
+					<a href="#" id="remove_end_time">Remove end time</a>
 				</div>
 			</td>
 		</tr>
@@ -228,7 +228,7 @@
 						'label' => false,
 						'class' => 'form-control',
 						'placeholder' => 'Location details (upstairs, room 149, etc.)',
-						'after' => '<a class="toggler" href="#" id="eventform_noaddress" .($has["address"] ? "style="display: none;"" : ").>Add address</a>'
+						'after' => '<a href="#" id="eventform_noaddress" .($has["address"] ? "style="display: none;"" : ").>Add address</a>'
 					)); ?>
 				</div>
 			</td>
@@ -282,7 +282,7 @@
 		<?php endif; ?>
 		<tr id="eventform_nocost" <?php if ($has['cost']): ?>style="display: none;"<?php endif; ?>>
 			<td>
-				<a class="toggler" href="#" id="event_add_cost">
+				<a href="#" id="event_add_cost">
 					Add cost
 				</a>
 			</td>
@@ -298,13 +298,13 @@
 					'div' => array(
 						'class'=>'form-group col-lg-8 col-xs-12'
 					),
-					'after' => ' <a class="toggler" href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
+					'after' => ' <a href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
 				)); ?>
 			</td>
 		</tr>
 		<tr id="eventform_noages" <?php if ($has['ages']): ?>style="display: none;"<?php endif; ?>>
 			<td>
-				<a class="toggler" href="#" id="event_add_age_restriction">
+				<a href="#" id="event_add_age_restriction">
 					Add&nbsp;age&nbsp;restriction
 				</a>
 			</td>
@@ -320,13 +320,13 @@
 						'class'=>'form-group col-lg-8 col-xs-12'
 					),
 					'maxLength' => 30,
-					'after' => ' <a class="toggler" href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
+					'after' => ' <a href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
 				)); ?>
 			</td>
 		</tr>
 		<tr id="eventform_nosource" <?php if ($has['source']): ?>style="display: none;"<?php endif; ?>>
 			<td>
-				<a class="toggler" href="#" id="event_add_source">
+				<a href="#" id="event_add_source">
 					Add info source
 				</a>
 			</td>
@@ -337,7 +337,7 @@
 			<td>
 				<?php echo $this->Form->input('source', array(
 					'label' => false,
-					'after' => ' <a class="toggler" href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
+					'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
 					'class' => 'form-control',
 					'div' => array(
 						'class'=>'form-group col-lg-8 col-xs-12'
