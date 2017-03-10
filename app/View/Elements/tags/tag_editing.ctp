@@ -66,7 +66,7 @@
 				echo $this->Form->input('custom_tags', array(
 					'label' => false,
 					'class' => 'form-control',
-					'after' => '<div class="text-muted">Write out tags, separated by commas. <a href="#" data-toggle="collapse" data-target="#new_tag_rules">Rules for creating new tags</a></div>',
+					'after' => '<div class="text-muted">Write out tags, separated by commas. <a href="#new_tag_rules" data-toggle="collapse">Rules for creating new tags</a></div>',
 					'id' => 'custom_tag_input'
 				));
 			?>
