@@ -46,7 +46,7 @@ function setup_eventseries_edit_form() {
 			editEventSeries_updateRow(event_id);
 		}
 	}
-	
+
 }
 
 function editEventSeries_updateRow(event_id) {
@@ -70,17 +70,12 @@ function editEventSeries_updateRow(event_id) {
 function setupEventForm() {
 	// Since TinyMCE doesn't work with HTML 5's required attribute
 	$('#EventDescription').removeAttr('required');
-	
+
 	// This is only applicable if a new event takes place on multiple dates
 	var series_title_input = $('#EventSeriesTitle');
 	if (! series_title_input.is(':visible')) {
 		series_title_input.removeAttr('required');
 	}
-	
-	$('#posting_rules_toggler').click(function(event) {
-		event.preventDefault();
-		$('#posting_rules').slideToggle('fast');
-	});
 	$('#add_end_time').click(function(event) {
 		event.preventDefault();
 		$('#eventform_hasendtime').show();
@@ -184,7 +179,7 @@ function setupEventForm() {
 	}
 	setupLocationAutocomplete();
 	setupAddressLookup();
-	
+
 	$('#series_editing_options input[type=radio]').click(function () {
 		if ($(this).val() != '0') {
 			$('#series_editing_warning').slideDown(300);
@@ -236,13 +231,13 @@ function setupLocationAutocomplete() {
 			// Add the selected term to 'selected tags'
 			var location = ui.item.label;
 			this.value = location;
-			
-			// Update address (might be changed to blank) 
+
+			// Update address (might be changed to blank)
 			var address = ui.item.value;
 			$('#EventAddress').val(address);
 			if (address != '' && ! $('#eventform_address').is(':visible')) {
 				$('#eventform_noaddress').hide();
-				$('#eventform_address').show();	
+				$('#eventform_address').show();
 			}
 			return false;
 		}
@@ -257,12 +252,12 @@ function setupAddressLookup() {
 		var location_field = $(this);
 		var location_name = location_field.val();
 		var address_field = $('#EventAddress');
-		
+
 		// Take no action if the address has already been entered
 		if (address_field.val() != '') {
 			return;
 		}
-		
+
 		// Take no action if location name is blank
 		if (location_name == '') {
 			return;
@@ -280,7 +275,7 @@ function setupAddressLookup() {
 				address_handle.hide();
 				address_row.show();
 			}
-			
+
 		// Ask the database for the address
 		} else {
 			var address_th = $('#eventform_address th');
@@ -302,7 +297,7 @@ function setupAddressLookup() {
 					address_field.val(data);
 					if (! address_row.is(':visible')) {
 						address_handle.hide();
-						address_row.show();	
+						address_row.show();
 					}
 				},
 				error: function () {
@@ -311,7 +306,7 @@ function setupAddressLookup() {
 			});
 		}
 	});
-	
+
 	// Stop in-progress address lookup on any keydown in address field
 }
 
@@ -326,7 +321,7 @@ function setupDatepickerMultiple(default_date, preselected_dates) {
 				$('#EventSeriesTitle').attr('required', 'required');
 				var series_title_field = $('#EventSeriesTitle');
 				if (series_title_field.val() == '') {
-					series_title_field.val($('#EventTitle').val()); 
+					series_title_field.val($('#EventTitle').val());
 				}
 			} else {
 				hideSeriesRow();

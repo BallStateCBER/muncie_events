@@ -18,7 +18,7 @@ var muncieEvents = {
 	populatedDates: {}
 };
 
-function closeSubmenu(name) {
+/* function closeSubmenu(name) {
 	setTimeout(function() {
 		if (muncieEvents.keepOpenMenus[name]) {
 			return;
@@ -26,7 +26,7 @@ function closeSubmenu(name) {
 		var submenu = $('#header_nav_'+name);
 		submenu.slideUp(200);
 	}, 1000);
-}
+} */
 
 function setupHeaderNav() {
 	// Set up datepicker
@@ -89,55 +89,6 @@ function setupSidebar() {
 		event.preventDefault();
 		var location = $(this).children('select').val();
 		sidebarSelectLocation(location);
-	});
-}
-
-function setupSubmenus() {
-	// Set up submenus
-	$('#header_nav .opener').each(function() {
-		var submenu = $(this).next('.submenu');
-		var submenu_name = submenu.attr('id').replace('header_nav_', '');
-		submenu.mouseover(function() {
-			muncieEvents.keepOpenMenus[submenu_name] = true;
-		}).mouseout(function() {
-			muncieEvents.keepOpenMenus[submenu_name] = false;
-			closeSubmenu(submenu_name);
-		});
-
-		var link = $(this);
-		link.click(function (event) {
-			event.preventDefault();
-			submenu.slideToggle(200);
-		}).mouseover(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = true;
-			submenu.slideDown(200);
-		}).mouseout(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = false;
-			closeSubmenu(submenu_name);
-		}); /*.focus(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = true;
-			submenu.slideDown(200);
-		}).blur(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = false;
-			closeSubmenu(submenu_name);
-		}); */
-
-		var container = link.parent('li');
-		container.mouseover(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = true;
-			$(this).find('ul').slideDown(200);
-		}).mouseout(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = false;
-			closeSubmenu(submenu_name);
-		});
-
-		var submenu_links = submenu.find('a');
-		submenu_links.focus(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = true;
-		}).blur(function () {
-			muncieEvents.keepOpenMenus[submenu_name] = false;
-			closeSubmenu(submenu_name);
-		});
 	});
 }
 
@@ -363,14 +314,12 @@ function setupEventAccordion() {
 				var thumbnail = toggler.siblings('.tiny_thumbnails').children('a.thumbnail:first-child');
 				if (thumbnail.length > 0) {
 					if (collapse.is(':visible') && collapse.css('height') != '0px') {
-						thumbnail.fadeIn(200);
+						thumbnail.fadeIn(150);
 					} else {
-						thumbnail.fadeOut(200);
+						thumbnail.fadeOut(500);
 					}
 				}
 
-				toggler.find('.address').slideToggle(200);
-				toggler.find('.location_details').slideToggle(200);
 				var more_info_id = 'more_info_'+event_id;
 				if (muncieEventsFeed.xfbml_parsed.indexOf(more_info_id) == -1) {
 					FB.XFBML.parse(document.getElementById(more_info_id));
@@ -445,10 +394,6 @@ function mailingListFormValidate() {
 	var unsubscribe_field = $('#MailingListUnsubscribe');
 	if (unsubscribe_field.length != 0 && unsubscribe_field.is(':checked')) {
 		return confirm('Are you sure you want to unsubscribe?');
-	}
-	if ($('#MailingListEmail').val() == '') {
-		alert('Please enter an email address.');
-		return false;
 	}
 	if ($('#MailingListFrequencyCustom').is(':checked')) {
 		var selected_days = $('#custom_frequency_options input[type=checkbox]:checked');
