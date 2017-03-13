@@ -26,11 +26,11 @@
 </head>
 <body class="layout_<?php echo $this->layout; ?>">
 	<?php echo $this->element('flash_messages'); ?>
-	<div id="header">
-		<div class="clearfix container">
-			<?php echo $this->element('header'); ?>
+		<div class="clearfix" id="header">
+			<div class="container">
+				<?php echo $this->element('header'); ?>
+			</div>
 		</div>
-	</div>
 
 	<div id="divider"></div>
 
