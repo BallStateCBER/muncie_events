@@ -1,14 +1,16 @@
-<ul>
-	<li><?php
+<ul class="navbar-nav">
+	<li class="nav-item"><?php
 		echo $this->Html->link('Home', array(
 			'plugin' => false,
 			'controller' =>
 			'pages',
-			'action' => 'home'
-		));
+			'action' => 'home'),
+			array(
+				'class' => 'nav-link',
+			));
 	?></li>
-	<li>
-		<a id="date_picker_toggler" data-toggle="collapse" href="#header_nav_datepicker" aria-expanded="false" aria-controls="header_nav_datepicker">Go to Date...</a>
+	<li class="nav-item">
+		<a class="nav-link" id="date_picker_toggler" data-toggle="collapse" href="#header_nav_datepicker" aria-expanded="false" aria-controls="header_nav_datepicker">Go to Date...</a>
 		<?php
 			if (! isset($default)) {
 				$default = date('m/d/Y');
@@ -70,7 +72,7 @@
 				<?php if (! empty($day_links)): ?>
 					<ul>
 						<?php foreach ($day_links as $day_link): ?>
-							<li>
+							<li class="nav-item">
 								<?php echo $day_link; ?>
 							</li>
 						<?php endforeach; ?>
@@ -80,11 +82,11 @@
 			</div>
 		</div>
 	</li>
-	<li>
-		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add')); ?>
+	<li class="nav-item">
+		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add'), array('class'=>'nav-link')); ?>
 	</li>
-	<li>
-		<?php echo $this->Html->link('Widgets', array('plugin' => false, 'controller' => 'widgets', 'action' => 'index')); ?>
+	<li class="nav-item">
+		<?php echo $this->Html->link('Widgets', array('plugin' => false, 'controller' => 'widgets', 'action' => 'index'), array('class'=>'nav-link')); ?>
 	</li>
 </ul>
 <?php
