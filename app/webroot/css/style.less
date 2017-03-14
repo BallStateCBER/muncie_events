@@ -686,10 +686,10 @@ form {
         font-weight: normal;
     }
     .error-message {
-        -moz-border-radius: none;
-        -webkit-border-radius: none;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
         background: none;
-        border-radius: none;
+        border-radius: 0;
         border: none;
         margin: 0;
         padding-left: 4px;
@@ -1106,7 +1106,7 @@ ul.event_accordion {
         margin: 15px;
         overflow: hidden;
         padding: 10px;
-        word-break: break-word;
+        word-break: normal;
 
         p {
             &:first-of-type {
@@ -1139,7 +1139,7 @@ ul.event_accordion {
         }
         img {
             margin-right: 5px;
-            vertical-align: -webkit-baseline-middle;
+            vertical-align: middle;
         }
         iframe {
             vertical-align: bottom;
@@ -1251,7 +1251,7 @@ table.calendar {
 .event {
     > i {
         @media @x-small {
-           display: block
+           display: block;
            visibility: visible;
         }
     }
