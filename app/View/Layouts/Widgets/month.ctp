@@ -10,7 +10,6 @@
 		echo $this->fetch('meta');
 		echo $this->Html->css('/magnific-popup/magnific-popup.css');
 		echo $this->Html->css('widgets/month');
-		echo $this->Html->css('responsive.css');
 		echo $this->fetch('css');
 		echo $this->Html->script('widgets/month');
 	?>
