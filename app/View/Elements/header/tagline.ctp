@@ -7,8 +7,7 @@
 		'let\'s MEet up',
 		'show tiME',
 		'make MEmories',
-		'coME as you are',
-		'cash ME ousside'
+		'coME as you are'
 	);
 	$phrase = $phrases[array_rand($phrases)];
 	if (in_array(substr($phrase, -1), array('.', '?', '!'))) {
