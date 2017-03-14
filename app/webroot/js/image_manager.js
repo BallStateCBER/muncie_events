@@ -6,21 +6,6 @@ var ImageManager = {
 			placeholder: 'ui-state-highlight'
 		});
 
-		$('#image_upload_toggler').click(function (event) {
-			event.preventDefault();
-			ImageManager.toggleImageUpload();
-		});
-
-		$('#image_select_toggler').click(function (event) {
-			event.preventDefault();
-			ImageManager.toggleUploadedImages();
-		});
-
-		$('#image_help_toggler').click(function (event) {
-			event.preventDefault();
-			ImageManager.toggleHelp();
-		});
-
 		ImageManager.hidePreselectedImages();
 	},
 
@@ -181,8 +166,7 @@ var ImageManager = {
 			'checkScript': '/images/file_exists',
 			'onCheck': false,
 			'fileSizeLimit': params.filesize_limit,
-			'buttonText': 'Click to select an image to upload',
-			'width': 300,
+			'buttonText': 'Click to select an image',
 			'formData': {
 				'timestamp': params.timestamp,
 				'token': params.token,
@@ -225,71 +209,6 @@ var ImageManager = {
 				ImageManager.unselectImage(container);
 			});
 		});
-	},
-
-	toggleHelp: function () {
-		if ($('#image_select_toggler').hasClass('loading')) {
-			return;
-		}
-
-		var upload = $('#image_upload_container');
-		var select = $('#image_select_container');
-		var help = $('#image_help');
-		if (upload.is(':visible')) {
-			upload.slideUp(300, function() {
-				help.slideDown(300);
-			});
-		} else if (select.is(':visible')) {
-			select.slideUp(300, function() {
-				help.slideDown(300);
-			});
-		} else {
-			help.slideToggle(300);
-		}
-	},
-
-	toggleImageUpload: function () {
-		if ($('#image_select_toggler').hasClass('loading')) {
-			return;
-		}
-
-		var upload = $('#image_upload_container');
-		var select = $('#image_select_container');
-		var help = $('#image_help');
-		if (select.is(':visible')) {
-			select.slideUp(300, function() {
-				upload.slideDown(300);
-			});
-		} else if (help.is(':visible')) {
-			help.slideUp(300, function() {
-				upload.slideDown(300);
-			});
-		} else {
-			upload.slideToggle(300);
-		}
-	},
-
-	toggleUploadedImages: function () {
-		if ($('#image_select_toggler').hasClass('loading')) {
-			return;
-		}
-
-		var upload = $('#image_upload_container');
-		var help = $('#image_help');
-		var uploaded = $('#image_select_container');
-		if (uploaded.is(':visible')) {
-			uploaded.slideUp(300);
-		} else if (upload.is(':visible')) {
-			upload.slideUp(300, function() {
-				ImageManager.showUploadedImages();
-			});
-		} else if (help.is(':visible')) {
-			help.slideUp(300, function() {
-				ImageManager.showUploadedImages();
-			});
-		} else {
-			ImageManager.showUploadedImages();
-		}
 	},
 
 	showUploadedImages: function () {
