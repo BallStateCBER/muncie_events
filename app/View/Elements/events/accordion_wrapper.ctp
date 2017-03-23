@@ -1,7 +1,7 @@
 <div id="calendar_list_view_wrapper">
 	<div class="event_accordion" id="event_accordion">
 		<?php if (empty($events)): ?>
-			<p class="no_events notification_message">
+			<p class="no_events alert alert-info">
 				No upcoming events found.
 			</p>
 		<?php else: ?>

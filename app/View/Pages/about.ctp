@@ -45,6 +45,7 @@
 	$credits = array(
 		'People' => array(
 			'<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Administrator',
+			'Erica Dee Fox' => 'Web Developer',
 			'Benjamin Easley' => 'Graphic Designer',
 			'Nicholas Boyum' => 'Artist (map of Muncie background image)'
 		),

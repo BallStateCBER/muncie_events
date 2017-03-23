@@ -1,9 +1,9 @@
-<?php 
+<?php
 	$logged_in = (boolean) $this->Session->read('Auth.User.id');
 	$user_role = $this->Session->read('Auth.User.role');
 	$this->Js->buffer("setupSidebar();");
 ?>
-<div id="sidebar">
+<div id="sidebar" class="col-md-3">
 
 	<?php if ($logged_in && $user_role == 'admin'): ?>
 		<div>
@@ -11,8 +11,8 @@
 			<ul class="admin_actions">
 				<li>
 					<?php echo $this->Html->link('Approve Events', array(
-						'plugin' => false, 
-						'controller' => 'events', 
+						'plugin' => false,
+						'controller' => 'events',
 						'action' => 'moderate'
 					)); ?>
 					<?php if ($unapproved_count): ?>
@@ -23,8 +23,8 @@
 				</li>
 				<li>
 					<?php echo $this->Html->link('Manage Tags', array(
-						'plugin' => false, 
-						'controller' => 'tags', 
+						'plugin' => false,
+						'controller' => 'tags',
 						'action' => 'manage'
 					)); ?>
 				</li>
@@ -71,7 +71,7 @@
 			</h2>
 			<?php if (count($sidebar_vars['locations']) > 0): ?>
 				<form id="sidebar_select_location">
-					<select>
+					<select class='form-control'>
 						<option value="">
 							Select a location...
 						</option>
@@ -93,7 +93,7 @@
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
-	
+
 	<div>
 		<h2>
 			Tags
@@ -103,7 +103,8 @@
 		</h2>
 		<?php if (isset($sidebar_vars['upcoming_tags']) && count($sidebar_vars['upcoming_tags']) > 0): ?>
 			<?php echo $this->element('tags/cloud', array(
-				'upcoming_tags' => $sidebar_vars['upcoming_tags']
+				'upcoming_tags' => $sidebar_vars['upcoming_tags'],
+				'class' => 'form-control'
 			)); ?>
 		<?php else: ?>
 			<span class="no_results">
@@ -111,7 +112,7 @@
 			</span>
 		<?php endif; ?>
 	</div>
-	
+
 	<div id="sidebar_mailinglist">
 		<h2>
 			<?php echo $this->Html->link('Mailing List', array(
@@ -124,7 +125,7 @@
 			that you're interested in.
 		</p>
 	</div>
-	
+
 	<div id="sidebar_widget">
 		<h2>
 			<?php echo $this->Html->link('Calendar Widgets', array(
@@ -139,5 +140,5 @@
 			on your website.
 		</p>
 	</div>
-	
+
 </div>

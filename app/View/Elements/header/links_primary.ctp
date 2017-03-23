@@ -1,20 +1,22 @@
-<ul>
-	<li><?php 
+<ul class="navbar-nav">
+	<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='home') )?'active ' :'' ?>nav-item"><?php
 		echo $this->Html->link('Home', array(
-			'plugin' => false, 
-			'controller' => 
-			'pages', 
-			'action' => 'home'
-		)); 
+			'plugin' => false,
+			'controller' =>
+			'pages',
+			'action' => 'home'),
+			array(
+				'class' => 'nav-link',
+			));
 	?></li>
-	<li>
-		<a href="#" id="date_picker_toggler" class="opener">Go to Date...</a>
+	<li class="nav-item">
+		<a class="nav-link" id="date_picker_toggler" data-toggle="collapse" href="#header_nav_datepicker" aria-expanded="false" aria-controls="header_nav_datepicker">Go to Date...</a>
 		<?php
 			if (! isset($default)) {
 				$default = date('m/d/Y');
 			}
 		?>
-		<div id="header_nav_datepicker" class="submenu" style="display: none;">
+		<div id="header_nav_datepicker" class="collapse" aria-labelledby="date_picker_toggler">
 			<div>
 				<?php
 					$day_links = array();
@@ -28,25 +30,25 @@
 						$day = date('d', $timestamp);
 						$pop_dates_in_month = $header_vars['populated_dates'][$month_year];
 						if (! in_array($day, $pop_dates_in_month)) {
-							continue;	
+							continue;
 						}
-						
+
 						// Today
 						if ($n == 0) {
 							$day_links[] = $this->Html->link('Today', array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'today'
 							));
 						// Tomorrow
 						} elseif ($n == 1) {
 							$day_links[] = $this->Html->link('Tomorrow', array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'tomorrow'
 							));
 						// Monday, Tuesday, etc.
 						} elseif ($n < 7) {
 							$day_links[] = $this->Html->link(date('l', $timestamp), array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'day',
 								date('m', $timestamp),
 								date('d', $timestamp),
@@ -55,7 +57,7 @@
 						// A week or more in the future
 						} else {
 							$day_links[] = $this->Html->link(date('D, M j', $timestamp), array(
-								'controller' => 'events', 
+								'controller' => 'events',
 								'action' => 'day',
 								date('m', $timestamp),
 								date('d', $timestamp),
@@ -70,7 +72,7 @@
 				<?php if (! empty($day_links)): ?>
 					<ul>
 						<?php foreach ($day_links as $day_link): ?>
-							<li>
+							<li class="nav-item">
 								<?php echo $day_link; ?>
 							</li>
 						<?php endforeach; ?>
@@ -80,26 +82,11 @@
 			</div>
 		</div>
 	</li>
-	<?php /* Retained as an example of a drop-down menu
-		<li>
-			<a href="#" class="opener">Categories</a>
-			<ul id="header_nav_categories" class="submenu">
-				<?php foreach ($header_vars['categories'] as $category): ?>
-					<li>
-						<a href="<?php echo Router::url(array('controller' => 'events', 'action' => 'category', Inflector::slug(strtolower($category['Category']['slug'])))); ?>" class="with_icon">
-							<img src="<?php echo $category['Category']['icon']; ?>" height="16" />
-							<span><?php echo $category['Category']['name']; ?></span>
-						</a>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</li>
-	*/ ?>
-	<li>
-		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add')); ?>
+	<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='add') )?'active ' :'' ?>nav-item">
+		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add'), array('class'=>'nav-link')); ?>
 	</li>
-	<li>
-		<?php echo $this->Html->link('Widgets', array('plugin' => false, 'controller' => 'widgets', 'action' => 'index')); ?>
+	<li class="<?php echo (!empty($this->params['action']) && ($this->params['controller']=='widgets') )?'active ' :'' ?>nav-item">
+		<?php echo $this->Html->link('Widgets', array('plugin' => false, 'controller' => 'widgets', 'action' => 'index'), array('class'=>'nav-link')); ?>
 	</li>
 </ul>
 <?php

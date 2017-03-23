@@ -1,6 +1,15 @@
+// out:month.css
+
 @import "common";
 @import "../include/icons";
 @import "../include/popups";
+
+/* media query & responsive design vars */
+@x-small: ~"(max-width: 576px)";
+@small: ~"(min-width: 576px) and (max-width: 768px)";
+@medium: ~"(min-width: 768px) and (max-width: 992px)";
+@large: ~"(min-width: 992px) and (max-width: 1200px)";
+@x-large: ~"(min-width: 1200px)";
 
 @DefaultEventFontSize: 11px;
 
@@ -21,6 +30,9 @@ table.calendar {
 		ul {margin: 0; padding: 0;}
 		li {
 			font-size: @DefaultEventFontSize; list-style-type: none; overflow: hidden; padding: 5px 2px; white-space: normal;
+			@media @x-small {
+				max-height: 10px;
+			}
 			&:nth-child(even) {background-color: @BackgroundColorAlt;}
 			img {height: 12px; float: left; margin-left: -14px; margin-top: 1px; vertical-align: text-bottom; width: 12px;}
 		}
@@ -31,7 +43,7 @@ table.calendar {
 	}
 	td {
 		border: 1px solid @BorderColorDark; cursor:default; padding:5px; text-align:left; vertical-align: top;
-		&.prev_month, 
+		&.prev_month,
 		&.next_month {
 			border: none; text-align:center;
 			a {text-decoration: none;}

@@ -313,32 +313,6 @@
 				)); ?>
 			</td>
 		</tr>
-
-		<?php if ($has['series'] && $this->action == 'edit'): ?>
-			<tr id="series_editing_options">
-				<th>
-					Series Editing
-				</th>
-				<td>
-					<?php echo $this->Form->radio(
-						'update_series',
-						array(
-							'0' => 'Only update <strong>this event</strong>',
-							'future' => 'Update <strong>this and future events</strong> in this series',
-							'all' => 'Update <strong>all events</strong> in this series'
-						),
-						array(
-							'legend' => false
-						)
-					); ?>
-					<p id="series_editing_warning">
-						Warning: All event information will be copied from this event to other events in this series,
-						overwriting any changes that you may have made to those events since first posting them.
-					</p>
-				</td>
-			</tr>
-		<?php endif; ?>
-
 		<?php if ($this->action == 'add' && ! $this->Session->read('Auth.User.id')): ?>
 			<tr>
 				<th>Spam Protection</th>
