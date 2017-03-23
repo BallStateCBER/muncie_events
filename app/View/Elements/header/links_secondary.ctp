@@ -3,7 +3,6 @@
 	$user_role = $this->Session->read('Auth.User.role');
 ?>
 	<?php if ($logged_in): ?>
-		<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='account') )?'active ' :'' ?>nav-item"><?php echo $this->Html->link('Account', array('plugin' => false, 'controller' => 'users', 'action' => 'account'), array('class'=>'nav-link')); ?></li>
 		<li class="nav-item">
 			<?php if ($facebook_user): ?>
 				<?php echo $this->Facebook->disconnect(array(
@@ -14,6 +13,7 @@
 				<?php echo $this->Html->link('Log out', array('plugin' => false, 'controller' => 'users', 'action' => 'logout'), array('class'=>'nav-link')); ?>
 			<?php endif; ?>
 		</li>
+		<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='account') )?'active ' :'' ?>nav-item"><?php echo $this->Html->link('Account', array('plugin' => false, 'controller' => 'users', 'action' => 'account'), array('class'=>'nav-link')); ?></li>
 	<?php else: ?>
 		<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='login') )?'active ' :'' ?>nav-item"><?php echo $this->Html->link('Log in', array('plugin' => false, 'controller' => 'users', 'action' => 'login'), array('class'=>'nav-link')); ?></li>
 		<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='register') )?'active ' :'' ?>nav-item"><?php echo $this->Html->link('Register', array('plugin' => false, 'controller' => 'users', 'action' => 'register'), array('class'=>'nav-link')); ?></li>
