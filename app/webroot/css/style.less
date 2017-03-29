@@ -592,7 +592,8 @@ h1.page_title {
         margin: -25px -25px 5px -25px;
         padding: 0 0 0 10px;
         text-transform: uppercase;
-
+        font-family: Harabara;
+        letter-spacing: 2px;
         a {
             color: #fff;
         }
@@ -718,6 +719,7 @@ fieldset {
     legend {
         font-size: 130%;
         font-weight: bold;
+        width: auto;
     }
     fieldset {
         margin-top: 0;
@@ -754,6 +756,7 @@ input {
         margin: 5px;
         padding: 0;
         width: auto;
+        display: inline-block;
     }
 }
 div.checkbox label {
@@ -1746,6 +1749,11 @@ table.calendar {
     }
     #add_end_time {
         display: inline-block;
+        margin-left: 10px;
+    }
+    #eventform_noaddress {
+        float: left;
+        margin-top: 10px;
     }
     #eventform_tags .input {
         margin: 0;
@@ -2018,7 +2026,6 @@ div#custom_event_type_options {
     }
     img.expand_collapse {
         height: 10px;
-        width: 10px;
         padding-right: 8px;
     }
     img.expand_collapse,
@@ -2323,6 +2330,9 @@ iframe.widgets {
     .row {
         border-bottom: 1px dashed #555;
         list-style-type: none;
+        margin-left: 0px;
+        margin-right: 0px;
+        display: block;
         @media @x-small {
             border-bottom: none;
         }
