@@ -37,17 +37,17 @@
 				</span>
 					<span class="where">
 					<?php echo $event['Event']['location'] ? $event['Event']['location'] : '&nbsp;'; ?>
-					<div class="collapse" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="height: 0;"<?php endif; ?>>
+						<div class="collapse" id="more_info_<?php echo $event['Event']['id']; ?>" <?php if (! $leave_open): ?>style="height: 0;"<?php endif; ?>>
 						<?php if ($event['Event']['location_details']): ?>
 							<span class="location_details">
 								<?php echo $event['Event']['location_details']; ?>
 							</span>
-					<?php endif; ?>
-					<?php if ($event['Event']['address']): ?>
-					<span class="address" id="address_<?php echo $event['Event']['id']; ?>">
+						<?php endif; ?>
+						<?php if ($event['Event']['address']): ?>
+							<span class="address" id="address_<?php echo $event['Event']['id']; ?>">
 								<?php echo $event['Event']['address']; ?>
 							</span>
-					<?php endif; ?>
+						<?php endif; ?>
 					</span>
 				</a>
 				<div class="card">
