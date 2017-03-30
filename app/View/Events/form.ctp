@@ -224,7 +224,8 @@
 						'class' => 'form-control col-lg-8',
 						'div' => array(
 							'class' => 'col-lg-12'
-						)
+						),
+						'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
 					)); ?>
 					<br />
 					<?php echo $this->Form->input('location_details', array(
@@ -233,8 +234,7 @@
 						'placeholder' => 'Location details (upstairs, room 149, etc.)',
 						'div' => array(
 							'class' => 'col-lg-12'
-						),
-						'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
+						)
 					)); ?>
 
 				</div>
