@@ -218,18 +218,25 @@
 		<tr>
 			<th>Location</th>
 			<td>
-				<div class="form-group col-lg-8 col-xs-12">
+				<div class="form-group">
 					<?php echo $this->Form->input('location', array(
 						'label' => false,
-						'class' => 'form-control'
+						'class' => 'form-control col-lg-8',
+						'div' => array(
+							'class' => 'col-lg-12'
+						)
 					)); ?>
 					<br />
 					<?php echo $this->Form->input('location_details', array(
 						'label' => false,
-						'class' => 'form-control',
-						'placeholder' => 'Location details (upstairs, room 149, etc.)'
+						'class' => 'form-control col-lg-8',
+						'placeholder' => 'Location details (upstairs, room 149, etc.)',
+						'div' => array(
+							'class' => 'col-lg-12'
+						),
+						'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
 					)); ?>
-					<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style='display: none;'" : ""?>>Add address</a>
+
 				</div>
 			</td>
 		</tr>
