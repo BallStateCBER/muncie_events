@@ -236,7 +236,6 @@
 							'class' => 'col-lg-12'
 						)
 					)); ?>
-
 				</div>
 			</td>
 		</tr>
@@ -298,15 +297,17 @@
 		<tr id="eventform_hascost" <?php if (! $has['cost']): ?>style="display: none;"<?php endif; ?>>
 			<th>Cost</th>
 			<td>
-				<?php echo $this->Form->input('cost', array(
-					'maxLength' => 200,
-					'label' => false,
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					),
-					'after' => ' <a href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
-				)); ?>
+				<div class="form-group">
+					<?php echo $this->Form->input('cost', array(
+						'maxLength' => 200,
+						'label' => false,
+						'class' => 'form-control col-lg-8',
+						'div' => array(
+							'class'=>'col-lg-12'
+						),
+						'after' => ' <a href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
+					)); ?>
+				</div>
 			</td>
 		</tr>
 		<tr id="eventform_noages" <?php if ($has['ages']): ?>style="display: none;"<?php endif; ?>>
@@ -320,15 +321,17 @@
 		<tr id="eventform_hasages" <?php if (! $has['ages']): ?>style="display: none;"<?php endif; ?>>
 			<th>Age&nbsp;Restriction</th>
 			<td>
-				<?php echo $this->Form->input('age_restriction', array(
-					'label' => false,
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					),
-					'maxLength' => 30,
-					'after' => ' <a href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
-				)); ?>
+				<div class="form-group">
+					<?php echo $this->Form->input('age_restriction', array(
+						'label' => false,
+						'class' => 'form-control col-lg-8',
+						'div' => array(
+							'class'=>'col-lg-12'
+						),
+						'maxLength' => 30,
+						'after' => ' <a href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
+					)); ?>
+				</div>
 			</td>
 		</tr>
 		<tr id="eventform_nosource" <?php if ($has['source']): ?>style="display: none;"<?php endif; ?>>
@@ -342,14 +345,16 @@
 		<tr id="eventform_hassource" <?php if (! $has['source']): ?>style="display: none;"<?php endif; ?>>
 			<th>Source</th>
 			<td>
-				<?php echo $this->Form->input('source', array(
-					'label' => false,
-					'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					)
-				)); ?>
+				<div class="form-group">
+					<?php echo $this->Form->input('source', array(
+						'label' => false,
+						'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
+						'class' => 'form-control col-lg-8',
+						'div' => array(
+							'class'=>'col-lg-12'
+						)
+					)); ?>
+				</div>
 			</td>
 		</tr>
 		<?php if ($this->action == 'add' && ! $this->Session->read('Auth.User.id')): ?>
