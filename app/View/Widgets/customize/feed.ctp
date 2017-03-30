@@ -7,7 +7,7 @@
 ); ?>
 
 <div class="widget_controls_wrapper">
-	<div class="widget_controls">
+	<div class="widget_controls form-group col-lg-4">
 		<h2>Customize Your Widget</h2>
 		<form>
 			<h3>
@@ -29,7 +29,9 @@
 			</h3>
 			<div class="borders">
 				<?php echo $this->element('widgets/customize/borders'); ?>
-				<input type="checkbox" name="outerBorder" checked="checked" value="1" class="option" /> Border around widget
+				<div class="form-control">
+					<input type="checkbox" name="outerBorder" checked="checked" value="1" class="option" /> Border around widget
+				</div>
 			</div>
 
 			<h3>
@@ -43,34 +45,19 @@
 				<a href="#">Size</a>
 			</h3>
 			<div>
-				<label for="WidgetHeight">
-					Height:
-				</label>
-				<input id="WidgetHeight" value="<?php echo $defaults['iframe_options']['height']; ?>px" name="height" type="text" class="style" />
-
-				<br />
-
-				<label for="WidgetWidth">
-					Width:
-				</label>
-				<input id="WidgetWidth" value="<?php echo $defaults['iframe_options']['width']; ?>px" name="width" type="text" class="style" />
-				<p class="text-muted">
-					Sizes can be in pixels (e.g. 300px) or percentages (e.g. 100%).
-					A <strong>minimum width</strong> of 200px is recommended.
-				</p>
+				<?php echo $this->element('widgets/customize/size'); ?>
 			</div>
 
 			<br />
-			<input type="submit" value="Apply changes" />
+			<input class="btn btn-small" type="submit" value="Apply changes" />
 		</form>
 	</div>
-	<div class="widget_demo" id="widget_demo"></div>
-	<br class="clear" />
+	<div class="widget_demo col-lg-7" id="widget_demo"></div>
 </div>
 
 <?php
 	$this->Html->script('/jPicker/jpicker-1.1.6.js', array('inline' => false));
-	$this->Html->css('/jPicker/css/jpicker-1.1.6.min.css', null, array('inline' => false));
+	$this->Html->css('/jPicker/css/jPicker-1.1.6.min.css', null, array('inline' => false));
 	$this->Html->css('/jPicker/jPicker.css', null, array('inline' => false));
 	$this->Html->script('widgets/customize.js', array('inline' => false));
 	$this->Js->buffer("widgetCustomizer.setupWidgetDemo('feed');");
