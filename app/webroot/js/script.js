@@ -315,8 +315,12 @@ function setupEventAccordion() {
 				if (thumbnail.length > 0) {
 					if (collapse.is(':visible') && collapse.css('height') != '0px') {
 						thumbnail.fadeIn(150);
+						toggler.find('.address').slideUp(150);
+						toggler.find('.location_details').slideUp(150);
 					} else {
 						thumbnail.fadeOut(500);
+						toggler.find('.address').css('display', 'block');
+						toggler.find('.location_details').css('display', 'block');
 					}
 				}
 
