@@ -4,19 +4,19 @@ var muncieEventsMonthWidget = {
 	prepared_calendars: new Array(),
 	events: {},
 	fade_duration: 200,
-	
+
 	prepareWidget: function() {
-		
+
 	},
-	
+
 	prepareLinks: function(calendar_selector) {
 		// Skip if this calendar has already been prepared
 		if (this.prepared_calendars.indexOf(calendar_selector) != -1) {
 			return;
 		}
-		
+
 		var calendar = $(calendar_selector);
-		
+
 		// Prev / next links
 		calendar.find('thead a.prev_month').click(function(event) {
 			event.preventDefault();
@@ -26,14 +26,14 @@ var muncieEventsMonthWidget = {
 			event.preventDefault();
 			muncieEventsMonthWidget.goToNextMonth();
 		});
-		
+
 		// Event links
 		calendar.find('tbody a.event').click(function(event) {
 			event.preventDefault();
 			var event_id = $(this).data('eventId');
 			muncieEventsMonthWidget.showEvent(event_id);
 		});
-		
+
 		// Date and 'more events' links
 		var year = calendar.data('year');
 		var month = calendar.data('month');
@@ -42,10 +42,10 @@ var muncieEventsMonthWidget = {
 			var day = $(this).data('day');
 			muncieEventsMonthWidget.listEventsOnDay(year, month, day);
 		});
-		
+
 		this.prepared_calendars.push(calendar_selector);
 	},
-	
+
 	/**
 	 * Prepares the 'event actions' block (like on Facebook, export, edit, etc.)
 	 * @param container_selector
@@ -53,7 +53,7 @@ var muncieEventsMonthWidget = {
 	setupEventActions: function(container_selector) {
 		$(container_selector).find('.export_options_toggler').click(function(event) {
 			event.preventDefault();
-			var link = $(this); 
+			var link = $(this);
 			link.parent('div').toggleClass('open');
 			link.next('.export_options').slideToggle(300);
 		});
@@ -102,10 +102,10 @@ var muncieEventsMonthWidget = {
 			}
 		});
 	},
-	
+
 	listEventsOnDay: function(year, month, day) {
 		var date = year+'-'+month+'-'+day;
-		
+
 		// If there are no events on this date
 		if (! this.events[date]) {
 			// Find appropriate cell
@@ -114,14 +114,14 @@ var muncieEventsMonthWidget = {
 				console.log('Error: Calendar cell not found. ($(\'#calendar_'+year+'-'+month+' a[data-day='+day+']\').parents(\'td\');)');
 				return;
 			}
-			
+
 			// Avoid creating multiple messages
 			var container = cell.children('div');
 			var existing_message = container.children('.no_events');
 			if (existing_message.length > 0) {
 				return;
 			}
-			
+
 			// Display message that fades in and out
 			var message = $('<p class="no_events">No events on this day.</p>').hide();
 			container.append(message);
@@ -131,14 +131,14 @@ var muncieEventsMonthWidget = {
 						message.remove();
 					});
 				}, 3000);
-			});			
+			});
 			return;
 		}
-		
+
 		var calendar_container = $('#calendar_container');
 		var event_lists_container = $('#event_lists');
 		var event_list = $('#events_on_'+year+'_'+month+'_'+day);
-		
+
 		// If this list has already been generated
 		if (event_list.length > 0) {
 			calendar_container.fadeOut(this.fade_duration, function() {
@@ -147,17 +147,17 @@ var muncieEventsMonthWidget = {
 			});
 			return;
 		}
-		
+
 		// If a list must be generated
 		event_list = $('<div id="events_on_'+year+'_'+month+'_'+day+'"></div>');
 		event_list.append('<h2>'+this.events[date].heading+'</h2>');
-		
+
 		for (var i = 0; i < this.events[date].events.length; i++) {
 			var event = this.events[date].events[i];
 			var event_link = $('<a href="'+event.url+'" data-event-id="'+event.id+'" class="event"></a>');
 			event_link.click(function(event) {
 				event.preventDefault();
-				var event_id = $(this).data('eventId'); 
+				var event_id = $(this).data('eventId');
 				event_lists_container.fadeOut(muncieEventsMonthWidget.fade_duration, function() {
 					event_list.hide();
 					muncieEventsMonthWidget.showEvent(event_id);
@@ -189,21 +189,21 @@ var muncieEventsMonthWidget = {
 		event_lists_container.append(event_list);
 		calendar_container.fadeOut(muncieEventsMonthWidget.fade_duration, function() {
 			event_lists_container.fadeIn(this.fade_duration);
-		});		
+		});
 	},
-	
+
 	getNextMonth: function() {
 		var current_month = this.getCurrentMonthInt();
 		var next_month = (current_month == 12) ? 1 : current_month + 1;
 		return this.zeroPadMonth(next_month);
 	},
-	
+
 	getPrevMonth: function() {
 		var current_month = this.getCurrentMonthInt();
 		var prev_month = (current_month == 1) ? 12 : current_month - 1;
 		return this.zeroPadMonth(prev_month);
 	},
-	
+
 	getCurrentMonthInt: function() {
 		var month = this.current_month;
 		if (typeof(month) == 'string' && month.substr(0, 1) == '0') {
@@ -211,30 +211,30 @@ var muncieEventsMonthWidget = {
 		}
 		return parseInt(month);
 	},
-	
+
 	zeroPadMonth: function(month) {
 		if (month < 10) {
 			return '0'+month;
 		}
 		return month;
 	},
-	
+
 	getNextMonthsYear: function() {
 		var current_year = parseInt(this.current_year);
 		var current_month = this.getCurrentMonthInt();
 		return (current_month == 12) ? current_year + 1 : current_year;
 	},
-	
+
 	getPrevMonthsYear: function() {
 		var current_year = parseInt(this.current_year);
 		var current_month = this.getCurrentMonthInt();
 		return (current_month == 1) ? current_year - 1 : current_year;
 	},
-	
+
 	setCurrentMonth: function(month) {
 		this.current_month = month;
 	},
-	
+
 	setCurrentYear: function(year) {
 		this.current_year = year;
 	},
@@ -242,11 +242,11 @@ var muncieEventsMonthWidget = {
 	goToNextMonth: function() {
 		this.goToMonth(this.getNextMonthsYear(), this.getNextMonth());
 	},
-	
+
 	goToPrevMonth: function() {
 		this.goToMonth(this.getPrevMonthsYear(), this.getPrevMonth());
 	},
-	
+
 	goToMonth: function(year, month) {
 		var loaded_calendar = $('#calendar_'+year+'-'+month);
 		if (loaded_calendar.length > 0) {
@@ -270,11 +270,11 @@ var muncieEventsMonthWidget = {
 				//$('#calendar_container table.calendar:visible').fadeOut(muncieEventsMonthWidget.fade_duration);
 			},
 			success: function(data) {
-				
 				$('#calendar_container table.calendar:visible').fadeOut(muncieEventsMonthWidget.fade_duration, function() {
 					$(this).parent().hide().append(data).fadeIn(muncieEventsMonthWidget.fade_duration);
+                    console.log(muncieEventsMonthWidget);
 				});
-				
+
 				/*
 				var calendar = $(data).hide();
 				$('#calendar_container').append(calendar);
@@ -289,7 +289,7 @@ var muncieEventsMonthWidget = {
 			}
 		});
 	},
-	
+
 	setEvents: function(events) {
 		if (events.length == 0) {
 			return;
@@ -307,11 +307,11 @@ var muncieEventsMonthWidget = {
 			*/
 		}
 	},
-	
+
 	loadingStart: function() {
 		$('#loading').fadeIn(this.fade_duration);
 	},
-	
+
 	loadingEnd: function() {
 		$('#loading').fadeOut(this.fade_duration);
 	}
