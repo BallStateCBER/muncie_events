@@ -104,7 +104,7 @@ a {
     margin: 0 auto 0 auto;
 }
 body {
-    background: #838C95 url('/img/boyum_map.jpg') no-repeat center top;
+    background: #838C95 url('/img/boyum_map.jpg') no-repeat center fixed;
     background-size: 100% auto;
     font-family: Tahoma, sans-serif;
 }
@@ -121,7 +121,7 @@ body {
     }
 }
 .header {
-    padding: 0rem .5rem .5rem 0rem;
+    padding: 0rem .5rem 0rem 0rem;
 }
 .header-nav {
     ul {
@@ -132,6 +132,12 @@ body {
                 border-radius: 10px;
                 margin: 10px;
                 transition: background 1.5s, box-shadow 1.5s, text-shadow 1.5s;
+            }
+            @media @medium {
+                margin-left: 10px;
+            }
+            @media @small {
+                margin-left: 10px;
             }
             @media @x-large {
                 border-radius: 10px;
@@ -168,7 +174,10 @@ body {
 }
 #header {
     background: fade(#000, 40%);
-    padding: 0px;
+    padding-bottom: 10px;
+    @media @x-large {
+        padding-bottom: 0px;
+    }
     h1 {
         span:nth-of-type(2) {
             color: #0c365a;
@@ -200,9 +209,7 @@ body {
         font-family: Harabara;
         font-weight: normal;
         letter-spacing: 2px;
-        margin-left: 80px;
         min-width: 125px;
-        padding: 5px;
         text-align: center;
         text-shadow: -2px 2px 2px rgba(12,54,90,0.5);
         @media @x-small {
@@ -211,13 +218,12 @@ body {
         }
         @media @small {
             box-shadow: none;
+            padding: 10px;
         }
         @media @large {
-            margin-left: 0px;
             width: 100%;
         }
         @media @x-large {
-            margin-left: 0px;
             width: 100%;
         }
         .punctuation {
@@ -275,6 +281,9 @@ body {
                 text-decoration: underline;
             }
         }
+    }
+    .navbar-brand {
+        padding-top: 0px;
     }
     #res-nav {
         @media @large {
@@ -402,6 +411,12 @@ body {
     float: left;
     @media @large {
         display: none;
+    }
+    @media @medium {
+        margin: -10px;
+    }
+    @media @small {
+        float: none;;
     }
     @media @x-large {
         display: none;
