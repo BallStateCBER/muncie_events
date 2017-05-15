@@ -124,9 +124,6 @@ body {
     padding: 0rem .5rem .5rem 0rem;
 }
 .header-nav {
-    display: block;
-    float: right;
-    width: 100%;
     ul {
         li.nav-item {
             color: #fff !important;
@@ -141,7 +138,7 @@ body {
                 margin: 10px;
                 transition: background 1.5s, box-shadow 1.5s, text-shadow 1.5s;
             }
-            &:hover {
+            /*&:hover {
                 text-decoration: underline;
                 @media @large {
                     background: @LayoutHighlightColor;
@@ -153,10 +150,10 @@ body {
                     box-shadow: @LayoutBoxShadow;
                     text-shadow: -2px 2px 2px rgba(12,54,90,0.5);
                 }
-            }
+            }*/
         }
     }
-    li.active {
+    /*li.active {
         @media @large {
             background: @LayoutHighlightColor;
             box-shadow: @LayoutBoxShadow;
@@ -167,11 +164,16 @@ body {
             box-shadow: @LayoutBoxShadow;
             text-shadow: -2px 2px 2px rgba(12,54,90,0.5);
         }
-    }
+    }*/
 }
 #header {
     background: fade(#000, 40%);
     padding: 0px;
+    h1 {
+        span:nth-of-type(2) {
+            color: #0c365a;
+        }
+    }
     @media @x-small {
         background: @LayoutHighlightColor;
         padding: .5rem 1rem;
@@ -219,7 +221,7 @@ body {
             display: inline-block;
         }
         span {
-            display: inline-block;
+            display: block;
             text-transform: lowercase;
             @media @large {
                 display: block;;
@@ -233,15 +235,13 @@ body {
         }
         #logo-icon {
             @media @x-large {
-                font-size: 50px;
+                font-size: 75px;
             }
         }
     }
     .title {
       @media @large {
-        position: absolute;
-        top: 0px;
-        left: 435px;
+        position: relative;
       }
     }
     #mid-nav {
@@ -251,11 +251,10 @@ body {
             vertical-align: middle;
             .nav-item {
                 display: inline-block;
+                font-size: 16px;
             }
         }
         a {
-            border-left: 1px solid #fff;
-            border-right: 1px solid #fff;
             color: #fff !important;
             font-weight: bold;
             padding-bottom: 0px;
@@ -268,8 +267,28 @@ body {
         }
     }
     #res-nav {
+        @media @large {
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            font-size: 12px;
+            z-index: 6;
+            a {
+                color: white;
+            }
+        }
         @media @medium {
             display: none;
+        }
+        @media @x-large {
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            font-size: 12px;
+            z-index: 6;
+            a {
+                color: white;
+            }
         }
     }
     #tagline,
@@ -295,13 +314,19 @@ body {
     #tagline-lg {
         position: absolute;
         right: 0px;
-        top: 0px;
+        top: -15px;
         li {
             a {
                 background: none;
                 box-shadow: none;
+                font-size: 25px;
                 margin-right: 0px;
+                position: relative;
                 text-align: right;
+                width: 100%;
+                .icon-me-logo {
+                    vertical-align: -1px;
+                }
             }
         }
         @media @small {
@@ -325,13 +350,12 @@ body {
     padding: 0;
     position: absolute;
     text-shadow: none;
-    top: 100%;
-    width: auto;
     z-index: 4;
     @media @x-small {
         left: 0px;
         max-width: 100%;
         position: relative;
+        text-align: center;
         top: 0px;
     }
     @media @small {
@@ -360,7 +384,6 @@ body {
         display: block;
         margin: 0px;
         padding-bottom: 10px;
-        text-align: center;
         @media @x-large {
             margin-left: 0px;
         }
@@ -401,6 +424,18 @@ body {
         }
     }
 }
+
+.primary-nav {
+    @media @large {
+        bottom: -30px;
+        position: relative;
+    }
+    @media @x-large {
+        bottom: -50px;
+        position: relative;
+    }
+}
+
 #search_form {
     float: right;
     margin-top: 10px;
@@ -587,12 +622,13 @@ h1.page_title {
         background-color: @LayoutHighlightColor;
         box-shadow: @LayoutBoxShadow;
         color: #fff;
+        font-family: Harabara;
         font-size: 120%;
+        letter-spacing: 2px;
         margin: -25px -25px 5px -25px;
         padding: 0 0 0 10px;
+        text-shadow: -1px 1px 1px rgba(0,0,0,.25);
         text-transform: uppercase;
-        font-family: Harabara;
-        letter-spacing: 2px;
         a {
             color: #fff;
         }
@@ -899,6 +935,12 @@ div.event_accordion,
 }
 #EventSearchForm {
     @media @x-large {
+        bottom: -35px;
+        position: relative;
+    }
+    @media @large {
+        position: relative;
+        top: -10px;
     }
 }
 hgroup.event_accordion {
@@ -906,7 +948,6 @@ hgroup.event_accordion {
     font-size: 120%;
     letter-spacing: 3px;
     margin-top: 10px;
-    text-align: center;
     @media @x-large {
         text-align: left;
     }
@@ -1129,17 +1170,11 @@ ul.event_accordion {
         }
     }
     .actions {
-        font-size: 80%;
         margin-left: 0px;
         text-align: center;
-        > a,
-        > div {
-            vertical-align: top;
-        }
         a {
-            font-size: 20px;
+            font-size: 0.8em;
             margin-left: 15px;
-            vertical-align: top;
             @media @x-small {
                 font-size: 15px;
                 margin-left: 0px;
@@ -2141,6 +2176,7 @@ iframe.widgets {
     clear: both;
 }
 .widget_controls {
+    border: 1px solid black;
     float: left;
     font-size: 80%;
     margin-bottom: 15px;
@@ -2230,6 +2266,7 @@ iframe.widgets {
     float: right;
 
     p {
+        margin-top: 1rem;
         text-align: left;
     }
     code {
