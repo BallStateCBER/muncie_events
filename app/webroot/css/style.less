@@ -196,6 +196,7 @@ body {
         border-bottom-right-radius: 10px;
         box-shadow: -4px 4px 5px rgba(50,50,50,.5);
         color: #fff;
+        float: right;
         font-family: Harabara;
         font-weight: normal;
         letter-spacing: 2px;
@@ -212,22 +213,27 @@ body {
             box-shadow: none;
         }
         @media @large {
-            margin-left: 0px
+            margin-left: 0px;
+            width: 100%;
         }
         @media @x-large {
             margin-left: 0px;
+            width: 100%;
         }
         .punctuation {
             display: inline-block;
         }
         span {
-            display: block;
+            display: inline-block;
             text-transform: lowercase;
             @media @large {
-                display: block;;
+                display: block;
+            }
+            @media @medium {
+                display: block;
             }
             @media @x-large {
-                display: block;
+                font-size: 36px;
             }
         }
         .title {
@@ -235,6 +241,7 @@ body {
         }
         #logo-icon {
             @media @x-large {
+                display: block;
                 font-size: 75px;
             }
         }
@@ -243,6 +250,9 @@ body {
       @media @large {
         position: relative;
       }
+    }
+    #med-nav {
+        text-align: right;
     }
     #mid-nav {
         display: none;
@@ -304,13 +314,6 @@ body {
             float: right;
         }
     }
-    #tagline {
-        display: none;
-        @media @small {
-            display: inline-block;
-            line-height: normal;
-        }
-    }
     #tagline-lg {
         position: absolute;
         right: 0px;
@@ -345,7 +348,6 @@ body {
     box-shadow: @LayoutBoxShadow;
     box-shadow: none;
     font-weight: normal;
-    left: 210px;
     line-height: normal;
     padding: 0;
     position: absolute;
@@ -357,17 +359,6 @@ body {
         position: relative;
         text-align: center;
         top: 0px;
-    }
-    @media @small {
-        left: 120px;
-        top: 235px;
-    }
-    @media @medium {
-        left: 120px;
-        top: 100px;
-    }
-    @media @large {
-        left: -50px;
     }
     > div {
         padding: 10px;
@@ -408,10 +399,14 @@ body {
     }
 }
 #mobile-search {
+    float: left;
     @media @large {
         display: none;
     }
     @media @x-large {
+        display: none;
+    }
+    @media @x-small {
         display: none;
     }
     #EventSearchForm {
@@ -487,7 +482,6 @@ body {
     padding: 0;
     position: absolute;
     right: 0;
-    top: 45px;
     z-index: 3;
     @media @medium {
         top: 100%;
