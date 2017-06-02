@@ -148,7 +148,10 @@
 		<tr>
 			<th></th>
 			<td>
-				<?php echo $this->Form->end('Update Series'); ?>
+                <?php echo $this->Form->submit('Update Series', [
+                    'class' => 'btn btn-sm'
+                ]); ?>
+				<?php echo $this->Form->end(); ?>
 			</td>
 	</tbody>
 </table>
