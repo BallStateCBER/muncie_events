@@ -33,9 +33,6 @@
 	    </div>
 	    <div id="image_select_container" class="collapse" role="tabpanel" aria-labelledby="image_select_heading">
 	      <div class="card-block">
-              <p>
-                  Do I work?
-              </p>
 	      </div>
 	    </div>
 	  </div>
