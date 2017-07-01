@@ -60,9 +60,6 @@ function setupHeaderNav() {
 
 			return [selectable, class_name, tooltip];
 		},
-		onChangeMonthYear: function(year, month) {
-
-		}
 	}).change(function(event) {
 		var date = $(this).val();
 		window.location.href = '/events/day/'+date;
