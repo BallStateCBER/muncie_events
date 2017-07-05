@@ -2714,6 +2714,9 @@ iframe.widgets {
   font-weight: normal;
   width: auto;
 }
+.widget_controls .form-control {
+  background-color: transparent;
+}
 #WidgetFilter_categories {
   margin-left: 10px;
 }
