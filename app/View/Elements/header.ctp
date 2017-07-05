@@ -35,6 +35,7 @@
             <a class="navbar-brand logo">
                 <?php echo $this->element('header/tagline'); ?>
             </a>
+            <br />
             <?php echo $this->element('header/search'); ?>
         </li>
     </ul>

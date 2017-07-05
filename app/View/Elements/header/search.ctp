@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropdown" id="search_form">
     <?php
         echo $this->Form->create('Event', array(
             'id' => 'EventSearchForm',

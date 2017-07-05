@@ -1064,6 +1064,9 @@ body {
     position: relative;
   }
 }
+#search_form {
+  white-space: nowrap;
+}
 #search_autocomplete_loading {
   margin-right: 5px;
   visibility: hidden;
