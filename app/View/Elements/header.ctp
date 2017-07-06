@@ -9,9 +9,6 @@
     </h1>
     <ul class="navbar-nav" id="med-nav">
         <li class="navbar-item">
-            <div id="mobile-search">
-                <?php echo $this->element('header/search'); ?>
-            </div>
             <ul id="mid-nav" class="navbar-nav">
                 <?php echo $this->element('header/links_secondary'); ?>
             </ul>
@@ -35,7 +32,7 @@
                 <?php echo $this->element('header/tagline'); ?>
             </a>
             <br />
-            <?php echo $this->element('header/search'); ?>
         </li>
     </ul>
+    <?php echo $this->element('header/search'); ?>
 </nav>

@@ -411,33 +411,6 @@ body {
         float: none;
     }
 }
-#mobile-search {
-    float: left;
-    @media @large {
-        display: none;
-    }
-    @media @medium {
-        margin: -10px;
-    }
-    @media @small {
-        float: none;
-    }
-    @media @x-large {
-        display: none;
-    }
-    @media @x-small {
-        display: none;
-    }
-    #EventSearchForm {
-        text-align: center;
-        margin: 5px;
-    }
-    #search_options_toggler {
-        @media @x-small {
-            display: none;
-        }
-    }
-}
 
 .primary-nav {
     @media @large {
@@ -925,12 +898,24 @@ div.event_accordion,
 }
 #EventSearchForm {
     @media @x-large {
-        bottom: -35px;
+        bottom: -50px;
+        left: 35%;
         position: relative;
     }
     @media @large {
+        left: 30%;
         position: relative;
-        top: -10px;
+        top: 30px;
+    }
+    @media @medium {
+        position: relative;
+        top: -20px;
+    }
+    @media @small {
+        margin: 0 auto;
+    }
+    @media @x-small {
+        margin: 0 auto;
     }
     .input-group-btn {
         display: inline-flex;
