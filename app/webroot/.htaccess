@@ -2,10 +2,16 @@
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+    RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
     RewriteRule ^(.*)$ index.php [QSA,L]
     
     # Redirect www subdomain
     RewriteBase /
     RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+    RewriteCond %{REQUEST_URI} !^/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
     RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 </IfModule>
