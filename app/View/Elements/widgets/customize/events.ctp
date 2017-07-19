@@ -2,7 +2,7 @@
 	$this->Html->script('tag_manager.js', array('inline' => false));
 ?>
 
-<div>
+<div class="form-control">
 	<input type="checkbox" name="use_custom_categories" value="1" id="WidgetFilterToggler_categories" class="filter_toggler" />
 	<label for="WidgetFilterToggler_categories">Only specific categories...</label>
 	<div id="WidgetFilter_categories" style="display: none;">
@@ -21,7 +21,7 @@
 		<?php endforeach; ?>
 	</div>
 </div>
-<div>
+<div class="form-control">
 	<input type="checkbox" name="use_custom_location" value="1" id="WidgetFilterToggler_location" class="filter_toggler" />
 	<label for="WidgetFilterToggler_location">Only a specific location...</label>
 	<div id="WidgetFilter_location" style="display: none;">
@@ -31,7 +31,7 @@
 		</p>
 	</div>
 </div>
-<div>
+<div class="form-control">
 	<input type="checkbox" name="use_custom_tag_include" value="1" id="WidgetFilterToggler_tag_include" class="filter_toggler" />
 	<label for="WidgetFilterToggler_tag_include">Must have one of these tags...</label>
 	<div id="WidgetFilter_tag_include" style="display: none;">
@@ -45,7 +45,7 @@
 		"); ?>
 	</div>
 </div>
-<div>
+<div class="form-control">
 	<input type="checkbox" name="use_custom_tag_exclude" value="1" id="WidgetFilterToggler_tag_exclude" class="filter_toggler" />
 	<label for="WidgetFilterToggler_tag_exclude">Must NOT have these tags...</label>
 	<div id="WidgetFilter_tag_exclude" style="display: none;">

@@ -5,7 +5,7 @@ class Widget extends AppModel {
 	public $useTable = false;
 	public $widget_type = null;
 	public $custom_styles = array();
-	
+
 	public function getDefaults() {
 		if (! $this->widget_type) {
 			throw new InternalErrorException('Widget type is null.');
@@ -35,19 +35,19 @@ class Widget extends AppModel {
 		switch ($this->widget_type) {
 			case 'feed':
 				$defaults['iframe_options']['height'] = 300;
-				$defaults['iframe_options']['width'] = 300;
+				$defaults['iframe_options']['width'] = 100;
 				break;
 			case 'month':
 				$defaults['styles']['fontSize'] = '11px';
 				$defaults['styles']['showIcons'] = true;
 				$defaults['iframe_options']['height'] = 400;
-				$defaults['iframe_options']['width'] = 600;
+				$defaults['iframe_options']['width'] = 100;
 				$defaults['event_options']['events_displayed_per_day'] = 2;
 				break;
 		}
 		return $defaults;
 	}
-	
+
 	public function setType($widget_type) {
 		switch ($widget_type) {
 			case 'feed':
@@ -58,7 +58,7 @@ class Widget extends AppModel {
 				throw new InternalErrorException('Unknown widget type: '.$widget_type);
 		}
 	}
-	
+
 	public function getOptions() {
 		if (empty($_SERVER['QUERY_STRING'])) {
 			return array();
@@ -68,25 +68,25 @@ class Widget extends AppModel {
 		foreach ($parameters as $option) {
 			$option_split = explode('=', $option);
 			if (count($option_split) != 2) {
-				continue;	
+				continue;
 			}
 			list($key, $val) = $option_split;
-			
+
 			// Clean up option and skip blanks
 			$val = trim($val);
 			if ($val == '') {
 				continue;
 			}
 			$key = str_replace('amp;', '', $key);
-			
-			// Retain only valid options that differ from their default values 
+
+			// Retain only valid options that differ from their default values
 			if ($this->isValidNondefaultOption($key, $val)) {
 				$options[$key] = $val;
 			}
 		}
 		return $options;
 	}
-	
+
 	public function getIframeQueryString() {
 		if (empty($_SERVER['QUERY_STRING'])) {
 			return '';
@@ -97,29 +97,29 @@ class Widget extends AppModel {
 		foreach ($parameters as $option) {
 			$option_split = explode('=', $option);
 			if (count($option_split) != 2) {
-				continue;	
+				continue;
 			}
 			list($key, $val) = $option_split;
-			
+
 			// Clean up option and skip blanks
 			$val = trim($val);
 			if ($val == '') {
 				continue;
 			}
 			$key = str_replace('amp;', '', $key);
-			
-			// Retain only valid params that differ from their default values 
+
+			// Retain only valid params that differ from their default values
 			if ($this->isValidNondefaultOption($key, $val)) {
-				// Iframe options (applying to the iframe element, but not 
+				// Iframe options (applying to the iframe element, but not
 				// its contents) aren't included in the query string
 				if (! isset($defaults['iframe_options'][$key])) {
 					$iframe_params[$key] = $val;
 				}
 			}
 		}
-		return http_build_query($iframe_params, '', '&amp;'); 
+		return http_build_query($iframe_params, '', '&amp;');
 	}
-	
+
 	/**
 	 * Returns TRUE if $key is found in default_styles, default_iframe_options, or default_event_options and $val is not the default value
 	 * @param string $key
@@ -143,13 +143,13 @@ class Widget extends AppModel {
 		}
 		return false;
 	}
-	
+
 	public function getIframeStyles($options) {
 		$iframe_styles = '';
 		$defaults = $this->getDefaults();
-		
-		// Dimensions
-		foreach (array('width', 'height') as $dimension) {
+
+		// Dimensions for height
+		foreach (array('height') as $dimension) {
 			if (isset($options[$dimension])) {
 				$unit = substr($options[$dimension], -1) == '%' ? '%' : 'px';
 				$value = preg_replace("/[^0-9]/", "", $options[$dimension]);
@@ -159,7 +159,18 @@ class Widget extends AppModel {
 			}
 			$iframe_styles .= "$dimension:{$value}$unit;";
 		}
-		
+		// Dimensions for width
+		foreach (array('width') as $dimension) {
+			if (isset($options[$dimension])) {
+				$unit = substr($options[$dimension], -1) == '%' ? '%' : 'px';
+				$value = preg_replace("/[^0-9]/", "", $options[$dimension]);
+			} else {
+				$unit = '%';
+				$value = $defaults['iframe_options'][$dimension];
+			}
+			$iframe_styles .= "$dimension:{$value}$unit;";
+		}
+
 		// Border
 		if (isset($options['outerBorder']) && $options['outerBorder'] == 0) {
 			$iframe_styles .= "border:0;";
@@ -171,10 +182,10 @@ class Widget extends AppModel {
 			}
 			$iframe_styles .= "border:1px solid $outer_border_color;";
 		}
-		
+
 		return $iframe_styles;
 	}
-	
+
 	public function addCustomStyle($elements, $rules) {
 		if (! is_array($elements)) {
 			$elements = array($elements);
@@ -188,10 +199,10 @@ class Widget extends AppModel {
 			}
 		}
 	}
-	
+
 	public function processCustomStyles($options) {
 		if (empty($options)) {
-			return;	
+			return;
 		}
 		$defaults = $this->getDefaults();
 		foreach ($options as $var => $val) {
@@ -207,7 +218,7 @@ class Widget extends AppModel {
 					continue;
 				}
 			} else {
-				continue;	
+				continue;
 			}
 			if (method_exists($this, "style_$var")) {
 				$method = "style_$var";
@@ -215,7 +226,7 @@ class Widget extends AppModel {
 			}
 		}
 	}
-	
+
 	private function style_textColorDefault($val) {
 		$this->addCustomStyle(
 			'body',
@@ -253,8 +264,8 @@ class Widget extends AppModel {
 		if ($this->widget_type == 'feed') {
 			$this->addCustomStyle(
 				array(
-					'#event_list h2.day', 
-					'#event_list p.no_events', 
+					'#event_list h2.day',
+					'#event_list p.no_events',
 					'#load_more_events_wrapper.loading a',
 				),
 				"color:$val;"
@@ -264,7 +275,7 @@ class Widget extends AppModel {
 
 	private function style_textColorLink($val) {
 		$this->addCustomStyle(
-			'a', 
+			'a',
 			"color:$val;"
 		);
 		if ($this->widget_type == 'feed') {
@@ -274,7 +285,7 @@ class Widget extends AppModel {
 			);
 		}
 	}
-	
+
 	private function style_borderColorLight($val) {
 		$this->addCustomStyle(
 			'a.back:first-child',
@@ -305,10 +316,10 @@ class Widget extends AppModel {
 			$this->addCustomStyle(
 				'#event_lists .close',
 				"border-color:$val;"
-			);	
+			);
 		}
 	}
-	
+
 	private function style_borderColorDark($val) {
 		if ($this->widget_type == 'feed') {
 			$this->addCustomStyle(
@@ -325,23 +336,23 @@ class Widget extends AppModel {
 			);
 		}
 	}
-	
+
 	private function style_backgroundColorDefault($val) {
 		$this->addCustomStyle(
 			array(
-				'html, body', 
+				'html, body',
 				'#loading div:nth-child(1)'
 			),
 			"background-color:$val;"
 		);
 		if ($this->widget_type == 'month') {
 			$this->addCustomStyle(
-				'#event_lists > div > div', 
+				'#event_lists > div > div',
 				"background-color:$val;"
 			);
 		}
 	}
-	
+
 	private function style_backgroundColorAlt($val) {
 		$this->addCustomStyle(
 			'#widget_filters',
@@ -363,7 +374,7 @@ class Widget extends AppModel {
 			);
 		}
 	}
-	
+
 	private function style_fontSize($val) {
 		if ($this->widget_type == 'month') {
 			$this->addCustomStyle(
@@ -375,10 +386,10 @@ class Widget extends AppModel {
 			);
 		}
 	}
-	
+
 	private function style_showIcons($val) {
 		if ($val) {
-			return;	
+			return;
 		}
 		if ($this->widget_type == 'month') {
 			$this->addCustomStyle(
@@ -387,10 +398,10 @@ class Widget extends AppModel {
 			);
 		}
 	}
-	
+
 	private function style_hideGeneralEventsIcon($val) {
 		if (! $val) {
-			return;	
+			return;
 		}
 		if ($this->widget_type == 'month') {
 			$this->addCustomStyle(

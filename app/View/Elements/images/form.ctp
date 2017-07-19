@@ -1,9 +1,9 @@
 <?php
-	$upload_max = ini_get('upload_max_filesize');
-	$post_max = ini_get('post_max_size');
+    $upload_max = ini_get('upload_max_filesize');
+    $post_max = ini_get('post_max_size');
     $server_filesize_limit = min($upload_max, $post_max);
     $manual_filesize_limit = min('10M', $server_filesize_limit);
-	$this->Html->script('image_manager.js', array('inline' => false));
+    $this->Html->script('image_manager.js', array('inline' => false));
 ?>
 
 <div id="image_form">
@@ -33,35 +33,35 @@
 	    </div>
 	    <div id="image_select_container" class="collapse" role="tabpanel" aria-labelledby="image_select_heading">
 	      <div class="card-block">
-					<ul id="selected_images">
-						<?php if (! empty($this->request->data['EventsImage'])): ?>
-							<?php foreach ($this->request->data['EventsImage'] as $selected_image): ?>
-								<?php
-									$id = $selected_image['image_id'];
-									$filename = $this->request->data['Image'][$id]['filename'];
-								?>
-								<li id="selectedimage_<?php echo $id; ?>" data-image-id="<?php echo $id; ?>">
-									<img src="/img/icons/arrow-move.png" class="handle" alt="Move" title="Move" />
-									<a href="#" class="remove"><img src="/img/icons/cross.png" class="remove" alt="Remove" title="Remove" /></a>
-									<?php echo $this->Calendar->thumbnail('tiny', array(
-										'filename' => $filename,
-										'class' => 'selected_image'
-									)); ?>
-									<?php echo $this->Form->input("Image.$id", array(
-										'label' => 'Caption:',
-										'div' => false,
-										'type' => 'text',
-										'value' => $selected_image['caption'],
-										'placeholder' => "Enter a caption for this image",
-										'class' => 'caption'
-									)); ?>
-								</li>
-							<?php endforeach; ?>
-						<?php endif; ?>
-					</ul>
 	      </div>
 	    </div>
 	  </div>
+      <ul id="selected_images">
+          <?php if (! empty($this->request->data['EventsImage'])): ?>
+              <?php foreach ($this->request->data['EventsImage'] as $selected_image): ?>
+                  <?php
+                        $id = $selected_image['image_id'];
+                        $filename = $this->request->data['Image'][$id]['filename'];
+                    ?>
+                  <li id="selectedimage_<?php echo $id; ?>" data-image-id="<?php echo $id; ?>">
+                      <img src="/img/icons/arrow-move.png" class="handle" alt="Move" title="Move" />
+                      <a href="#" class="remove"><img src="/img/icons/cross.png" class="remove" alt="Remove" title="Remove" /></a>
+                      <?php echo $this->Calendar->thumbnail('tiny', array(
+                            'filename' => $filename,
+                            'class' => 'selected_image'
+                        )); ?>
+                      <?php echo $this->Form->input("Image.$id", array(
+                            'label' => 'Caption:',
+                            'div' => false,
+                            'type' => 'text',
+                            'value' => $selected_image['caption'],
+                            'placeholder' => "Enter a caption for this image",
+                            'class' => 'caption'
+                        )); ?>
+                  </li>
+              <?php endforeach; ?>
+          <?php endif; ?>
+      </ul>
 	  <div class="card">
 	    <div class="card-header" role="tab" id="image_help_heading">
 	      <h5 class="mb-0">
@@ -102,9 +102,9 @@
 </div>
 
 <?php
-	echo $this->Html->script('/uploadifive/jquery.uploadifive.min.js', array('inline' => false));
-	echo $this->Html->css('/uploadifive/uploadifive.css', null, array('inline' => false));
-	$this->Js->buffer("
+    echo $this->Html->script('/uploadifive/jquery.uploadifive.min.js', array('inline' => false));
+    echo $this->Html->css('/uploadifive/uploadifive.css', null, array('inline' => false));
+    $this->Js->buffer("
 		ImageManager.setupUpload({
 			token: '".md5(Configure::read('upload_verify_token').time())."',
 			user_id: '".$this->Session->read('Auth.User.id')."',
