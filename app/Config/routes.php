@@ -17,6 +17,7 @@ Router::connect('/moderate', 	array('controller' => 'events', 'action' => 'moder
 Router::connect('/reset_password/*',	array('controller' => 'users', 'action' => 'reset_password'));
 Router::connect('/past_locations', 		array('controller' => 'events', 'action' => 'past_locations'));
 Router::connect('/robots.txt', 	array('controller' => 'pages', 'action' => 'robots'));
+Router::redirect('/wp-login.php', 	array('controller' => 'pages', 'action' => 'home'));
 
 // The following content types will have /type/id route to /types/view/id
 $models = array('event', 'user', 'tag', 'event_series');
