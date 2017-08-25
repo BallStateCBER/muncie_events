@@ -139,7 +139,11 @@
         ?>
 		<?php foreach ($tags as $tag_name => $tag): ?>
 			<?php
-                $font_size = log($tag['count']) / log($max_count) * $font_size_range + $min_font_size;
+                if ($max_count) {
+                    $font_size = log($tag['count']) / log($max_count) * $font_size_range + $min_font_size;
+                } else {
+                    $font_size = $min_font_size;
+                }
                 $font_size = round($font_size, 1);
 			?>
 			<?php echo $this->Html->link(
