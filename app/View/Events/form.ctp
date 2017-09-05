@@ -1,7 +1,7 @@
 <?php
-	$multiple_dates_allowed = ($this->action == 'add' || $this->action == 'edit_series');
-	$logged_in = (boolean) $this->Session->read('Auth.User.id');
-	$this->Html->script('event_form.js', array('inline' => false));
+    $multiple_dates_allowed = ($this->action == 'add' || $this->action == 'edit_series');
+    $logged_in = (boolean) $this->Session->read('Auth.User.id');
+    $this->Html->script('event_form.js', array('inline' => false));
 ?>
 
 <h1 class="page_title">
@@ -51,94 +51,93 @@
 <?php endif; ?>
 
 <?php
-	echo $this->Form->create('Event');
-	if (isset($event_id) && $event_id) {
-		echo $this->Form->input('Event.id', array('type' => 'hidden'));
-	}
+    echo $this->Form->create('Event');
+    if (isset($event_id) && $event_id) {
+        echo $this->Form->input('Event.id', array('type' => 'hidden'));
+    }
 ?>
 <table class="event_form">
 	<tbody>
 		<tr>
 			<th>Event</th>
 			<td><?php
-				echo $this->Form->input('title', array(
-					'label' => false,
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					)
-				));
-			?></td>
+                echo $this->Form->input('title', array(
+                    'label' => false,
+                    'class' => 'form-control',
+                    'div' => array(
+                        'class'=>'form-group col-lg-8 col-xs-12'
+                    )
+                ));
+            ?></td>
 		</tr>
 		<?php /* if ($this->request->data['Event']['series_id']): ?>
-			<tr>
-				<th>Part of Series</th>
-				<td class="in_series">
-					<?php if (! empty($this->data['EventSeries']['title'])): ?>
-						<?php echo $this->data['EventSeries']['title']; ?>
-					<?php else: ?>
-						(Unnamed series)
-					<?php endif; ?>
-					<?php echo $this->Html->link(
-						'view',
-						array(
-							'controller' => 'event_series',
-							'action' => 'view',
-							'id' => $this->data['Event']['series_id']
-						)
-					); ?>
-					|
-					<?php echo $this->Html->link(
-						'edit',
-						array(
-							'controller' => 'event_series',
-							'action' => 'edit',
-							'id' => $this->data['Event']['series_id']
-						)
-					); ?>
-				</td>
-			</tr>
-		<?php endif; */ ?>
+            <tr>
+                <th>Part of Series</th>
+                <td class="in_series">
+                    <?php if (! empty($this->data['EventSeries']['title'])): ?>
+                        <?php echo $this->data['EventSeries']['title']; ?>
+                    <?php else: ?>
+                        (Unnamed series)
+                    <?php endif; ?>
+                    <?php echo $this->Html->link(
+                        'view',
+                        array(
+                            'controller' => 'event_series',
+                            'action' => 'view',
+                            'id' => $this->data['Event']['series_id']
+                        )
+                    ); ?>
+                    |
+                    <?php echo $this->Html->link(
+                        'edit',
+                        array(
+                            'controller' => 'event_series',
+                            'action' => 'edit',
+                            'id' => $this->data['Event']['series_id']
+                        )
+                    ); ?>
+                </td>
+            </tr>
+        <?php endif; */ ?>
 		<tr>
 			<th>Category</th>
 			<td><?php
-				echo $this->Form->input('category_id', array(
-					'label' => false,
-					'options' => $categories,
-					'empty' => false,
-					'default' => 13,
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					)
-				));
-			?></td>
+                echo $this->Form->input('category_id', array(
+                    'label' => false,
+                    'options' => $categories,
+                    'empty' => false,
+                    'default' => 13,
+                    'class' => 'form-control',
+                    'div' => array(
+                        'class'=>'form-group col-lg-8 col-xs-12'
+                    )
+                ));
+            ?></td>
 		</tr>
 		<tr>
 			<th>Date(s)</th>
 			<td>
 				<div class="col-xs-12 col-lg-8">
-					<div id="datepicker" class="<?php echo ($multiple_dates_allowed ? 'multi' : 'single'); ?>"></div>
+					<div id="datepicker" class="<?php echo($multiple_dates_allowed ? 'multi' : 'single'); ?>"></div>
 					<?php
-						if ($multiple_dates_allowed) {			// Multiple dates can be selected
-							$this->Html->script('jquery-ui.multidatespicker.js', array('inline' => false));
-							$this->Js->buffer("
+                        if ($multiple_dates_allowed) {            // Multiple dates can be selected
+                            $this->Html->script('jquery-ui.multidatespicker.js', array('inline' => false));
+                            $this->Js->buffer("
 								var default_date = '$default_date';
 								var preselected_dates = $datepicker_preselected_dates;
 								setupDatepickerMultiple(default_date, preselected_dates);
 							");
-
-						} else {	// Only one date can be selected
-							$this->Js->buffer("
+                        } else {    // Only one date can be selected
+                            $this->Js->buffer("
 								var default_date = '".$this->request->data['Event']['date']."';
 								setupDatepickerSingle(default_date);
 							");
-						}
-						echo $this->Form->input('date', array(
-							'type' => 'hidden',
-							'id' => 'datepicker_hidden'
-						));
-					?>
+                        }
+                        echo $this->Form->input('date', array(
+                            'type' => 'hidden',
+                            'id' => 'datepicker_hidden'
+                        ));
+                    ?>
 					<?php if ($multiple_dates_allowed): ?>
 						<div class="text-muted">
 							Select more than one date to create multiple events connected by a series.
@@ -157,16 +156,16 @@
 				<th>Series Name</th>
 				<td>
 					<?php echo $this->Form->input('EventSeries.title', array(
-						'label' => false,
-						'after' => '<div class="text-muted">By default, the series and its events have the same title.</div>',
-						'class' => 'form-control',
-						'div' => array(
-							'class'=>'form-group col-lg-8 col-xs-12'
-						)
-					)); ?>
+                        'label' => false,
+                        'after' => '<div class="text-muted">By default, the series and its events have the same title.</div>',
+                        'class' => 'form-control',
+                        'div' => array(
+                            'class'=>'form-group col-lg-8 col-xs-12'
+                        )
+                    )); ?>
 					<?php echo $this->Form->input('series_id', array(
-						'type' => 'hidden'
-					)); ?>
+                        'type' => 'hidden'
+                    )); ?>
 				</td>
 			</tr>
 		<?php endif; ?>
@@ -174,43 +173,43 @@
 			<th>Time</th>
 			<td>
 				<?php
-					echo $this->Form->input('time_start', array(
-						'label' => false,
-						'interval' => 5,
-						'timeFormat' => '12',
-						'div' => array(
-							'id' => 'eventform_timestart_div',
-							'class'=>'form-group col-md-10 col-xs-12'
-						),
-						'class' => 'form-control event_time_form',
-						'after' => '<span id="eventform_noendtime" '.($has['end_time'] ? 'style="display: none;"' : '').'><a id="add_end_time" href="#">Add end time</a></span>'
-					));
-				?>
+                    echo $this->Form->input('time_start', array(
+                        'label' => false,
+                        'interval' => 5,
+                        'timeFormat' => '12',
+                        'div' => array(
+                            'id' => 'eventform_timestart_div',
+                            'class'=>'form-group col-md-10 col-xs-12'
+                        ),
+                        'class' => 'form-control event_time_form',
+                        'after' => '<span id="eventform_noendtime" '.($has['end_time'] ? 'style="display: none;"' : '').'><a id="add_end_time" href="#">Add end time</a></span>'
+                    ));
+                ?>
 				<div id="eventform_hasendtime" class="form-group col-md-10 col-xs-12" <?php if (! $has['end_time']): ?>style="display: none;"<?php endif; ?>>
 					<?php
-						if (isset($this->data['Event']['time_end'])) {
-							$selected_end_time = ($this->data['Event']['time_end'] == '00:00:00')
-								? '24:00:00'	// Fixes bug where midnight is represented as noon
-								: $this->data['Event']['time_end'];
-						} else {
-							$selected_end_time = array(
-								'hour' => '1',
-								'min' => '00',
-								'meridian' => 'pm'
-							);
-						}
-						echo $this->Form->input('time_end', array(
-							'label' => false,
-							'interval' => 5,
-							'timeFormat' => '12',
-							'selected' => $selected_end_time,
-							'class' => 'form-control event_time_form'
-						));
-					?>
+                        if (isset($this->data['Event']['time_end'])) {
+                            $selected_end_time = ($this->data['Event']['time_end'] == '00:00:00')
+                                ? '24:00:00'    // Fixes bug where midnight is represented as noon
+                                : $this->data['Event']['time_end'];
+                        } else {
+                            $selected_end_time = array(
+                                'hour' => '1',
+                                'min' => '00',
+                                'meridian' => 'pm'
+                            );
+                        }
+                        echo $this->Form->input('time_end', array(
+                            'label' => false,
+                            'interval' => 5,
+                            'timeFormat' => '12',
+                            'selected' => $selected_end_time,
+                            'class' => 'form-control event_time_form'
+                        ));
+                    ?>
 					<?php echo $this->Form->hidden('has_end_time', array(
-						'id' => 'eventform_hasendtime_boolinput',
-					 	'value' => $has['end_time'] ? 1 : 0
-					)); ?>
+                        'id' => 'eventform_hasendtime_boolinput',
+                        'value' => $has['end_time'] ? 1 : 0
+                    )); ?>
 					<a href="#" id="remove_end_time">Remove end time</a>
 				</div>
 			</td>
@@ -220,22 +219,22 @@
 			<td>
 				<div class="form-group">
 					<?php echo $this->Form->input('location', array(
-						'label' => false,
-						'class' => 'form-control col-lg-8',
-						'div' => array(
-							'class' => 'col-lg-12'
-						),
-						'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
-					)); ?>
+                        'label' => false,
+                        'class' => 'form-control col-lg-8',
+                        'div' => array(
+                            'class' => 'col-lg-12'
+                        ),
+                        'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
+                    )); ?>
 					<br />
 					<?php echo $this->Form->input('location_details', array(
-						'label' => false,
-						'class' => 'form-control col-lg-8',
-						'placeholder' => 'Location details (upstairs, room 149, etc.)',
-						'div' => array(
-							'class' => 'col-lg-12'
-						)
-					)); ?>
+                        'label' => false,
+                        'class' => 'form-control col-lg-8',
+                        'placeholder' => 'Location details (upstairs, room 149, etc.)',
+                        'div' => array(
+                            'class' => 'col-lg-12'
+                        )
+                    )); ?>
 				</div>
 			</td>
 		</tr>
@@ -243,12 +242,12 @@
 			<th>Address</th>
 			<td>
 				<?php echo $this->Form->input('address', array(
-					'label' => false,
-					'class' => 'form-control',
-					'div' => array(
-						'class'=>'form-group col-lg-8 col-xs-12'
-					)
-				)); ?>
+                    'label' => false,
+                    'class' => 'form-control',
+                    'div' => array(
+                        'class'=>'form-group col-lg-8 col-xs-12'
+                    )
+                )); ?>
 			</td>
 		</tr>
 		<tr>
@@ -256,9 +255,9 @@
 			<td>
 				<div class="form-group col-lg-8 col-xs-12">
 					<?php echo $this->element('tinymce_input', array(
-						'field' => 'Event.description',
-						'div' => false
-					)); ?>
+                        'field' => 'Event.description',
+                        'div' => false
+                    )); ?>
 				</div>
 				</div>
 			</td>
@@ -268,13 +267,13 @@
 			<td id="eventform_tags">
 				<div class="form-group col-lg-8 col-xs-12">
 					<?php
-						echo $this->element('tags/tag_editing', array(
-							'available_tags' => $available_tags,
-							'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
-							'hide_label' => true,
-							'allow_custom' => $logged_in
-						));
-					?>
+                        echo $this->element('tags/tag_editing', array(
+                            'available_tags' => $available_tags,
+                            'selected_tags' => isset($this->request->data['Tag']) ? $this->request->data['Tag'] : array(),
+                            'hide_label' => true,
+                            'allow_custom' => $logged_in
+                        ));
+                    ?>
 				</div>
 			</td>
 		</tr>
@@ -299,14 +298,14 @@
 			<td>
 				<div class="form-group">
 					<?php echo $this->Form->input('cost', array(
-						'maxLength' => 200,
-						'label' => false,
-						'class' => 'form-control col-lg-8',
-						'div' => array(
-							'class'=>'col-lg-12'
-						),
-						'after' => ' <a href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
-					)); ?>
+                        'maxLength' => 200,
+                        'label' => false,
+                        'class' => 'form-control col-lg-8',
+                        'div' => array(
+                            'class'=>'col-lg-12'
+                        ),
+                        'after' => ' <a href="#" id="event_remove_cost">Remove</a><div class="text-muted">Just leave this blank if the event is free.</div>'
+                    )); ?>
 				</div>
 			</td>
 		</tr>
@@ -323,14 +322,14 @@
 			<td>
 				<div class="form-group">
 					<?php echo $this->Form->input('age_restriction', array(
-						'label' => false,
-						'class' => 'form-control col-lg-8',
-						'div' => array(
-							'class'=>'col-lg-12'
-						),
-						'maxLength' => 30,
-						'after' => ' <a href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
-					)); ?>
+                        'label' => false,
+                        'class' => 'form-control col-lg-8',
+                        'div' => array(
+                            'class'=>'col-lg-12'
+                        ),
+                        'maxLength' => 30,
+                        'after' => ' <a href="#" id="event_remove_age_restriction">Remove</a><div class="text-muted">Leave this blank if this event has no age restrictions.</div>'
+                    )); ?>
 				</div>
 			</td>
 		</tr>
@@ -347,13 +346,13 @@
 			<td>
 				<div class="form-group">
 					<?php echo $this->Form->input('source', array(
-						'label' => false,
-						'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
-						'class' => 'form-control col-lg-8',
-						'div' => array(
-							'class'=>'col-lg-12'
-						)
-					)); ?>
+                        'label' => false,
+                        'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
+                        'class' => 'form-control col-lg-8',
+                        'div' => array(
+                            'class'=>'col-lg-12'
+                        )
+                    )); ?>
 				</div>
 			</td>
 		</tr>
@@ -369,33 +368,33 @@
 			<th></th>
 			<td>
 				<?php
-					switch ($this->action) {
-						case 'add':
-							$label = 'Add Event';
-							break;
-						case 'edit':
-							$label = 'Update Event';
-							break;
-						case 'edit_series':
-							$label = 'Update Series';
-							break;
-					}
-					echo $this->Form->submit($label, array('class'=>'btn btn-secondary btn-sm'));
-				?>
+                    switch ($this->action) {
+                        case 'add':
+                            $label = 'Add Event';
+                            break;
+                        case 'edit':
+                            $label = 'Update Event';
+                            break;
+                        case 'edit_series':
+                            $label = 'Update Series';
+                            break;
+                    }
+                    echo $this->Form->submit($label, array('class'=>'btn btn-secondary'));
+                ?>
 			</td>
 		</tr>
 	</tbody>
 </table>
 
 <?php
-	$previous_locations_for_autocomplete = array();
-	foreach ($previous_locations as $location => $address) {
-		$previous_locations_for_autocomplete[] = array(
-			'label' => $location,
-			'value' => $address
-		);
-	}
-	$this->Js->buffer('
+    $previous_locations_for_autocomplete = array();
+    foreach ($previous_locations as $location => $address) {
+        $previous_locations_for_autocomplete[] = array(
+            'label' => $location,
+            'value' => $address
+        );
+    }
+    $this->Js->buffer('
 		eventForm.previousLocations = '.$this->Js->object($previous_locations_for_autocomplete).';
 		setupEventForm();
 	');

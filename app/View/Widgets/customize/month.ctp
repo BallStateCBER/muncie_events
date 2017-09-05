@@ -1,9 +1,9 @@
 <h1 class="page_title">Monthly Calendar</h1>
 
 <?php echo $this->Html->link(
-	'&larr; Back to Widgets Overview',
-	array('action' => 'index'),
-	array('escape' => false, 'class' => 'under_header_back')
+    '&larr; Back to Widgets Overview',
+    array('action' => 'index'),
+    array('escape' => false, 'class' => 'under_header_back')
 ); ?>
 
 <div class="widget_controls_wrapper">
@@ -95,16 +95,16 @@
 			</div>
 
 			<br />
-			<input class="btn btn-small" type="submit" value="Apply changes" />
+			<input class="btn" type="submit" value="Apply changes" />
 		</form>
 	</div>
 	<div class="widget_demo col-lg-7" id="widget_demo"></div>
 </div>
 
 <?php
-	$this->Html->script('/jPicker/jpicker-1.1.6.js', array('inline' => false));
-	$this->Html->css('/jPicker/css/jPicker-1.1.6.min.css', null, array('inline' => false));
-	$this->Html->css('/jPicker/jPicker.css', null, array('inline' => false));
-	$this->Html->script('widgets/customize.js', array('inline' => false));
-	$this->Js->buffer("widgetCustomizer.setupWidgetDemo('month');");
+    $this->Html->script('/jPicker/jpicker-1.1.6.js', array('inline' => false));
+    $this->Html->css('/jPicker/css/jPicker-1.1.6.min.css', null, array('inline' => false));
+    $this->Html->css('/jPicker/jPicker.css', null, array('inline' => false));
+    $this->Html->script('widgets/customize.js', array('inline' => false));
+    $this->Js->buffer("widgetCustomizer.setupWidgetDemo('month');");
 ?>

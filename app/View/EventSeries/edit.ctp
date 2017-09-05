@@ -149,7 +149,7 @@
 			<th></th>
 			<td>
                 <?php echo $this->Form->submit('Update Series', [
-                    'class' => 'btn btn-sm'
+                    'class' => 'btn'
                 ]); ?>
 				<?php echo $this->Form->end(); ?>
 			</td>
