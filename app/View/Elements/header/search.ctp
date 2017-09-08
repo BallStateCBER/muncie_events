@@ -13,9 +13,9 @@
         <div class="btn-group">
             <?= $this->Form->submit('Search', [
                 'div' => false,
-                'class' => 'btn btn-default'
+                'class' => 'btn btn-default btn-sm'
             ]) ?>
-            <button id="search_options_toggler" class="dropdown-toggle btn btn-secondary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="search_options_toggler" class="dropdown-toggle btn btn-secondary btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Search options</span>
             </button>
