@@ -1,9 +1,9 @@
 <?php
-	$logged_in = (boolean) $this->Session->read('Auth.User.id');
-	$user_role = $this->Session->read('Auth.User.role');
-	$this->Js->buffer("setupSidebar();");
+    $logged_in = (boolean) $this->Session->read('Auth.User.id');
+    $user_role = $this->Session->read('Auth.User.role');
+    $this->Js->buffer("setupSidebar();");
 ?>
-<div id="sidebar" class="col-md-3">
+<div id="sidebar" class="col-lg-3 col-md-4">
 
 	<?php if ($logged_in && $user_role == 'admin'): ?>
 		<div>
@@ -11,10 +11,10 @@
 			<ul class="admin_actions">
 				<li>
 					<?php echo $this->Html->link('Approve Events', array(
-						'plugin' => false,
-						'controller' => 'events',
-						'action' => 'moderate'
-					)); ?>
+                        'plugin' => false,
+                        'controller' => 'events',
+                        'action' => 'moderate'
+                    )); ?>
 					<?php if ($unapproved_count): ?>
 						<span class="count">
 							<?php echo $unapproved_count; ?>
@@ -23,10 +23,10 @@
 				</li>
 				<li>
 					<?php echo $this->Html->link('Manage Tags', array(
-						'plugin' => false,
-						'controller' => 'tags',
-						'action' => 'manage'
-					)); ?>
+                        'plugin' => false,
+                        'controller' => 'tags',
+                        'action' => 'manage'
+                    )); ?>
 				</li>
 			</ul>
 		</div>
@@ -40,18 +40,18 @@
 					<li>
 						<a href="<?php echo Router::url(array('controller' => 'events', 'action' => 'category', $category['Category']['slug'])); ?>" class="with_icon">
 							<span class="category_name"><?php
-								echo $category['Category']['name'];
-							 ?></span>
+                                echo $category['Category']['name'];
+                             ?></span>
 							<?php
-								$category_id = $category['Category']['id'];
-								if (isset($sidebar_vars['upcoming_event_totals_by_category'][$category_id])) {
-									$upcoming_events_count = $sidebar_vars['upcoming_event_totals_by_category'][$category_id];
-								} else {
-									$upcoming_events_count = 0;
-								}
-								if ($upcoming_events_count):
-									$title = $upcoming_events_count.' upcoming '.__n('event', 'events', $upcoming_events_count);
-							?>
+                                $category_id = $category['Category']['id'];
+                                if (isset($sidebar_vars['upcoming_event_totals_by_category'][$category_id])) {
+                                    $upcoming_events_count = $sidebar_vars['upcoming_event_totals_by_category'][$category_id];
+                                } else {
+                                    $upcoming_events_count = 0;
+                                }
+                                if ($upcoming_events_count):
+                                    $title = $upcoming_events_count.' upcoming '.__n('event', 'events', $upcoming_events_count);
+                            ?>
 								<span class="upcoming_events_count" title="<?php echo $title; ?>">
 									<?php echo $upcoming_events_count; ?>
 								</span>
@@ -98,14 +98,14 @@
 		<h2>
 			Tags
 			<?php echo $this->Html->link('See all', array(
-				'controller' => 'tags', 'action' => 'index', 'plugin' => false
-			), array('class' => 'see_all')); ?>
+                'controller' => 'tags', 'action' => 'index', 'plugin' => false
+            ), array('class' => 'see_all')); ?>
 		</h2>
 		<?php if (isset($sidebar_vars['upcoming_tags']) && count($sidebar_vars['upcoming_tags']) > 0): ?>
 			<?php echo $this->element('tags/cloud', array(
-				'upcoming_tags' => $sidebar_vars['upcoming_tags'],
-				'class' => 'form-control'
-			)); ?>
+                'upcoming_tags' => $sidebar_vars['upcoming_tags'],
+                'class' => 'form-control'
+            )); ?>
 		<?php else: ?>
 			<span class="no_results">
 				No tags found for upcoming events.
@@ -116,8 +116,8 @@
 	<div id="sidebar_mailinglist">
 		<h2>
 			<?php echo $this->Html->link('Mailing List', array(
-				'controller' => 'mailing_list', 'action' => 'join', 'plugin' => false
-			)); ?>
+                'controller' => 'mailing_list', 'action' => 'join', 'plugin' => false
+            )); ?>
 		</h2>
 		<p>
 			<?php echo $this->Html->link('Join the Mailing List', array('plugin' => false, 'controller' => 'mailing_list', 'action' => 'join')); ?>
@@ -129,8 +129,8 @@
 	<div id="sidebar_widget">
 		<h2>
 			<?php echo $this->Html->link('Calendar Widgets', array(
-				'controller' => 'widgets', 'action' => 'index', 'plugin' => false
-			)); ?>
+                'controller' => 'widgets', 'action' => 'index', 'plugin' => false
+            )); ?>
 		</h2>
 		<p>
 			Join our event promotion network by displaying a free
