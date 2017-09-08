@@ -8,17 +8,17 @@
 			<th>Time</th>
 			<td class="direction">
 				<?php foreach (array('upcoming', 'past') as $dir): ?>
-					<?php echo $this->Html->link(
-						ucfirst($dir).' Events',
-						array(
-							'controller' => 'tags',
-							'action' => 'index',
-							($dir == 'upcoming' ? 'future' : 'past')
-						),
-						array(
-							'class' => ($direction_adjective == $dir ? 'selected' : ''),
-						)
-					); ?>
+                    <?php echo $this->Html->link(
+ +                        ucfirst($dir).' Events',
+ +                        array(
+ +                            'controller' => 'tags',
+ +                            'action' => 'index',
+ +                            ($dir == 'upcoming' ? 'future' : 'past')
+ +                        ),
+ +                        array(
+ +                            'class' => ($direction_adjective == $dir ? 'selected' : ''),
+ +                        )
+ +                    ); ?>
 				<?php endforeach; ?>
 			</td>
 		</tr>
