@@ -289,6 +289,16 @@ body {
     .navbar-brand {
         padding-top: 0px;
     }
+    .navbar-nav {
+        .nav-item {
+            .nav-link {
+                color: #fff;
+                &:hover, &:active {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
     #res-nav {
         @media @large {
             position: absolute;
@@ -502,6 +512,7 @@ h1.page_title {
     color: #fff;
     font-size: 80%;
     margin-top: 15px;
+    padding-bottom: 20px;
     text-align: center;
 
     a {
