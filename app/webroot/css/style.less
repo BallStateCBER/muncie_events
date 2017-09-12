@@ -110,6 +110,9 @@ body {
 }
 
 /* HEADER */
+a [class^="icon-"]:before, a [class*=" icon-"]:before {
+    cursor: default !important;
+}
 #EventFilter {
     border-radius: 0.3em 0px 0px 0.3em;
     display: inline-block;
@@ -222,9 +225,11 @@ body {
             padding: 10px;
         }
         @media @large {
+            float: none;
             width: 100%;
         }
         @media @x-large {
+            float: none;
             width: 100%;
         }
         .punctuation {
@@ -422,7 +427,6 @@ body {
         float: none;
     }
 }
-
 .primary-nav {
     @media @large {
         bottom: -30px;
@@ -453,15 +457,24 @@ body {
     }
 }
 #search_options {
+    background-clip: padding-box;
     background-color: #fff;
     border-radius: @LayoutBorderRadius;
     border: @LayoutBorderWidth solid @LayoutPrimaryColor;
     box-shadow: @LayoutBoxShadow;
+    color: #292b2c;
+    font-size: 1rem;
     font-weight: normal;
+    float: left;
     left: inherit;
+    list-style: none;
+    margin: .125rem 0 0;
+    min-width: 10rem;
     padding: 0;
     position: absolute;
     right: 0;
+    text-align: left;
+    top: 100%;
     z-index: 3;
     @media @medium {
         top: 100%;
@@ -533,6 +546,7 @@ h1.page_title {
 /* SIDEBAR */
 #sidebar {
     float: right;
+    padding-right: 10px;
 
     > div {
         border-radius: @LayoutBorderRadius;
@@ -893,6 +907,18 @@ div.checkbox label {
 
 
 /* EVENT ACCORDION */
+.card {
+    border: none;
+}
+.card-footer {
+    border-top: none;
+}
+.card-header {
+    border-bottom: none;
+}
+.card, .card-header, .card-footer {
+    background-color: #f0f0f0;
+}
 div.event_accordion,
 .event_accordion_aside > div {
     -moz-box-sizing: border-box;
@@ -910,20 +936,23 @@ div.event_accordion,
 }
 #EventSearchForm {
     @media @x-large {
-        bottom: -50px;
-        left: 35%;
+        bottom: -47px;
         position: relative;
+        right: 47%;
+        width: 152%;
     }
     @media @large {
-        left: 30%;
+        bottom: -30px;
         position: relative;
-        top: 30px;
+        right: 47%;
+        width: 152%;
     }
     @media @medium {
         position: relative;
     }
     @media @small {
         margin: 0 auto;
+        width: 60%;
     }
     @media @x-small {
         margin: 0 auto;
@@ -1145,7 +1174,7 @@ ul.event_accordion {
     .description {
         background-color: #fff;
         line-height: 1.6em;
-        margin: 15px;
+        margin: 0px 15px;
         overflow: hidden;
         padding: 10px;
         word-break: normal;
