@@ -49,12 +49,13 @@
 -Nanners
 Vegetables
 -Taters</pre>
-		<?php echo $this->Form->input('name', array('type' => 'textarea', 'label' => false, 'style' => 'width: 100%;')); ?>
-		<?php echo $this->Form->input('parent_name', array('label' => 'Parent Tag (optional)', 'type' => 'text', 'class' => 'search_field')); ?>
+		<?php echo $this->Form->input('name', array('type' => 'textarea', 'label' => false, 'style' => 'width: 100%;', 'class' => 'form-control')); ?>
+		<?php echo $this->Form->input('parent_name', array('label' => 'Parent Tag (optional)', 'type' => 'text', 'class' => 'search_field form-control form-control')); ?>
 		<p>
 			All tags will be created as both listed and selectable.
 		</p>
-		<?php echo $this->Form->end('Add'); ?>
+		<?php echo $this->Form->submit('Add', ['class' => 'btn']); ?>
+        <?php echo $this->Form->end(); ?>
 
 		<div id="add_results"></div>
 	</div>
@@ -64,14 +65,14 @@ Vegetables
 			Warning: If a tag is removed, all child-tags will also be removed. This cannot be undone.
 		</p>
 		<?php echo $this->Html->link('Remove all tags in the "Delete" group', array(
-			'controller' => 'tags', 'action' => 'empty_delete_group'
-		)); ?>
+            'controller' => 'tags', 'action' => 'empty_delete_group'
+        )); ?>
 		<p>
 			Or start typing a tag name:
 		</p>
 		<form id="tag_remove_form">
-			<input type="text" id="tag_remove_field" class="search_field" />
-			<input type="submit" value="Remove" />
+			<input type="text" id="tag_remove_field" class="search_field form-control form-control" />
+			<input type="submit" value="Remove" class="btn" />
 		</form>
 		<div class="results"></div>
 	</div>
@@ -82,9 +83,9 @@ Vegetables
 		</p>
 		<div>
 			<form id="tag_edit_search_form">
-				<input type="text" class="search_field" />
+				<input type="text" class="search_field form-control" />
 				<br />
-				<input type="submit" value="Edit this tag" />
+				<input type="submit" value="Edit this tag" class="btn" />
 			</form>
 		</div>
 		<div class="results" id="edit_results"></div>
@@ -96,13 +97,13 @@ Vegetables
 		</p>
 		<form id="tag_merge_form">
 			Merge
-			<input type="text" id="tag_merge_from_field" class="search_field"/>
+			<input type="text" id="tag_merge_from_field" class="search_field form-control"/>
 			into
-			<input type="text" id="tag_merge_into_field" class="search_field"/>
+			<input type="text" id="tag_merge_into_field" class="search_field form-control"/>
 
 			<span class="footnote">(The first tag will be <strong>removed</strong>.)</span>
 			<br />
-			<input type="submit" value="Merge" />
+			<input type="submit" value="Merge" class="btn" />
 		</form>
 		<div class="results" id="merge_results"></div>
 	</div>
@@ -113,9 +114,9 @@ Vegetables
 		</p>
 		<div>
 			<form id="tag_search_form">
-				<input type="text" class="search_field" />
+				<input type="text" class="search_field form-control" />
 				<br />
-				<input type="submit" value="Trace path to this tag" />
+				<input type="submit" value="Trace path to this tag" class="btn" />
 			</form>
 		</div>
 		<div class="results" id="trace_results"></div>
