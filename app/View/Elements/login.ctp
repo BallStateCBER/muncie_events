@@ -16,6 +16,9 @@
                 array(
                     'controller' => 'users',
                     'action' => 'forgot_password'
+                ),
+                array(
+                    'class' => 'float-right',
                 )
             ),
             'class' => 'form-control',
@@ -23,32 +26,40 @@
                 'class'=>'form-group col-lg-4 col-xs-12'
             )
         ));
-        echo $this->Form->input('remember_me', array(
-            'type' => 'checkbox',
-            'label' => array(
-                'text' => ' Remember me',
-                'style' => 'display: inline;'
-            ),
-            'checked' => true,
-            'div' => array(
-                'class'=>'form-group col-lg-4 col-xs-12'
-            )
-        ));
-        echo $this->Form->submit('Login', array(
-            'after' => '',
-            'class' => 'btn btn-secondary'
-        ));
-        echo $this->Form->end();
     ?>
-	Or log in with Facebook: <?php echo $this->Facebook->login(array(
+    <div class="form-group col-lg-4 col-xs-12">
+        <?php
+            echo $this->Form->input('remember_me', array(
+                'type' => 'checkbox',
+                'label' => array(
+                    'text' => ' Remember me',
+                    'style' => 'display: inline;'
+                ),
+                'checked' => true,
+                'div' => array(
+                    'class'=>'float-right'
+                )
+            ));
+        ?>
+        <br />
+        <?php
+            echo $this->Form->submit('Login', array(
+                'after' => '',
+                'class' => 'btn btn-secondary float-right'
+            ));
+            echo $this->Form->end();
+        ?>
+    </div>
+</div>
+<br /><br />
+    Or log in with Facebook: <?php echo $this->Facebook->login(array(
         'label' => 'Log in with Facebook',
         'img' => 'fb_login.png',
         'show-faces' => false,
         'perms' => 'email,user_events,create_event,rsvp_event',
         'redirect' => "/users/confirm_facebook_login?redirect=$redirect"
     )); ?>
-</div>
-
+<br />
 Don't have an account yet?
 
 <?php echo $this->Html->link(
