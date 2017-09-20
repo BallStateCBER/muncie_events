@@ -51,21 +51,15 @@
         ?>
     </div>
 </div>
-<br /><br />
-    Or log in with Facebook: <?php echo $this->Facebook->login(array(
-        'label' => 'Log in with Facebook',
-        'img' => 'fb_login.png',
-        'show-faces' => false,
-        'perms' => 'email,user_events,create_event,rsvp_event',
-        'redirect' => "/users/confirm_facebook_login?redirect=$redirect"
-    )); ?>
-<br />
-Don't have an account yet?
 
-<?php echo $this->Html->link(
-    'Register',
-    array(
-        'controller' => 'users',
-        'action' => 'register'
-    )
-); ?>
+<p>
+    Don't have an account yet?
+
+    <?php echo $this->Html->link(
+        'Register',
+        array(
+            'controller' => 'users',
+            'action' => 'register'
+        )
+    ); ?>
+</p>
