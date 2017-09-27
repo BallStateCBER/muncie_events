@@ -30,10 +30,11 @@
 
 /* media query & responsive design vars */
 @x-small: ~"(max-width: 576px)";
-@small: ~"(min-width: 576px) and (max-width: 768px)";
+@small: ~"(min-width: 576px) and (max-width: 767px)";
 @medium: ~"(min-width: 768px) and (max-width: 992px)";
 @large: ~"(min-width: 992px) and (max-width: 1200px)";
 @x-large: ~"(min-width: 1200px)";
+@tablet-specifically: ~"(width: 768px)";
 
 /* FONTS */
 @font-face {
@@ -118,8 +119,14 @@ a [class^="icon-"]:before, a [class*=" icon-"]:before {
     display: inline-block;
     padding: 3px;
     width: 60%;
+    @media @medium {
+        width: 50%;
+    }
+    @media @small {
+        width: 50%;
+    }
     @media @x-small {
-        width: 69%;
+        width: 50%;
     }
 }
 .header {
@@ -267,7 +274,11 @@ a [class^="icon-"]:before, a [class*=" icon-"]:before {
       }
     }
     #med-nav {
+        bottom: 0;
+        position: absolute;
+        right: 0;
         text-align: right;
+        width: 50%;
     }
     #mid-nav {
         display: none;
@@ -950,12 +961,16 @@ div.event_accordion,
     @media @medium {
         position: relative;
     }
+    @media @tablet-specifically {
+        width: 98%;
+    }
     @media @small {
         margin: 0 auto;
-        width: 60%;
+        text-align: center;
     }
     @media @x-small {
         margin: 0 auto;
+        text-align: center;
     }
     .input-group-btn {
         display: inline-flex;
