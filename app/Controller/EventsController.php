@@ -574,11 +574,12 @@ class EventsController extends AppController
                 $date = date('Y-m-d', $timestamp);
             }
             unset($date);
-            $this->request->data['Event']['user_id'] = $user_id;
-            $this->request->data['Event']['published'] = $autopublish;
             if ($this->Auth->user('role') == 'admin') {
                 $this->request->data['Event']['approved_by'] = $this->Auth->user('id');
+                $autopublish = 1;
             }
+            $this->request->data['Event']['user_id'] = $user_id;
+            $this->request->data['Event']['published'] = $autopublish;
 
             $this->Event->set($this->request->data);
 
