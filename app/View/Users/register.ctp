@@ -2,20 +2,6 @@
 	<?php echo $title_for_layout; ?>
 </h1>
 
-<ul id="register_options">
-	<li>
-		<a href="#" id="register_handle">
-			The Old-Fashioned Way
-		</a>
-	</li>
-	<li>
-		<a href="#" id="register_facebook_handle">
-			With Your Facebook Account
-		</a>
-	</li>
-</ul>
-
-
 <div id="register">
 	<?php
         echo $this->Form->create('User', array('url' => array('controller' => 'users', 'action' => 'register')));
@@ -60,48 +46,3 @@
         echo $this->Form->end();
     ?>
 </div>
-
-<div id="register_facebook" style="display: none;">
-	<?php echo $this->Facebook->registration(array(
-        'fields' => '[
-	    	{"name":"name"},
-	    	{"name":"email"},
-	    	{
-	    		"name":"join_mailing_list",
-	    		"description":"Join Mailing List*",
-	    		"type":"checkbox",
-	    		"default":true
-	    	},
-	    ]',
-        'width' => 350,
-        'redirect-uri' => Router::url(array(
-            'controller' => 'users',
-            'action' => 'register_facebook'
-        ), true)
-    )); ?>
-	<?php echo $mailing_list_footnote; ?>
-</div>
-
-<?php $this->Js->buffer("
-	$('#register_handle').click(function(event) {
-		event.preventDefault();
-		var register_container = $('#register');
-		if (register_container.is(':visible')) {
-			return;
-		}
-		$('#register_facebook').fadeOut(300, function() {
-			register_container.fadeIn(300);
-		});
-	});
-
-	$('#register_facebook_handle').click(function(event) {
-		event.preventDefault();
-		var register_fb_container = $('#register_facebook');
-		if (register_fb_container.is(':visible')) {
-			return;
-		}
-		$('#register').fadeOut(300, function() {
-			register_fb_container.fadeIn(300);
-		});
-	});
-"); ?>
