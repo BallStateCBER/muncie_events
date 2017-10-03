@@ -16,7 +16,7 @@
 			<div id="WidgetFilterOptions">
 				<?php echo $this->element('widgets/customize/events'); ?>
 
-				<div class="checkbox">
+				<div class="checkbox form-control">
 					<input type="hidden" name="showIcons" value="0" />
 					<input type="checkbox" name="showIcons" checked="checked" value="1" class="option" id="WidgetShowIcons" />
 					<label for="WidgetShowIcons">
@@ -24,7 +24,7 @@
 					</label>
 				</div>
 
-				<div class="checkbox" id="WidgetHideGEIcon_wrapper">
+				<div class="checkbox form-control" id="WidgetHideGEIcon_wrapper">
 					<input type="hidden" name="hideGeneralEventsIcon" value="0" />
 					<input type="checkbox" name="hideGeneralEventsIcon" value="1" class="option" id="WidgetHideGEIcon" />
 					<label for="WidgetHideGEIcon">
@@ -35,7 +35,7 @@
 				<label for="WidgetEventsDisplayedPerDay">
 					Events shown per day:
 				</label>
-				<select id="WidgetEventsDisplayedPerDay" name="events_displayed_per_day">
+				<select id="WidgetEventsDisplayedPerDay" name="events_displayed_per_day" class="form-control">
 					<?php for ($n = 1; $n <= 10; $n++): ?>
 						<option value="<?php echo $n; ?>" <?php if ($n == $defaults['event_options']['events_displayed_per_day']): ?>selected="selected"<?php endif; ?>>
 							<?php echo $n; ?>

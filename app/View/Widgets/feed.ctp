@@ -12,14 +12,14 @@
 <?php else: ?>
 	<?php foreach ($events as $date => $days_events): ?>
 		<?php
-			if ($date == date('Y-m-d')) {
-				$day = 'Today';
-			} elseif ($date == date('Y-m-d', strtotime('tomorrow'))) {
-				$day = 'Tomorrow';
-			} else {
-				$day = date('l', strtotime($date));
-			}
-		?>
+            if ($date == date('Y-m-d')) {
+                $day = 'Today';
+            } elseif ($date == date('Y-m-d', strtotime('tomorrow'))) {
+                $day = 'Tomorrow';
+            } else {
+                $day = date('l', strtotime($date));
+            }
+        ?>
 		<h2 class="short_date">
 			<?php echo date('M j', strtotime($date)); ?>
 		</h2>
@@ -31,13 +31,13 @@
 				<li <?php if (! empty($event['EventsImage'])): ?>class="with_images"<?php endif; ?>>
 					<?php if (! empty($event['EventsImage'])): ?>
 						<?php
-							$image = array_shift($event['EventsImage']); 
-							echo $this->Calendar->thumbnail('tiny', array(
-								'filename' => $image['Image']['filename'],
-								'caption' => $image['caption'],
-								'group' => 'event_minimized'.$event['Event']['id']
-							));
-						?>
+                            $image = array_shift($event['EventsImage']);
+                            echo $this->Calendar->thumbnail('tiny', array(
+                                'filename' => $image['Image']['filename'],
+                                'caption' => $image['caption'],
+                                'group' => 'event_minimized'.$event['Event']['id']
+                            ));
+                        ?>
 					<?php endif; ?>
 					<?php $url = Router::url(array('controller' => 'events', 'action' => 'view', 'id' => $event['Event']['id'])); ?>
 					<a href="<?php echo $url; ?>" title="Click for more info" class="event_link" id="event_link_<?php echo $event['Event']['id']; ?>">
@@ -55,10 +55,10 @@
 						<div class="hidden_images">
 							<?php foreach ($event['EventsImage'] as $image): ?>
 								<?php echo $this->Calendar->thumbnail('tiny', array(
-									'filename' => $image['Image']['filename'],
-									'caption' => $image['caption'],
-									'group' => 'event_minimized'.$event['Event']['id']
-								)); ?>
+                                    'filename' => $image['Image']['filename'],
+                                    'caption' => $image['caption'],
+                                    'group' => 'event_minimized'.$event['Event']['id']
+                                )); ?>
 							<?php endforeach; ?>
 						</div>
 					<?php endif; ?>
@@ -66,7 +66,7 @@
 			<?php endforeach; ?>
 		</ul>
 	<?php endforeach; ?>
-	
+
 	<?php $this->Js->buffer("
 		muncieEventsFeedWidget.setNextStartDate('$next_start_date');
 		muncieEventsFeedWidget.prepareLinks([".implode(',', $event_ids)."]);
