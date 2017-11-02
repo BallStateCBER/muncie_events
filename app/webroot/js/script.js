@@ -18,16 +18,6 @@ var muncieEvents = {
 	populatedDates: {}
 };
 
-/* function closeSubmenu(name) {
-	setTimeout(function() {
-		if (muncieEvents.keepOpenMenus[name]) {
-			return;
-		}
-		var submenu = $('#header_nav_'+name);
-		submenu.slideUp(200);
-	}, 1000);
-} */
-
 function setupHeaderNav() {
 	// Set up datepicker
 	$('#header_datepicker').datepicker({

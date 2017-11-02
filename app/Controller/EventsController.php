@@ -1028,7 +1028,6 @@ class EventsController extends AppController
                 }
             }
         }
-
         $this->set(compact('tags'));
         $this->layout = 'ajax';
     }
