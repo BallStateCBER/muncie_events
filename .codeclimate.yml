@@ -1,0 +1,13 @@
+engines:
+  phpmd:
+    enabled: true
+ratings:
+  paths:
+  - "**.php"
+exclude_paths:
+  - "lib/"
+  - "plugins/"
+  - "vendors/"
+  - "app/Vendor/"
+  - "app/Lib/"
+  - "app/Plugin/"

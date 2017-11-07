@@ -44,7 +44,7 @@
 		</div>
 	</noscript>
 	<?php
-		/* 
+		/*
 		// Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline ?>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="/data_center/js/jquery-1.8.3.min.js"><\/script>')</script>
@@ -54,12 +54,12 @@
 	<script src="/js/script.js"></script>
 	<script type="text/javascript" src="/magnific-popup/jquery.magnific-popup.min.js"></script>
 	<script type="text/javascript" src="/js/image_popups.js"></script>
-	<?php 
+	<?php
 		$this->Js->buffer("muncieEventsImagePopups.prepare();");
 		echo $this->fetch('script');
 		echo $this->Js->writeBuffer();
 		echo $this->element('analytics');
-		echo $this->Facebook->init(); 
+		echo $this->Facebook->init();
 	?>
 </body>
 </html>

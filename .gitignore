@@ -8,6 +8,8 @@ app/[Cc]onfig/database.php
 !empty
 app/webroot/img/events/*
 app/webroot/uploadifive/*
+app/webroot/js/jquery-*
+lib/Cake-*
 
 # IDEs
 *.pydevproject
@@ -37,3 +39,6 @@ local.properties
 
 # PDT-specific
 .buildpath
+
+# PhpStorm
+.idea/*

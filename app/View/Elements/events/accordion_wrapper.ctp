@@ -1,7 +1,7 @@
 <div id="calendar_list_view_wrapper">
 	<div class="event_accordion" id="event_accordion">
 		<?php if (empty($events)): ?>
-			<p class="no_events notification_message">
+			<p class="no_events alert alert-info">
 				No upcoming events found.
 			</p>
 		<?php else: ?>
@@ -13,7 +13,7 @@
 			<img id="" src="/img/loading_small.gif" /> Loading...
 		</div>
 		<div id="load_more_events_wrapper">
-			<a href="#" id="load_more_events">More events...</a>
+			<button class="btn" href="#" id="load_more_events">More events...</a>
 		</div>
 		<?php $this->Js->buffer("
 			$('#load_more_events').button().click(function(event) {

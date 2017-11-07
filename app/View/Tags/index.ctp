@@ -8,17 +8,17 @@
 			<th>Time</th>
 			<td class="direction">
 				<?php foreach (array('upcoming', 'past') as $dir): ?>
-					<?php echo $this->Html->link(
-						ucfirst($dir).' Events',
-						array(
-							'controller' => 'tags',
-							'action' => 'index',
-							($dir == 'upcoming' ? 'future' : 'past')
-						),
-						array(
-							'class' => ($direction_adjective == $dir ? 'selected' : ''),
-						)
-					); ?>
+                    <?php echo $this->Html->link(
+                         ucfirst($dir).' Events',
+                         array(
+                             'controller' => 'tags',
+                             'action' => 'index',
+                             ($dir == 'upcoming' ? 'future' : 'past')
+                         ),
+                         array(
+                             'class' => ($direction_adjective == $dir ? 'selected' : ''),
+                         )
+                     ); ?>
 				<?php endforeach; ?>
 			</td>
 		</tr>
@@ -28,35 +28,35 @@
 				<ul>
 					<li>
 						<?php echo $this->Html->link(
-							'All Categories',
-							array(
-								'controller' => 'tags',
-								'action' => 'index',
-								$direction
-							),
-							array(
-								'data-category' => 'all',
-								'class' => ($category == 'all' ? 'selected' : '')
-							)
-						); ?>
+                            'All Categories',
+                            array(
+                                'controller' => 'tags',
+                                'action' => 'index',
+                                $direction
+                            ),
+                            array(
+                                'data-category' => 'all',
+                                'class' => ($category == 'all' ? 'selected' : '')
+                            )
+                        ); ?>
 					</li>
 					<?php foreach ($categories as $cat): ?>
 						<?php if (in_array($cat['Category']['id'], $categories_with_tags)): ?>
 							<li>
 								<?php echo $this->Html->link(
-									$this->Icon->category($cat['Category']['name']),
-									array(
-										'controller' => 'tags',
-										'action' => 'index',
-										$direction,
-										$cat['Category']['id']
-									),
-									array(
-										'title' => $cat['Category']['name'],
-										'class' => ($category == $cat['Category']['id'] ? 'selected' : ''),
-										'escape' => false
-									)
-								); ?>
+                                    $this->Icon->category($cat['Category']['name']),
+                                    array(
+                                        'controller' => 'tags',
+                                        'action' => 'index',
+                                        $direction,
+                                        $cat['Category']['id']
+                                    ),
+                                    array(
+                                        'title' => $cat['Category']['name'],
+                                        'class' => ($category == $cat['Category']['id'] ? 'selected' : ''),
+                                        'escape' => false
+                                    )
+                                ); ?>
 							</li>
 						<?php else: ?>
 							<li class="no_tags">
@@ -79,27 +79,27 @@
 				<ul>
 					<li>
 						<?php echo $this->Html->link(
-							'All Tags',
-							'#',
-							array(
-								'title' => 'View tag cloud',
-								'data-tag-list' => 'cloud',
-								'class' => 'selected'
-							)
-						); ?>
+                            'All Tags',
+                            '#',
+                            array(
+                                'title' => 'View tag cloud',
+                                'data-tag-list' => 'cloud',
+                                'class' => 'selected'
+                            )
+                        ); ?>
 					</li>
 					<?php $letters = array_merge(range('a', 'z'), array('#')); ?>
 					<?php foreach ($letters as $letter): ?>
 						<li>
 							<?php if (isset($tags_by_first_letter[$letter])): ?>
 								<?php echo $this->Html->link(
-									strtoupper($letter),
-									'#',
-									array(
-										'title' => 'View only tags for '.$direction_adjective.' events beginning with '.strtoupper($letter),
-										'data-tag-list' => $letter
-									)
-								); ?>
+                                    strtoupper($letter),
+                                    '#',
+                                    array(
+                                        'title' => 'View only tags for '.$direction_adjective.' events beginning with '.strtoupper($letter),
+                                        'data-tag-list' => $letter
+                                    )
+                                ); ?>
 							<?php else: ?>
 								<span title="No tags for <?php echo $direction_adjective; ?> events beginning with <?php echo strtoupper($letter); ?>">
 									<?php echo strtoupper($letter); ?>
@@ -115,7 +115,7 @@
 
 <div id="tag_index_cloud">
 	<?php if (empty($tags)): ?>
-		<p class="notification_message">
+		<p class="alert alert-info">
 			No tags found for any <?php echo $direction_adjective; ?> events.
 		</p>
 	<?php else: ?>
@@ -139,22 +139,26 @@
         ?>
 		<?php foreach ($tags as $tag_name => $tag): ?>
 			<?php
-                $font_size = log($tag['count']) / log($max_count) * $font_size_range + $min_font_size;
+                if ($max_count) {
+                    $font_size = log($tag['count']) / log($max_count) * $font_size_range + $min_font_size;
+                } else {
+                    $font_size = $min_font_size;
+                }
                 $font_size = round($font_size, 1);
-			?>
+            ?>
 			<?php echo $this->Html->link(
-				$tag_name,
-				array(
-					'controller' => 'events',
-					'action' => 'tag',
-					'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
-					'direction' => $direction
-				),
-				array(
-					'title' => $tag['count'].' '.__n('event', 'events', $tag['count']),
-					'style' => "font-size: {$font_size}%"
-				)
-			); ?>
+                $tag_name,
+                array(
+                    'controller' => 'events',
+                    'action' => 'tag',
+                    'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
+                    'direction' => $direction
+                ),
+                array(
+                    'title' => $tag['count'].' '.__n('event', 'events', $tag['count']),
+                    'style' => "font-size: {$font_size}%"
+                )
+            ); ?>
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
@@ -165,14 +169,14 @@
 			<?php foreach ($tags_under_letter as $tag_name => $tag): ?>
 				<li>
 					<?php echo $this->Html->link(
-						ucfirst($tag_name),
-						array(
-							'controller' => 'events',
-							'action' => 'tag',
-							'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
-							'direction' => $direction
-						)
-					); ?>
+                        ucfirst($tag_name),
+                        array(
+                            'controller' => 'events',
+                            'action' => 'tag',
+                            'slug' => $tag['id'].'_'.Inflector::slug($tag['name']),
+                            'direction' => $direction
+                        )
+                    ); ?>
 					<span class="count">
 						<?php echo $tag['count']; ?>
 					</span>

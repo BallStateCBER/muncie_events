@@ -9,10 +9,10 @@
 <?php echo $this->element('events/date_picker', array('default' => "$month/$day/$year")); ?>
 
 <?php if (empty($events)): ?>
-	<p class="notification_message">
-		Sorry, but no events 
+	<p class="alert alert-info">
+		Sorry, but no events
 		<?php if ("$month$day$year" >= date('mdY')): ?>
-			have been 
+			have been
 		<?php else: ?>
 			were
 		<?php endif; ?>
@@ -20,10 +20,10 @@
 		<br />
 		If you know of an event happening on this date,
 		<?php echo $this->Html->link('tell us about it', array(
-			'controller' => 'events', 
-			'action' => 'add', 
-			'm' => $month, 
-			'd' => $day, 
+			'controller' => 'events',
+			'action' => 'add',
+			'm' => $month,
+			'd' => $day,
 			'y' => $year
 		)); ?>.
 	</p>

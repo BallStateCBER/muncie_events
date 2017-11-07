@@ -45,7 +45,7 @@
 	<?php $this->Js->buffer("setupEventAccordion();"); ?>
 
 <?php else: ?>
-	<p class="notification_message">
+	<p class="alert alert-info">
 		No events found.
 	</p>
 <?php endif; ?>

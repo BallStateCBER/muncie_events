@@ -42,28 +42,30 @@
 </h2>
 
 <?php
-	$credits = array(
-		'People' => array(
-			'<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Administrator',
-			'Benjamin Easley' => 'Graphic Designer',
-			'Nicholas Boyum' => 'Artist (map of Muncie background image)'
-		),
-		'Organizations' => array(
-			'<a href="http://fullcircleartscoop.org">Full Circle Arts Co-op</a>' => 'Sponsor',
-			'<a href="http://bsu.edu/cber">Center for Business and Economic Research</a>' => 'Sponsor'
-		),
-		'Software' => array(
-			'<a href="http://cakephp.org">CakePHP</a>' => 'Site framework',
-			'<a href="http://jquery.com/">jQuery</a>' => 'Javascript framework',
-			'<a href="http://jqueryui.com/">jQuery UI</a>' => 'User interface magic',
-			'<a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a>' => 'Elegant media popups',
-			'<a href="http://www.digitalmagicpro.com/jPicker/">jPicker</a>' => 'Color picker',
-			'<a href="http://recaptcha.net/">reCAPTCHA</a>' => 'Spam defense',
-			'<a href="http://google.com/analytics">Google Analytics</a>' => 'Traffic analysis',
-			'<a href="http://www.eclipse.org/">Eclipse</a>' => 'IDE of choice',
-			'<a href="http://getfirebug.com/">Firebug</a>' => 'Testing'
-		)
-	);
+    $credits = array(
+        'People' => array(
+            '<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Administrator',
+            'Erica Dee Fox' => 'Web Developer',
+            'Benjamin Easley' => 'Graphic Designer',
+            'Nicholas Boyum' => 'Artist (map of Muncie background image)'
+        ),
+        'Organizations' => array(
+            '<a href="http://fullcircleartscoop.org">Full Circle Arts Co-op</a>' => 'Sponsor',
+            '<a href="http://bsu.edu/cber">Center for Business and Economic Research</a>' => 'Sponsor'
+        ),
+        'Software' => array(
+            '<a href="http://cakephp.org">CakePHP</a>' => 'Site framework',
+            '<a href="http://jquery.com/">jQuery</a>' => 'Javascript framework',
+            '<a href="http://jqueryui.com/">jQuery UI</a>' => 'User interface magic',
+            '<a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a>' => 'Elegant media popups',
+            '<a href="http://www.digitalmagicpro.com/jPicker/">jPicker</a>' => 'Color picker',
+            '<a href="http://recaptcha.net/">reCAPTCHA</a>' => 'Spam defense',
+            '<a href="http://google.com/analytics">Google Analytics</a>' => 'Traffic analysis',
+            '<a href="http://www.jetbrains.com/phpstorm/">PhpStorm</a>' => 'IDE of choice',
+            '<a href="http://www.atom.io">Atom</a>' => 'Other IDE of choice',
+            '<a href="http://travis-ci.org">Travis CI</a>' => 'Testing'
+        )
+    );
 ?>
 
 <ul id="credits">

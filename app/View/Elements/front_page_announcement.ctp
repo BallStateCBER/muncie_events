@@ -1,4 +1,4 @@
-<div id="front_page_announcement" class="notification_message">
+<div id="front_page_announcement" class="alert alert-info">
 	<h2>What is Muncie Events?</h2>
 	<p>
 		A free service that distributes event information for Muncie, IN through a
@@ -12,7 +12,7 @@
 			'action' => 'join'
 		)); ?>.
 		We're constantly developing this project to meet the needs of our community,
-		so stay tuned for more bells and whistles.	
+		so stay tuned for more bells and whistles.
 		If you like what we're doing, please
 		<a href="http://facebook.com/MuncieEvents">like us on Facebook</a>,
 		<a href="/contact">give us your feedback</a>, and

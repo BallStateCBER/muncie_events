@@ -18,6 +18,10 @@ Router::connect('/reset_password/*',	array('controller' => 'users', 'action' => 
 Router::connect('/past_locations', 		array('controller' => 'events', 'action' => 'past_locations'));
 Router::connect('/robots.txt', 	array('controller' => 'pages', 'action' => 'robots'));
 
+// Spambot deflection
+Router::redirect('/wp-login.php', array('controller' => 'pages', 'action' => 'home'));
+Router::redirect('/.well-known/*', array('controller' => 'pages', 'action' => 'home'));
+
 // The following content types will have /type/id route to /types/view/id
 $models = array('event', 'user', 'tag', 'event_series');
 foreach ($models as $model) {

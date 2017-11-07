@@ -8,41 +8,47 @@
 	), true));
 ?>
 <?php if ($total_pages > 1): ?>
-	<div class="pagination">
-	
-		<?php
-			$first = $this->Paginator->first('&laquo;', array('escape' => false));
-			echo $first ? $first : '<span>&laquo;</span>';
-		?>
-		
-		<?php
-			if (true || $this->Paginator->hasPrev()) {
-				echo $this->Paginator->prev('&lsaquo;', array(
-					'escape' => false
-				));
-			}
-		?>
-		
-		<select class="paginator_select" data-url="<?php echo $paginator_url; ?>">
+
+	<ul class="pagination">
+
+		<li class="page-item">
+			<?php
+				$first = $this->Paginator->first("&laquo; First", array('escape' => false, 'class' => 'page-link'));
+				echo $first ? $first : "<a class='page-link'>&laquo; First</a>";
+			?>
+		</li>
+
+		<li class="page-item">
+			<?php
+				$prev = $this->Paginator->prev("&lsaquo; Prev", array('escape' => false, 'class' => 'page-link'));
+				echo $prev ? $prev : "<a class='page-link'>&lsaquo; Prev</a>";
+			?>
+		</li>
+
+		<select class="paginator_select custom-select" data-url="<?php echo $paginator_url; ?>">
 			<?php for ($p = 1; $p <= $total_pages; $p++): ?>
 				<option <?php if ($p == $current_page): ?>selected="selected"<?php endif; ?>>
 					<?php echo $p; ?>
 				</option>
 			<?php endfor; ?>
 		</select>
+
 		<?php $this->Js->buffer("setupPagination();"); ?>
-		
-		<?php
-			if (true || $this->Paginator->hasNext()) {
-				echo $this->Paginator->next('&rsaquo;', array(
-					'escape' => false
-				));
-			}
-		?>
-		
-		<?php 
-			$last = $this->Paginator->last("$total_pages &raquo;", array('escape' => false));
-			echo $last ? $last : "<span>$total_pages &raquo;</span>";
-		?>
-	</div>
+
+		<li class="page-item">
+			<?php
+				$next = $this->Paginator->next("Next &rsaquo;", array('escape' => false, 'class' => 'page-link'));
+				echo $next ? $next : "<a class='page-link'>Next &rsaquo;</a>";
+			?>
+		</li>
+
+		<li class="page-item">
+			<?php
+				$last = $this->Paginator->last("Last &raquo;", array('escape' => false, 'class' => 'page-link'));
+				echo $last ? $last : "<a class='page-link'>Last &raquo;</a>";
+			?>
+		</li>
+
+	</ul>
+	
 <?php endif; ?>

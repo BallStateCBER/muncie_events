@@ -40,32 +40,32 @@ class Event extends AppModel {
 	public $validate = array(
 		'title' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Title required.'
 			)
 		),
 		'date' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Please select a date'
 			)
 		),
 		'location' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Location required.'
 			),
 		),
 		/* The TinyMCE input form doesn't work with the 'required' HTML 5 attribute */
 		'description' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Please describe this event.'
 			)
 		),
 		'category_id' => array(
 			'notEmpty' => array(
-				'rule' => 'notEmpty',
+				'rule' => 'notBlank',
 				'message' => 'Please categorize this event.'
 			)
 		)

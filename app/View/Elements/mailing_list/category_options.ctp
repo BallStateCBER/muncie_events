@@ -1,20 +1,35 @@
-<fieldset>
+<fieldset class="col-md-6">
 	<legend>Event Types</legend>
-	
+
 	<?php echo $this->Form->input(
 		'event_categories',
 		array(
 			'type' => 'radio',
 			'options' => array(
-				'all' => 'All Events',
-				'custom' => 'Custom'
+				'all' => 'All Events'
 			),
 			'class' => 'category_options',
+			'div' => array(
+				'class'=>'form-control mailing-options'
+			),
 			'legend' => false
 		)
 	); ?>
-	
-	<div id="custom_event_type_options" style="display: none;">
+	<?php echo $this->Form->input(
+		'event_categories',
+		array(
+			'type' => 'radio',
+			'options' => array(
+				'custom' => 'Custom'
+			),
+			'class' => 'category_options',
+			'div' => array(
+				'class'=>'form-control mailing-options'
+			),
+			'legend' => false
+		)
+	); ?>
+	<div id="custom_event_type_options">
 		<?php if (isset($categories_error)): ?>
 			<div class="error">
 				<?php echo $categories_error; ?>

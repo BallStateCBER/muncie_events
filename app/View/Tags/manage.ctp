@@ -22,7 +22,7 @@
 				Tags with no associated events are in <span style="color: red;">red</span>.
 			</li>
 			<li>
-				Do not move or edit the 'Delete' and 'Unlisted' groups. You may, however, move tags into and out of them. 
+				Do not move or edit the 'Delete' and 'Unlisted' groups. You may, however, move tags into and out of them.
 			</li>
 			<li>
 				The 'Unlisted' group is where new tags created by users automatically go.
@@ -32,12 +32,12 @@
 			<li>
 				PROTIP: Move a tag by clicking to the right of it and dragging
 				it to the right of another tag, rather than clicking on its name and
-				dragging it on top of another tag's name. For some reason, this 
+				dragging it on top of another tag's name. For some reason, this
 				is the only way to do it when root-level tags are involved.
 			</li>
 		</ul>
 	</div>
-	
+
 	<div id="tab-add">
 		<?php echo $this->Form->create('Tag', array('url' => array('controller' => 'tags', 'action' => 'add'))); ?>
 		<strong>Tag</strong>(s)<br />
@@ -49,82 +49,83 @@
 -Nanners
 Vegetables
 -Taters</pre>
-		<?php echo $this->Form->input('name', array('type' => 'textarea', 'label' => false, 'style' => 'width: 100%;')); ?>
-		<?php echo $this->Form->input('parent_name', array('label' => 'Parent Tag (optional)', 'type' => 'text', 'class' => 'search_field')); ?>
+		<?php echo $this->Form->input('name', array('type' => 'textarea', 'label' => false, 'style' => 'width: 100%;', 'class' => 'form-control')); ?>
+		<?php echo $this->Form->input('parent_name', array('label' => 'Parent Tag (optional)', 'type' => 'text', 'class' => 'search_field form-control form-control')); ?>
 		<p>
 			All tags will be created as both listed and selectable.
 		</p>
-		<?php echo $this->Form->end('Add'); ?>
-		
+		<?php echo $this->Form->submit('Add', ['class' => 'btn']); ?>
+        <?php echo $this->Form->end(); ?>
+
 		<div id="add_results"></div>
 	</div>
-	
+
 	<div id="tab-remove">
-		<p class="notification_message">
+		<p class="alert alert-info">
 			Warning: If a tag is removed, all child-tags will also be removed. This cannot be undone.
 		</p>
 		<?php echo $this->Html->link('Remove all tags in the "Delete" group', array(
-			'controller' => 'tags', 'action' => 'empty_delete_group'
-		)); ?>
+            'controller' => 'tags', 'action' => 'empty_delete_group'
+        )); ?>
 		<p>
 			Or start typing a tag name:
 		</p>
 		<form id="tag_remove_form">
-			<input type="text" id="tag_remove_field" class="search_field" />
-			<input type="submit" value="Remove" />
+			<input type="text" id="tag_remove_field" class="search_field form-control form-control" />
+			<input type="submit" value="Remove" class="btn" />
 		</form>
 		<div class="results"></div>
 	</div>
-	
+
 	<div id="tab-edit">
 		<p>
 			Start typing a tag name:
 		</p>
 		<div>
 			<form id="tag_edit_search_form">
-				<input type="text" class="search_field" />
+				<input type="text" class="search_field form-control" />
 				<br />
-				<input type="submit" value="Edit this tag" />
+				<input type="submit" value="Edit this tag" class="btn" />
 			</form>
 		</div>
 		<div class="results" id="edit_results"></div>
 	</div>
-	
+
 	<div id="tab-merge">
 		<p>
 			Start typing tag names:
 		</p>
 		<form id="tag_merge_form">
-			Merge 
-			<input type="text" id="tag_merge_from_field" class="search_field"/>
+			Merge
+			<input type="text" id="tag_merge_from_field" class="search_field form-control"/>
 			into
-			<input type="text" id="tag_merge_into_field" class="search_field"/>
-			
+			<input type="text" id="tag_merge_into_field" class="search_field form-control"/>
+
 			<span class="footnote">(The first tag will be <strong>removed</strong>.)</span>
 			<br />
-			<input type="submit" value="Merge" />
+			<input type="submit" value="Merge" class="btn" />
 		</form>
 		<div class="results" id="merge_results"></div>
 	</div>
-	
+
 	<div id="tab-find">
 		<p>
 			Start typing a tag name:
 		</p>
 		<div>
 			<form id="tag_search_form">
-				<input type="text" class="search_field" />
+				<input type="text" class="search_field form-control" />
 				<br />
-				<input type="submit" value="Trace path to this tag" />
+				<input type="submit" value="Trace path to this tag" class="btn" />
 			</form>
 		</div>
 		<div class="results" id="trace_results"></div>
 	</div>
-	
+
 	<div id="tab-fix">
 		<p>
 			These functions are safe to use at any time, and should be used to fix relevant problems
-			that come up. But these were initially only set up to assist in the transition from 
+			that come up. But these were initially only set up to assist in the transition from
 			The Muncie Scene's tag system to the new system.
 		</p>
 		<ul>

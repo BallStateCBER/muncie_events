@@ -1,15 +1,15 @@
 var muncieEventsFeedWidget = {
-	next_start_date: null,	
+	next_start_date: null,
 	no_more_events: false,
 	fade_duration: 200,
-	
+
 	prepareWidget: function() {
 		$('#load_more_events').click(function(event) {
 			event.preventDefault();
 			muncieEventsFeedWidget.loadMoreEvents();
 		});
 	},
-	
+
 	prepareLinks: function(event_ids) {
 		if (event_ids.length == 0) {
 			return;
@@ -25,7 +25,7 @@ var muncieEventsFeedWidget = {
 			})(event_id, event_list);
 		}
 	},
-	
+
 	/**
 	 * Prepares the 'event actions' block (like on Facebook, export, edit, etc.)
 	 * @param container_selector
@@ -33,12 +33,12 @@ var muncieEventsFeedWidget = {
 	setupEventActions: function(container_selector) {
 		$(container_selector).find('.export_options_toggler').click(function(event) {
 			event.preventDefault();
-			var link = $(this); 
+			var link = $(this);
 			link.parent('div').toggleClass('open');
 			link.next('.export_options').slideToggle(300);
 		});
 	},
-	
+
 	showEvent: function(eid, elist) {
 		var event_view = $('#event_'+eid);
 		if (event_view.length > 0) {
@@ -55,7 +55,8 @@ var muncieEventsFeedWidget = {
 				muncieEventsFeedWidget.loadingStart();
 			},
 			success: function(data) {
-				$('#load_more_events').hide();
+                $('#load_more_events').hide();
+                $('#load_more_events_wrapper').hide();
 				elist.after($('<div id="event_'+eid+'" style="display: none;"></div>').html(data));
 				muncieEventsFeedWidget.setupEventActions('#event_'+eid);
 				elist.fadeOut(muncieEventsFeedWidget.fade_duration, function() {
@@ -66,6 +67,7 @@ var muncieEventsFeedWidget = {
 							$('#event_list').fadeIn(muncieEventsFeedWidget.fade_duration);
 							$(window).scrollTop(event_link.offset().top);
 							$('#load_more_events').show();
+                            $('#load_more_events_wrapper').show();
 						});
 					});
 					event_view.prepend(back_link);
@@ -82,8 +84,8 @@ var muncieEventsFeedWidget = {
 			}
 		});
 	},
-	
-	/**Sets the date that the next "page" of events will start at 
+
+	/**Sets the date that the next "page" of events will start at
 	 * @param date A string in 'YYYY-MM-DD' format
 	 */
 	setNextStartDate: function(date) {
@@ -130,11 +132,11 @@ var muncieEventsFeedWidget = {
 			}
 		});
 	},
-	
+
 	loadingStart: function() {
 		$('#loading').fadeIn(this.fade_duration);
 	},
-	
+
 	loadingEnd: function() {
 		$('#loading').fadeOut(this.fade_duration);
 	}

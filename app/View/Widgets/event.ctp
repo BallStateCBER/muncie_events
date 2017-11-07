@@ -2,10 +2,10 @@
 	<h1 class="title">
 		<?php echo $event['Event']['title']; ?>
 	</h1>
-	<?php 
-		echo $this->element('events/actions', array('event' => $event, 'can_edit' => false));
-		$this->Js->buffer("setupEventActions('.event');");
-	?>
+	<?php
+        echo $this->element('events/actions', array('event' => $event, 'can_edit' => false));
+        $this->Js->buffer("setupEventActions('.event');");
+    ?>
 	<div class="header_details">
 		<table class="details">
 			<tr>
@@ -33,25 +33,25 @@
 			<tr>
 				<th>What</th>
 				<td class="what">
-					<?php 
-						echo $this->Icon->category($event['Category']['name']).$event['Category']['name'];
-						if (! empty($event['Tag'])) {
-							echo ': <span class="tags">';
-							$linked_tags = array(); 
-							foreach ($event['Tag'] as $tag) {
-								$linked_tags[] = $tag['name'];
-								/*
-								$linked_tags[] = $this->Html->link($tag['name'], array(
-									'controller' => 'events', 
-									'action' => 'index', 
-									'tag' => $tag['id'].'_'.Inflector::slug($tag['name'])
-								));
-								*/
-							}
-							echo implode(', ', $linked_tags);
-							echo '</div>';		
-						}
-					?>
+					<?php
+                        echo $this->Icon->category($event['Category']['name']).$event['Category']['name'];
+                        if (! empty($event['Tag'])) {
+                            echo ': <span class="tags">';
+                            $linked_tags = array();
+                            foreach ($event['Tag'] as $tag) {
+                                $linked_tags[] = $tag['name'];
+                                /*
+                                $linked_tags[] = $this->Html->link($tag['name'], array(
+                                    'controller' => 'events',
+                                    'action' => 'index',
+                                    'tag' => $tag['id'].'_'.Inflector::slug($tag['name'])
+                                ));
+                                */
+                            }
+                            echo implode(', ', $linked_tags);
+                            echo '</div>';
+                        }
+                    ?>
 				</td>
 			</tr>
 			<?php if ($event['Event']['cost']): ?>
@@ -72,10 +72,10 @@
 					<td>
 						<?php foreach ($event['EventsImage'] as $image): ?>
 							<?php echo $this->Calendar->thumbnail('tiny', array(
-								'filename' => $image['Image']['filename'],
-								'caption' => $image['caption'],
-								'group' => 'event_view'.$event['Event']['id']
-							)); ?>
+                                'filename' => $image['Image']['filename'],
+                                'caption' => $image['caption'],
+                                'group' => 'event_view'.$event['Event']['id']
+                            )); ?>
 						<?php endforeach; ?>
 					</td>
 				</tr>
@@ -84,21 +84,21 @@
 	</div>
 	<div class="description">
 		<?php echo $this->Text->autolink($event['Event']['description'], array(
-			'escape' => false
-		)); ?>
+            'escape' => false
+        )); ?>
 	</div>
-	<div class="footer"> 
+	<div class="footer">
 		<?php
-			$url = Router::url(array(
-				'controller' => 'events',
-				'action' => 'view',
-				'id' => $event['Event']['id']
-			), true);
-			echo $this->Html->link('Go to event page', $url);
-		?>
+            $url = Router::url(array(
+                'controller' => 'events',
+                'action' => 'view',
+                'id' => $event['Event']['id']
+            ), true);
+            echo $this->Html->link('Go to event page', $url);
+        ?>
 		<?php if ($event['Event']['source']): ?>
 			<br />
-			Source: 
+			Source:
 			<?php echo $this->Text->autoLink($event['Event']['source']); ?>
 		<?php endif; ?>
 	</div>
