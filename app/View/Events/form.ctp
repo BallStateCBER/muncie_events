@@ -360,7 +360,9 @@
 			<tr>
 				<th>Spam Protection</th>
 				<td>
-					<?php echo $this->element('recaptcha', array('label' => false)); ?>
+                    <div class="col-lg-8 col-md-10 col-xs-12">
+					    <?php echo $this->element('recaptcha', array('label' => false)); ?>
+                    </div>
 				</td>
 			</tr>
 		<?php endif; ?>
