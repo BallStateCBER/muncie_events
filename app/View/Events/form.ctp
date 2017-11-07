@@ -65,7 +65,7 @@
                     'label' => false,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 ));
             ?></td>
@@ -109,7 +109,7 @@
                     'default' => 13,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 ));
             ?></td>
@@ -160,7 +160,7 @@
                         'after' => '<div class="text-muted">By default, the series and its events have the same title.</div>',
                         'class' => 'form-control',
                         'div' => array(
-                            'class'=>'form-group col-lg-8 col-xs-12'
+                            'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                         )
                     )); ?>
 					<?php echo $this->Form->input('series_id', array(
@@ -245,7 +245,7 @@
                     'label' => false,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 )); ?>
 			</td>
