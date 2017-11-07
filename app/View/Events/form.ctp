@@ -139,7 +139,7 @@
                         ));
                     ?>
 					<?php if ($multiple_dates_allowed): ?>
-						<div class="text-muted">
+						<div class="text-muted" id="datepicker_text">
 							Select more than one date to create multiple events connected by a series.
 						</div>
 					<?php endif; ?>
@@ -360,7 +360,7 @@
 			<tr>
 				<th>Spam Protection</th>
 				<td>
-                    <div class="col-lg-8 col-md-10 col-xs-12">
+                    <div class="col-lg-8 col-md-10 col-xs-12" id="event_captcha">
 					    <?php echo $this->element('recaptcha', array('label' => false)); ?>
                     </div>
 				</td>
