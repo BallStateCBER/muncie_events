@@ -50,6 +50,8 @@ class EmailConfig {
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
 		'emailFormat' => 'both',
+        'username' => 'automailer@muncieevents.com',
+        'password' => null, // Defined in core.php, set in __construct()
 		//'charset' => 'utf-8',
 		//'headerCharset' => 'utf-8',
 	);
@@ -62,6 +64,8 @@ class EmailConfig {
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
 		'emailFormat' => 'both',
+        'username' => 'automailer@muncieevents.com',
+        'password' => null, // Defined in core.php, set in __construct()
 	);
 
 	public $mailing_list = array(
@@ -71,7 +75,9 @@ class EmailConfig {
 		'from' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'sender' => array('automailer@MuncieEvents.com' => 'Muncie Events'),
 		'returnPath' => 'automailer@MuncieEvents.com',
-		'emailFormat' => 'both'
+		'emailFormat' => 'both',
+        'username' => 'automailer@muncieevents.com',
+        'password' => null, // Defined in core.php, set in __construct()
 	);
 
 	public $smtp = array(
@@ -120,7 +126,9 @@ class EmailConfig {
 	);
 
     public function __construct() {
-        // Do conditional assignments here.
+        $this->default['password'] = Configure::read('automailer_password');
+        $this->contact_form['password'] = Configure::read('automailer_password');
+        $this->mailing_list['password'] = Configure::read('automailer_password');
     }
 
 }
