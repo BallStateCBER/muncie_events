@@ -11,7 +11,7 @@ app/webroot/uploadifive/*
 app/webroot/js/jquery-*
 lib/Cake-*
 
-# Eclipse
+# IDEs
 *.pydevproject
 .project
 .metadata
@@ -26,6 +26,7 @@ local.properties
 .classpath
 .settings/
 .loadpath
+.idea/*
 
 # External tool builders
 .externalToolBuilders/
