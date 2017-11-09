@@ -65,7 +65,7 @@
                     'label' => false,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 ));
             ?></td>
@@ -109,7 +109,7 @@
                     'default' => 13,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 ));
             ?></td>
@@ -139,7 +139,7 @@
                         ));
                     ?>
 					<?php if ($multiple_dates_allowed): ?>
-						<div class="text-muted">
+						<div class="text-muted" id="datepicker_text">
 							Select more than one date to create multiple events connected by a series.
 						</div>
 					<?php endif; ?>
@@ -160,7 +160,7 @@
                         'after' => '<div class="text-muted">By default, the series and its events have the same title.</div>',
                         'class' => 'form-control',
                         'div' => array(
-                            'class'=>'form-group col-lg-8 col-xs-12'
+                            'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                         )
                     )); ?>
 					<?php echo $this->Form->input('series_id', array(
@@ -220,7 +220,7 @@
 				<div class="form-group">
 					<?php echo $this->Form->input('location', array(
                         'label' => false,
-                        'class' => 'form-control col-lg-8',
+                        'class' => 'form-control col-lg-8 col-md-10',
                         'div' => array(
                             'class' => 'col-lg-12'
                         ),
@@ -229,7 +229,7 @@
 					<br />
 					<?php echo $this->Form->input('location_details', array(
                         'label' => false,
-                        'class' => 'form-control col-lg-8',
+                        'class' => 'form-control col-lg-8 col-md-10',
                         'placeholder' => 'Location details (upstairs, room 149, etc.)',
                         'div' => array(
                             'class' => 'col-lg-12'
@@ -245,7 +245,7 @@
                     'label' => false,
                     'class' => 'form-control',
                     'div' => array(
-                        'class'=>'form-group col-lg-8 col-xs-12'
+                        'class'=>'form-group col-lg-8 col-md-10 col-xs-12'
                     )
                 )); ?>
 			</td>
@@ -253,7 +253,7 @@
 		<tr>
 			<th>Description</th>
 			<td>
-				<div class="form-group col-lg-8 col-xs-12">
+				<div class="form-group col-lg-8 col-md-10 col-xs-12">
 					<?php echo $this->element('tinymce_input', array(
                         'field' => 'Event.description',
                         'div' => false
@@ -265,7 +265,7 @@
 		<tr>
 			<th>Tags</th>
 			<td id="eventform_tags">
-				<div class="form-group col-lg-8 col-xs-12">
+				<div class="form-group col-lg-8 col-md-10 col-xs-12">
 					<?php
                         echo $this->element('tags/tag_editing', array(
                             'available_tags' => $available_tags,
@@ -300,7 +300,7 @@
 					<?php echo $this->Form->input('cost', array(
                         'maxLength' => 200,
                         'label' => false,
-                        'class' => 'form-control col-lg-8',
+                        'class' => 'form-control col-lg-8 col-md-10',
                         'div' => array(
                             'class'=>'col-lg-12'
                         ),
@@ -323,7 +323,7 @@
 				<div class="form-group">
 					<?php echo $this->Form->input('age_restriction', array(
                         'label' => false,
-                        'class' => 'form-control col-lg-8',
+                        'class' => 'form-control col-lg-8 col-md-10',
                         'div' => array(
                             'class'=>'col-lg-12'
                         ),
@@ -348,7 +348,7 @@
 					<?php echo $this->Form->input('source', array(
                         'label' => false,
                         'after' => ' <a href="#" id="event_remove_source">Remove</a><div class="text-muted">Did you get this information from a website, newspaper, flyer, etc?</div>',
-                        'class' => 'form-control col-lg-8',
+                        'class' => 'form-control col-lg-8 col-md-10',
                         'div' => array(
                             'class'=>'col-lg-12'
                         )
@@ -360,7 +360,9 @@
 			<tr>
 				<th>Spam Protection</th>
 				<td>
-					<?php echo $this->element('recaptcha', array('label' => false)); ?>
+                    <div class="col-lg-8 col-md-10 col-xs-12" id="event_captcha">
+					    <?php echo $this->element('recaptcha', array('label' => false)); ?>
+                    </div>
 				</td>
 			</tr>
 		<?php endif; ?>
