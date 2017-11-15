@@ -22,7 +22,8 @@ class AppController extends Controller {
 			// Selectively turn on when appropriate
 			'noAuth' => true,
 			'createUser' => false
-		)
+		),
+        'Security'
 	);
 	public $helpers = array(
 		'Calendar',
@@ -33,6 +34,9 @@ class AppController extends Controller {
 	public $uses = array('User');
 
 	public function beforeFilter() {
+        $this->Security->blackHoleCallback = 'forceSSL';
+        $this->Security->requireSecure();
+
 		$this->Auth->allow();
 
 		// By default, prevent __syncFacebookUser from being called
@@ -193,4 +197,14 @@ class AppController extends Controller {
 	public function beforeFacebookSave() {
 		return false;
 	}
+
+    /**
+     * Redirects the current request to HTTPS
+     *
+     * @return mixed
+     */
+    public function forceSSL()
+    {
+        return $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+    }
 }
