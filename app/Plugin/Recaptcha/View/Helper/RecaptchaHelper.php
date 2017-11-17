@@ -15,7 +15,7 @@ class RecaptchaHelper extends AppHelper {
 		if (isset($recaptcha_error)) {
 			$html .= $recaptcha_error . '<br/>';
 		}
-		return $html .= recaptcha_get_html($publickey);
+		return $html .= recaptcha_get_html($publickey, null, true);
 	}
 
 	function error() {
