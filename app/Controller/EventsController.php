@@ -715,7 +715,7 @@ class EventsController extends AppController
                 $this->Event->removeImageAssociations($id);
                 $this->Event->removeTagAssociations($id);
                 if ($this->Event->saveAssociated($this->request->data)) {
-                    if ($this->request->data['Event']['update_series']) {
+                    if (isset($this->request->data['Event']['update_series'])) {
                         $this->Event->updateSeries($this->request->data);
                     }
                     $is_admin = $this->Auth->user('role') == 'admin';
