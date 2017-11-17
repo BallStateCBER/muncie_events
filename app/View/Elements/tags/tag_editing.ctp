@@ -70,6 +70,7 @@
 					'id' => 'custom_tag_input'
 				));
 			?>
+            <?php $this->Js->buffer("TagManager.setupAutosuggest('#custom_tag_input');"); ?>
 			<div id="new_tag_rules" class="alert alert-info collapse">
 				<p>
 					Before entering new tags, please search for existing tags that meet your needs.
