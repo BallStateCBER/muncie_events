@@ -433,6 +433,7 @@ class Image extends AppModel {
 
 	public function afterDelete() {
 		App::uses('File', 'Utility');
+        $filename = $this->data['Image']['filename'];
 
 		$full_img_dir = Configure::read('event_img_dir') . DS . 'full';
 		$file = new File($full_img_dir . DS . $filename, false, 0777);
