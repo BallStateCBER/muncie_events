@@ -5,7 +5,8 @@ if (empty($images)) {
 } else {
 	foreach ($images as $image_id => $filename) {
 		echo '<a href="#" id="listed_image_'.$image_id.'" data-image-id="'.$image_id.'" data-image-filename="'.$filename.'">';
-		echo '<img src="/img/events/tiny/'.$filename.'" />';
+		$url = Configure::read('event_img_base_url') . '/tiny/' . $filename;
+		echo '<img src="' . $url . '" />';
 		echo '</a>';
 	}
 }

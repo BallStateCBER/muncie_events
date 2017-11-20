@@ -209,9 +209,10 @@ class EventsController extends AppController
          * size and the rest are provided in 'small' size. */
         if (isset($event['EventsImage'])) {
             foreach ($event['EventsImage'] as $n => $eventsImage) {
-                $filename = $eventsImage['Image']['filename'];
                 $size = ($n == 0) ? 'full' : 'small';
-                $og_meta_tags['og:image'][] = FULL_BASE_URL.'/'.IMAGES_URL.'events/'.$size.'/'.$filename;
+                $filename = $eventsImage['Image']['filename'];
+                $url = Configure::read('event_img_base_url') . '/' . $size . '/' . $filename;
+                $og_meta_tags['og:image'][] = $url;
             }
         }
         $this->set(compact('og_meta_tags'));

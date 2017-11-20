@@ -118,7 +118,7 @@ class Image extends AppModel {
 	 * @param string $filename
 	 */
 	public function createTiny($source_file) {
-		$path = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'tiny'.DS;
+		$path = Configure::read('event_img_dir') . DS . 'tiny' . DS;
 		$filename = substr($source_file, strrpos($source_file, DS) + 1);
 		$destination_file = $path.$filename;
 		list($width, $height, $type, $attr) = getimagesize($source_file);
@@ -148,7 +148,7 @@ class Image extends AppModel {
 	 * @param string $filename
 	 */
 	public function createSmall($source_file) {
-		$path = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'small'.DS;
+		$path = Configure::read('event_img_dir') . DS . 'small' . DS;
 		$filename = substr($source_file, strrpos($source_file, DS) + 1);
 		$destination_file = $path.$filename;
 
@@ -433,12 +433,13 @@ class Image extends AppModel {
 
 	public function afterDelete() {
 		App::uses('File', 'Utility');
-		$full_img_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'full';
-		$file = new File($full_img_dir.$filename, false, 0777);
+
+		$full_img_dir = Configure::read('event_img_dir') . DS . 'full';
+		$file = new File($full_img_dir . DS . $filename, false, 0777);
 		$file->delete();
 
-		$tiny_dir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'tiny'.DS;
-		$file = new File($tiny_dir.$filename, false, 0777);
+		$tiny_dir = Configure::read('event_img_dir') . DS . 'tiny';
+		$file = new File($tiny_dir . DS . $filename, false, 0777);
 		$file->delete();
 	}
 }

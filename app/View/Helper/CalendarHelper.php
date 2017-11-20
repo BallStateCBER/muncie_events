@@ -298,18 +298,19 @@ class CalendarHelper extends AppHelper {
 			return '';
 		}
 		$filename = $params['filename'];
-		$reduced_path = WWW_ROOT.'img'.DS.'events'.DS.$type.DS.$filename;
+        $reduced_path = Configure::read('event_img_dir') . DS . $type . DS . $filename;
 		if (! file_exists($reduced_path)) {
 			return '';
 		}
-		$full_path = WWW_ROOT.'img'.DS.'events'.DS.'full'.DS.$filename;
+		$full_path = Configure::read('event_img_dir') . DS . 'full' . DS . $filename;
 		$class = "thumbnail tn_$type";
 		if (isset($params['class'])) {
 			$class .= ' '.$params['class'];
 		}
 
 		// Reduced image
-		$image = '<img src="/img/events/'.$type.'/'.$filename.'" class="'.$class.'" />';
+        $url = Configure::read('event_img_base_url') . '/' . $type . '/' . $filename;
+		$image = '<img src="' . $url . '" class="'.$class.'" />';
 
 
 		if (! file_exists($full_path)) {
@@ -321,7 +322,8 @@ class CalendarHelper extends AppHelper {
 		if (isset($params['group'])) {
 			$rel .= '['.$params['group'].']';
 		}
-		$link = '<a href="/img/events/full/'.$filename.'" rel="'.$rel.'" class="'.$class.'" alt="image"';
+		$url = Configure::read('event_img_base_url') . '/full/' . $filename;
+		$link = '<a href="' . $url . '" rel="'.$rel.'" class="'.$class.'" alt="image"';
 		if (isset($params['caption']) && ! empty($params['caption'])) {
 			$link .= ' title="'.$params['caption'].'"';
 		}

@@ -15,7 +15,7 @@ class ImagesController extends AppController
 
     public function upload()
     {
-        $uploadDir = ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'img'.DS.'events'.DS.'full'.DS;
+        $uploadDir = Configure::read('event_img_dir') . DS . 'full' . DS;
         $fileTypes = array('jpg', 'jpeg', 'gif', 'png');
         $verifyToken = md5(Configure::read('upload_verify_token') . $_POST['timestamp']);
         if (! empty($_FILES) && $_POST['token'] == $verifyToken) {
