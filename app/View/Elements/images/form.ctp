@@ -110,7 +110,8 @@
 			user_id: '".$this->Session->read('Auth.User.id')."',
 			event_id: ".(isset($event_id) ? $event_id : 'null').",
 			filesize_limit: '{$manual_filesize_limit}B',
-			timestamp: ".time()."
+			timestamp: ".time().",
+			event_img_base_url: '" . Configure::read('event_img_base_url') . "'
 		});
 		ImageManager.user_id = $user_id;
 		ImageManager.setupManager();
