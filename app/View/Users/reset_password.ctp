@@ -1,3 +1,7 @@
+<h1 class="page_title">
+    <?php echo $title_for_layout; ?>
+</h1>
+
 <div class="content_box">
 	<?php
         echo $this->Form->create('User', array('url' => array(
