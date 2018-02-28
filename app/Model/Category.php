@@ -47,12 +47,16 @@ class Category extends AppModel {
 	}
 	
 	/**
-	 * Returns an array with the total upcoming events for each category
+	 * Returns an array with the total upcoming published events for each category
+     *
 	 * @return array
 	 */
 	public function getAllUpcomingEventCounts() {
 		$results = $this->Event->find('all', array(
-			'conditions' => array('Event.date >=' => date('Y-m-d')),
+			'conditions' => array(
+			    'Event.date >=' => date('Y-m-d'),
+                'Event.published' => 1
+            ),
 			'fields' => array(
 				'DISTINCT Event.category_id',
 				'COUNT(Event.id) as count'
