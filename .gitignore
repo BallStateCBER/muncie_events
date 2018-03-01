@@ -42,3 +42,6 @@ local.properties
 
 # PhpStorm
 .idea/*
+
+# Google verification files
+app/webroot/google*.html
