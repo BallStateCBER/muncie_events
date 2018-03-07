@@ -12,14 +12,14 @@ class User extends AppModel
     public $validate = array(
         'name' => array(
             'notEmpty' => array(
-                'rule' => 'notEmpty',
+                'rule' => 'notBlank',
                 'message' => 'This is required.',
                 'last' => true
             )
         ),
         'new_password' => array(
             'nonempty' => array(
-                'rule' => 'notEmpty',
+                'rule' => 'notBlank',
                 'message' => 'You\'ll definitely need a password.'
             )
         ),
@@ -39,7 +39,7 @@ class User extends AppModel
                 'message' => 'Sorry, someone else is already using that email address.'
             ),
             'notEmpty' => array(
-                'rule' => 'notEmpty',
+                'rule' => 'notBlank',
                 'message' => 'This is required.',
                 'last' => true
             )
