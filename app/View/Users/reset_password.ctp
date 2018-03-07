@@ -13,12 +13,14 @@
         echo $this->Form->input('new_password', array(
             'label' => 'New Password',
             'type' => 'password',
-            'autocomplete' => 'off'
+            'autocomplete' => 'off',
+            'between' => '<br />'
         ));
         echo $this->Form->input('confirm_password', array(
             'label' => 'Confirm Password',
             'type' => 'password',
-            'autocomplete' => 'off'
+            'autocomplete' => 'off',
+            'between' => '<br />'
         ));
         echo $this->element('recaptcha_input');
         echo $this->Form->submit('Reset password', array('class' => 'btn'));
