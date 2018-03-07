@@ -410,6 +410,8 @@ class UsersController extends AppController
                 }
             }
         }
+
+        $this->set(['title_for_layout' => 'Change Password']);
     }
 
     public function forgot_password()
