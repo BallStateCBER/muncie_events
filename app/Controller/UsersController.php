@@ -237,8 +237,6 @@ class UsersController extends AppController
             //$this->redirect('/');
         }
 
-        $this->prepareRecaptcha();
-
         if ($this->request->is('post')) {
 
             // Format data
@@ -248,24 +246,29 @@ class UsersController extends AppController
             $hash = $this->Auth->password($this->request->data['User']['new_password']);
             $this->User->set('password', $hash);
 
-            if ($this->User->save($this->request->data)) {
-                $login_result = $this->Auth->login(array(
-                    'id' => $this->User->id,
-                    'role' => '',
-                    'email' => $this->request->data['User']['email'],
-                    'password' => $this->request->data['User']['new_password']
-                ));
-                if ($login_result) {
-                    $this->Flash->success('You\'ve been registered and logged in.');
-                    if ($this->request->data['User']['join_mailing_list']) {
-                        $this->redirect(array('controller' => 'mailing_list', 'action' => 'join', $this->request->data['User']['email']));
+            if ($this->Recaptcha->verify()) {
+                if ($this->User->save($this->request->data)) {
+                    $login_result = $this->Auth->login(array(
+                        'id' => $this->User->id,
+                        'role' => '',
+                        'email' => $this->request->data['User']['email'],
+                        'password' => $this->request->data['User']['new_password']
+                    ));
+                    if ($login_result) {
+                        $this->Flash->success('You\'ve been registered and logged in.');
+                        if ($this->request->data['User']['join_mailing_list']) {
+                            $this->redirect(array('controller' => 'mailing_list', 'action' => 'join', $this->request->data['User']['email']));
+                        } else {
+                            $this->redirect('/');
+                        }
                     } else {
-                        $this->redirect('/');
+                        $this->Flash->error('You\'ve been registered, but there was a problem logging you in. Try logging in manually.');
+                        $this->redirect(array('controller' => 'users', 'action' => 'login'));
                     }
-                } else {
-                    $this->Flash->error('You\'ve been registered, but there was a problem logging you in. Try logging in manually.');
-                    $this->redirect(array('controller' => 'users', 'action' => 'login'));
                 }
+            } else {
+                $this->set(array('recaptcha_error' => $this->Recaptcha->error));
+                $this->Flash->error('There was an error validating your CAPTCHA response. Please try again.');
             }
         }
 

@@ -22,7 +22,8 @@ class AppController extends Controller {
 			// Selectively turn on when appropriate
 			'noAuth' => true,
 			'createUser' => false
-		)
+		),
+        'Recaptcha.Recaptcha'
 	);
 	public $helpers = array(
 		'Calendar',
@@ -132,15 +133,6 @@ class AppController extends Controller {
 				));
 			}
 		}
-	}
-
-	/**
-	 * Sets up everything that the Recaptcha plugin depends on
-	 */
-	protected function prepareRecaptcha() {
-		$this->helpers[] = 'Recaptcha.Recaptcha';
-    	$this->Components->load('Recaptcha.Recaptcha')->startup($this);
-		Configure::load('Recaptcha.key');
 	}
 
 	/**

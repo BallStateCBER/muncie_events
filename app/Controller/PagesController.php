@@ -85,33 +85,35 @@ class PagesController extends AppController {
 		);
 
 		$logged_in = (boolean) $this->Auth->user('id');
-		if (! $logged_in) {
-			$this->prepareRecaptcha();
-		}
 
 		$categories = array('General', 'Website errors');
 		if ($this->request->is('post')) {
-			$this->Dummy->set($this->request->data);
+		    if ($logged_in || $this->Recaptcha->verify()) {
+                $this->Dummy->set($this->request->data);
 
-			if ($this->Dummy->validates()) {
-				$email = new CakeEmail('contact_form');
-				$category = $categories[$this->request->data['Dummy']['category']];
-				$email->from(array($this->request->data['Dummy']['email'] => $this->request->data['Dummy']['name']))
-					->to(Configure::read('admin_email'))
-					->subject('Muncie Events contact form: '.$category);
-				if ($email->send($this->request->data['Dummy']['body'])) {
-					return $this->renderMessage(array(
-						'title' => 'Message Sent',
-						'message' => 'Thanks for contacting us. We will try to respond to your message soon.',
-						'class' => 'success'
-					));
-				} else {
-					$this->Flash->error('There was some problem sending your email.
+                if ($this->Dummy->validates()) {
+                    $email = new CakeEmail('contact_form');
+                    $category = $categories[$this->request->data['Dummy']['category']];
+                    $email->from(array($this->request->data['Dummy']['email'] => $this->request->data['Dummy']['name']))
+                        ->to(Configure::read('admin_email'))
+                        ->subject('Muncie Events contact form: '.$category);
+                    if ($email->send($this->request->data['Dummy']['body'])) {
+                        return $this->renderMessage(array(
+                            'title' => 'Message Sent',
+                            'message' => 'Thanks for contacting us. We will try to respond to your message soon.',
+                            'class' => 'success'
+                        ));
+                    } else {
+                        $this->Flash->error('There was some problem sending your email.
 						It could be a random glitch, or something could be permanently
 						broken. Please contact <a href="mailto:'.Configure::read('admin_email').'">'
-						.Configure::read('admin_email').'</a> for assistance.');
-				}
-			}
+                            .Configure::read('admin_email').'</a> for assistance.');
+                    }
+                }
+            } else {
+                $this->set(array('recaptcha_error' => $this->Recaptcha->error));
+                $this->Flash->error('There was an error validating your CAPTCHA response. Please try again.');
+            }
 		}
 		$this->set(array(
 			'title_for_layout' => 'Contact Us',

@@ -551,111 +551,114 @@ class EventsController extends AppController
         $user_id = $this->Auth->user('id');
         $logged_in = (boolean) $user_id;
         $autopublish = $this->User->canAutopublish($user_id);
-        if (! $logged_in) {
-            $this->prepareRecaptcha();
-        }
+
         if ($this->request->is('post')) {
             if ($this->__rejectSpam()) {
                 return;
             }
-            $dates = explode(',', $this->request->data['Event']['date']);
-            $is_series = count($dates) > 1;
-            $user_id = $this->Auth->user('id');
-            $error_flag = false;
+            if ($logged_in || $this->Recaptcha->verify()) {
+                $dates = explode(',', $this->request->data['Event']['date']);
+                $is_series = count($dates) > 1;
+                $user_id = $this->Auth->user('id');
+                $error_flag = false;
 
-            // Process data
-            $this->__formatFormData();
-            $this->__processCustomTags();
-            $this->__processImageData();
+                // Process data
+                $this->__formatFormData();
+                $this->__processCustomTags();
+                $this->__processImageData();
 
-            // Correct date format
-            foreach ($dates as &$date) {
-                $date = trim($date);
-                $timestamp = strtotime($date);
-                $date = date('Y-m-d', $timestamp);
-            }
-            unset($date);
-            if ($this->Auth->user('role') == 'admin') {
-                $this->request->data['Event']['approved_by'] = $this->Auth->user('id');
-                $autopublish = 1;
-            }
-            $this->request->data['Event']['user_id'] = $user_id;
-            $this->request->data['Event']['published'] = $autopublish;
+                // Correct date format
+                foreach ($dates as &$date) {
+                    $date = trim($date);
+                    $timestamp = strtotime($date);
+                    $date = date('Y-m-d', $timestamp);
+                }
+                unset($date);
+                if ($this->Auth->user('role') == 'admin') {
+                    $this->request->data['Event']['approved_by'] = $this->Auth->user('id');
+                    $autopublish = 1;
+                }
+                $this->request->data['Event']['user_id'] = $user_id;
+                $this->request->data['Event']['published'] = $autopublish;
 
-            $this->Event->set($this->request->data);
+                $this->Event->set($this->request->data);
 
-            // Validation is disabled in calls to Event::save()
-            // because ReCAPTCHA validation fails if called twice
-            if ($this->Event->validates()) {
+                // Validation is disabled in calls to Event::save()
+                // because ReCAPTCHA validation fails if called twice
+                if ($this->Event->validates()) {
 
-                // Process submission of an event series
-                if ($is_series) {
-                    if (trim($this->request->data['EventSeries']['title']) == '') {
-                        $this->request->data['EventSeries']['title'] = $this->request->data['Event']['title'];
-                    }
-                    $this->Event->EventSeries->create();
-                    $this->Event->EventSeries->set('title', $this->request->data['EventSeries']['title']);
-                    $this->Event->EventSeries->set('user_id', $user_id);
-                    $this->Event->EventSeries->set('published', $autopublish);
-                    if ($this->Event->EventSeries->save()) {
-                        $this->request->data['Event']['series_id'] = $this->Event->EventSeries->id;
-
-                        // Prevents saveAssociated() from creating a new EventSeries for every Event
-                        unset($this->request->data['EventSeries']);
-
-                        $dates = array_unique($dates);
-                        sort($dates);
-                        $redirect_to_event_id = null;
-                        foreach ($dates as $date) {
-                            $this->request->data['Event']['date'] = $date;
-                            $this->Event->create();
-                            if (! $this->Event->saveAssociated($this->request->data, array('validate' => false))) {
-                                $error_flag = true;
-                            } elseif (! $redirect_to_event_id) {
-                                $redirect_to_event_id = $this->Event->id;
-                            }
+                    // Process submission of an event series
+                    if ($is_series) {
+                        if (trim($this->request->data['EventSeries']['title']) == '') {
+                            $this->request->data['EventSeries']['title'] = $this->request->data['Event']['title'];
                         }
+                        $this->Event->EventSeries->create();
+                        $this->Event->EventSeries->set('title', $this->request->data['EventSeries']['title']);
+                        $this->Event->EventSeries->set('user_id', $user_id);
+                        $this->Event->EventSeries->set('published', $autopublish);
+                        if ($this->Event->EventSeries->save()) {
+                            $this->request->data['Event']['series_id'] = $this->Event->EventSeries->id;
+
+                            // Prevents saveAssociated() from creating a new EventSeries for every Event
+                            unset($this->request->data['EventSeries']);
+
+                            $dates = array_unique($dates);
+                            sort($dates);
+                            $redirect_to_event_id = null;
+                            foreach ($dates as $date) {
+                                $this->request->data['Event']['date'] = $date;
+                                $this->Event->create();
+                                if (! $this->Event->saveAssociated($this->request->data, array('validate' => false))) {
+                                    $error_flag = true;
+                                } elseif (! $redirect_to_event_id) {
+                                    $redirect_to_event_id = $this->Event->id;
+                                }
+                            }
+                        } else {
+                            $error_flag = true;
+                            $this->Flash->error('There was a problem creating this event series. Please try again, or <a href="/contact">contact us</a> if you need assistance.');
+                        }
+
+                        // Process submission of a single event
                     } else {
-                        $error_flag = true;
-                        $this->Flash->error('There was a problem creating this event series. Please try again, or <a href="/contact">contact us</a> if you need assistance.');
+                        $this->request->data['Event']['date'] = date('Y-m-d', strtotime(trim($this->request->data['Event']['date'])));
+                        unset($this->request->data['EventSeries']);
+                        if ($this->Event->saveAssociated($this->request->data, array('validate' => false))) {
+                            $redirect_to_event_id = $this->Event->id;
+                        } else {
+                            $error_flag = true;
+                        }
                     }
 
-                // Process submission of a single event
-                } else {
-                    $this->request->data['Event']['date'] = date('Y-m-d', strtotime(trim($this->request->data['Event']['date'])));
-                    unset($this->request->data['EventSeries']);
-                    if ($this->Event->saveAssociated($this->request->data, array('validate' => false))) {
-                        $redirect_to_event_id = $this->Event->id;
-                    } else {
-                        $error_flag = true;
+                    if (! $error_flag) {
+                        $noun_verb1 = $is_series ? 'events have' : 'event has';
+                        $this->request->data = null;
+
+                        // If event is auto-published
+                        if ($autopublish) {
+                            $this->Flash->success("Your $noun_verb1 been added to the calendar.");
+                            $this->redirect(array(
+                                'controller' => 'events',
+                                'action' => 'view',
+                                'id' => $redirect_to_event_id
+                            ));
+
+                            // If event is now in moderation queue
+                        } else {
+                            $noun_verb2 = $is_series ? 'they are' : 'it is';
+                            $noun = $is_series ? 'they' : 'it';
+                            $add_url = Router::url(array('controller' => 'events', 'action' => 'add'));
+                            return $this->renderMessage(array(
+                                'title' => ($is_series ? 'Events' : 'Event').' Submitted',
+                                'message' => "Your $noun_verb1 been submitted for review. Once $noun_verb2 approved by an administrator, $noun will appear on the calendar. <a href=\"$add_url\">Add another event</a>",
+                                'class' => 'success'
+                            ));
+                        }
                     }
                 }
-
-                if (! $error_flag) {
-                    $noun_verb1 = $is_series ? 'events have' : 'event has';
-                    $this->request->data = null;
-
-                    // If event is auto-published
-                    if ($autopublish) {
-                        $this->Flash->success("Your $noun_verb1 been added to the calendar.");
-                        $this->redirect(array(
-                            'controller' => 'events',
-                            'action' => 'view',
-                            'id' => $redirect_to_event_id
-                        ));
-
-                    // If event is now in moderation queue
-                    } else {
-                        $noun_verb2 = $is_series ? 'they are' : 'it is';
-                        $noun = $is_series ? 'they' : 'it';
-                        $add_url = Router::url(array('controller' => 'events', 'action' => 'add'));
-                        return $this->renderMessage(array(
-                            'title' => ($is_series ? 'Events' : 'Event').' Submitted',
-                            'message' => "Your $noun_verb1 been submitted for review. Once $noun_verb2 approved by an administrator, $noun will appear on the calendar. <a href=\"$add_url\">Add another event</a>",
-                            'class' => 'success'
-                        ));
-                    }
-                }
+            } else {
+                $this->set(array('recaptcha_error' => $this->Recaptcha->error));
+                $this->Flash->error('There was an error validating your CAPTCHA response. Please try again.');
             }
         } else {
             $this->request->data['Event']['date'] = '';
