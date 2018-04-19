@@ -1,6 +1,6 @@
 # CakePHP
 tmp/*
-[Cc]onfig/core.php
+config/core.php
 [Cc]onfig/database.php
 app/tmp/*
 app/[Cc]onfig/core.php
