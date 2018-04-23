@@ -493,11 +493,11 @@ class EventsController extends AppController
             } else {
                 $dates = explode(',', $this->request->data['Event']['date']);
                 foreach ($dates as $date) {
-                    list($year, $month, $day) = explode('-', $date);
-                    if (! isset($default_date)) {
-                        $default_date = "$month/$day/$year";
+                    $timestamp = strtotime($date);
+                    if (!isset($default_date)) {
+                        $default_date = date('m/d/Y', $timestamp);
                     }
-                    $date_field_values[] = "$month/$day/$year";
+                    $date_field_values[] = date('m/d/Y', $timestamp);
                 }
                 $dates_for_js = array();
                 foreach ($date_field_values as $date) {
