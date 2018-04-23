@@ -491,7 +491,6 @@ class EventsController extends AppController
                 $default_date = 0; // Today
                 $datepicker_preselected_dates = '[]';
             } else {
-                //strpos($this->request->data['Event']['date'], '/');
                 $dates = explode(',', $this->request->data['Event']['date']);
                 foreach ($dates as $date) {
                     list($year, $month, $day) = explode('-', $date);
