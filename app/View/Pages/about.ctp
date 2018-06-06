@@ -4,8 +4,8 @@
 
 <p>
 	Muncie Events is a comprehensive event promotion tool provided to the city of
-	Muncie, Indiana by the Center for Business and Economic Research at Ball State
-	University and the Full Circle Arts Co-op, a 501(c)(3) not-for-profit organization.
+    Muncie, Indiana by the <a href="https://munciearts.org">Muncie Arts and Culture Council</a> and the
+    <a href="https://bsu.edu/cber">Center for Business and Economic Research</a> at Ball State University.
 </p>
 <p>
 	This service is guided by the following principles:
@@ -50,8 +50,8 @@
             'Nicholas Boyum' => 'Artist (map of Muncie background image)'
         ),
         'Organizations' => array(
-            '<a href="http://fullcircleartscoop.org">Full Circle Arts Co-op</a>' => 'Sponsor',
-            '<a href="http://bsu.edu/cber">Center for Business and Economic Research</a>' => 'Sponsor'
+            '<a href="https://munciearts.org">Muncie Arts and Culture Council</a>' => '',
+            '<a href="http://bsu.edu/cber">Center for Business and Economic Research</a>' => ''
         ),
         'Software' => array(
             '<a href="http://cakephp.org">CakePHP</a>' => 'Site framework',
