@@ -7,6 +7,8 @@ echo $this->Tinymce->input($field,
 		'theme_advanced_statusbar_location' => 'none',
 		// If this is changed, also change Event::allowed_tags
 		'valid_elements' => 'p,br,a[href|target=_blank],strong/b,i/em,u',
+		'height' => '300px',
+		'content_css' => '/css/tinymce.css',
 	
 		/* These three prevent links to other pages on this same domain
 		 * from being converted to relative URLs. */
