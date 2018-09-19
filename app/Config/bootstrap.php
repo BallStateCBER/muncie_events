@@ -188,3 +188,4 @@ CakePlugin::load('DebugKit');
 App::uses('FireCake','DebugKit.Lib');
 
 //require_once('../Vendor/FirePHPCore/FirePHP.class.php');
+require ROOT . DS . 'vendor' . DS . 'autoload.php';
