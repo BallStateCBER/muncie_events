@@ -58,22 +58,12 @@ class AppController extends Controller {
 						'User.email' => $cookie['email'],
 						'User.password' => $cookie['password']
 					),
-					'fields' => array('id', 'role'),
-					'contain' => array(
-						'MailingList' => array('fields' => array('id'))
-					)
+					'fields' => array('id', 'role')
 				));
 
 				// Include user data
 				$cookie['id'] = $user['User']['id'];
 				$cookie['role'] = $user['User']['role'];
-				/*
-				if (isset($user['MailingList']['id'])) {
-					$cookie['MailingList']['id'] = $user['MailingList']['id'];
-				} else {
-					$cookie['MailingList']['id'] = null;
-				}
-				*/
 
 				$login_successful = $this->Auth->login($cookie);
 				if ($user && ! $login_successful) {
