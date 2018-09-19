@@ -632,6 +632,7 @@ class EventsController extends AppController
                     if (! $error_flag) {
                         $noun_verb1 = $is_series ? 'events have' : 'event has';
                         $this->request->data = null;
+                        $this->sendSlackAlert($this->request->data['Event']['title']);
 
                         // If event is auto-published
                         if ($autopublish) {
@@ -642,7 +643,7 @@ class EventsController extends AppController
                                 'id' => $redirect_to_event_id
                             ));
 
-                            // If event is now in moderation queue
+                        // If event is now in moderation queue
                         } else {
                             $noun_verb2 = $is_series ? 'they are' : 'it is';
                             $noun = $is_series ? 'they' : 'it';
@@ -1404,5 +1405,17 @@ class EventsController extends AppController
             'categories' => $this->Event->Category->getAll(),
             'upcoming_event_tags' => $this->Event->Tag->getUpcoming($this->event_filter)
         ));
+    }
+
+    /**
+     * Sends a message to Slack alerting admins to a new event being posted
+     *
+     * @param string $title Event title
+     * @return void
+     */
+    private function sendSlackAlert($title)
+    {
+        require_once (APP . 'Slack' . DS . 'Slack.php');
+        (new \App\Slack\Slack())->sendNewEventAlert($title);
     }
 }
