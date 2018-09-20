@@ -618,7 +618,7 @@ class EventsController extends AppController
                             $this->Flash->error('There was a problem creating this event series. Please try again, or <a href="/contact">contact us</a> if you need assistance.');
                         }
 
-                        // Process submission of a single event
+                    // Process submission of a single event
                     } else {
                         $this->request->data['Event']['date'] = date('Y-m-d', strtotime(trim($this->request->data['Event']['date'])));
                         unset($this->request->data['EventSeries']);
