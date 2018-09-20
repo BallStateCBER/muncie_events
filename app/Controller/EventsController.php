@@ -631,8 +631,8 @@ class EventsController extends AppController
 
                     if (! $error_flag) {
                         $noun_verb1 = $is_series ? 'events have' : 'event has';
-                        $this->request->data = null;
                         $this->sendSlackAlert($this->request->data['Event']['title']);
+                        $this->request->data = null;
 
                         // If event is auto-published
                         if ($autopublish) {
