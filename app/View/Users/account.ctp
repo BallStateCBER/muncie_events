@@ -20,36 +20,6 @@
                 ); ?>
 			</li>
 		<?php endif; ?>
-		<?php if ($facebook): ?>
-			<li>
-				<?php echo $this->Form->postLink(
-                    'Remove sync with Facebook',
-                    array(
-                        'controller' => 'users',
-                        'action' => 'facebook_unsync'
-                    ),
-                    null,
-                    'You will be logged out and will need to log back in. Are you sure?'
-                ); ?>
-				<br />
-				<span class="fb_footnote">
-					Currently synced to <?php echo $facebook['name']; ?>
-					(<a href="<?php echo $facebook['url']; ?>"><?php echo $facebook['url']; ?></a>)
-				</span>
-			</li>
-		<?php else: ?>
-			<li>
-				<?php echo $this->Facebook->login(array(
-                    'label' => 'Sync Account with Facebook',
-                    'show-faces' => false,
-                    'perms' => 'email,user_events,create_event,rsvp_event',
-                    'redirect' => array(
-                        'controller' => 'users',
-                        'action' => 'facebook_sync'
-                    )
-                )); ?>
-			</li>
-		<?php endif; ?>
 	</ul>
 
 	<?php echo $this->Form->create('User', array(
