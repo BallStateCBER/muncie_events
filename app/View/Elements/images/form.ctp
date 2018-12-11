@@ -73,8 +73,15 @@
 	    <div id="image_help_container" class="collapse" role="tabpanel" aria-labelledby="image_help_heading">
 	      <div class="card-block">
 	        <h3>Uploading</h3>
+                <?php
+                  /*
+                   * Any changes to image rules should be copied over to /src/Template/Element/Pages/rules_images.ctp
+                   * in the Muncie Events API codebase
+                   */
+                 ?>
 	  			<ul class="footnote">
-	  				<li>Images must be .jpg, .jpeg, .gif, or .png.</li>
+                    <li>The first image will be displayed as the event's main image.</li>
+                    <li>Images must be .jpg, .jpeg, .gif, or .png.</li>
 	  				<li>Each file cannot exceed <?php echo $manual_filesize_limit; ?>B</li>
 	  				<li>You can upload an image once and re-use it in multiple events.</li>
 	  				<li>By uploading an image, you affirm that you are not violating any copyrights.</li>
@@ -84,13 +91,12 @@
 	  			<h3>After selecting images</h3>
 	  			<ul class="footnote">
 	  				<li>
-	  					The first image will be displayed as the event's main image.
+	  					Click on the <img src="/img/icons/arrow-move.png" alt="Move" title="Move" /> icon to drag
+                        images up or down and resort them.
 	  				</li>
 	  				<li>
-	  					Click on the <img src="/img/icons/arrow-move.png" alt="Move" title="Move" /> icon to drag images up or down and resort them.
-	  				</li>
-	  				<li>
-	  					Click on the <img src="/img/icons/cross.png" class="remove" alt="Remove" title="Remove" /> icon to unselect an image.
+	  					Click on the <img src="/img/icons/cross.png" class="remove" alt="Remove" title="Remove" /> icon
+                        to unselect an image.
 	  				</li>
 	  			</ul>
 	      </div>

@@ -1,3 +1,9 @@
+<?php
+/*
+ * Any changes to this file should be copied over to /src/Template/Element/Pages/about.ctp
+ * in the Muncie Events API codebase
+ */
+?>
 <h1 class="page_title">
 	About Muncie Events
 </h1>

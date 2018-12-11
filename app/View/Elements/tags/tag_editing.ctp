@@ -71,11 +71,18 @@
 				));
 			?>
             <?php $this->Js->buffer("TagManager.setupAutosuggest('#custom_tag_input');"); ?>
-			<div id="new_tag_rules" class="alert alert-info collapse">
+            <?php
+                /*
+                 * Any changes to tag rules should be copied over to /src/Template/Element/Pages/rules_tags.ctp
+                 * in the Muncie Events API codebase
+                 */
+            ?>
+            <div id="new_tag_rules" class="alert alert-info collapse">
 				<p>
 					Before entering new tags, please search for existing tags that meet your needs.
 					Once you start typing, please select any appropriate suggestions that appear below the input field.
-					Doing this will make it more likely that your event will be linked to popular tags that are viewed by more visitors.
+					Doing this will make it more likely that your event will be linked to popular tags that are viewed
+                    by more visitors.
 				</p>
 
 				<p>
@@ -83,7 +90,8 @@
 				</p>
 				<ul>
 					<li>
-						be short, general descriptions that people might search for, describing what will take place at the event
+						be short, general descriptions that people might search for, describing what will take place
+                        at the event
 					</li>
 					<li>
 						be general enough to also apply to other events (including events outside of a series)
@@ -91,7 +99,7 @@
 				</ul>
 
 				<p>
-					Must not:
+					And must not:
 				</p>
 				<ul>
 					<li>
@@ -101,7 +109,8 @@
 						include profanity, email addresses, or website addresses
 					</li>
 					<li>
-						be the name of the location (having this as a tag would be redundant, since people can already view events by location)
+						be the name of the event specific location (having this as a tag would be redundant, since people can
+                        already view events by location)
 					</li>
 				</ul>
 			</div>

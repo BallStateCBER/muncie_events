@@ -1,3 +1,9 @@
+<?php
+/*
+ * Any changes to this file should be copied over to /src/Template/Element/Pages/rules_events.ctp
+ * in the Muncie Events API codebase
+ */
+?>
 <ul>
 	<li>
 		<strong>Muncie Events:</strong> Only events taking place in Muncie may be posted.
