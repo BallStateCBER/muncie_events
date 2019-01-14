@@ -45,3 +45,6 @@ local.properties
 
 # Google verification files
 app/webroot/google*.html
+
+/vendor/*
+/Plugin/*
