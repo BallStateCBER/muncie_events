@@ -22,7 +22,6 @@
             'autocomplete' => 'off',
             'between' => '<br />'
         ));
-        echo $this->element('recaptcha_input');
         echo $this->Form->submit('Reset password', array('class' => 'btn'));
         echo $this->Form->end();
     ?>
