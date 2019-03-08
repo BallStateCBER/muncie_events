@@ -3,8 +3,8 @@
 </h1>
 
 <div class="prev_next_day">
-	<?php echo $this->Calendar->prevDay(mktime(0, 0, 0, $month, $day - 1, $year)); ?>
-	<?php echo $this->Calendar->nextDay(mktime(0, 0, 0, $month, $day + 1, $year)); ?>
+	<?= $this->Calendar->prevDay(mktime(0, 0, 0, (int)$month, (int)$day - 1, (int)$year)) ?>
+	<?= $this->Calendar->nextDay(mktime(0, 0, 0, (int)$month, (int)$day + 1, (int)$year)) ?>
 </div>
 <?php echo $this->element('events/date_picker', array('default' => "$month/$day/$year")); ?>
 
