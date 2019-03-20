@@ -888,18 +888,22 @@ class EventsController extends AppController
 
 
         // Set up paginate to find past/upcoming events with the correct tag
-        $this->paginate[0] = ($direction == 'future') ? 'upcomingWithTag' : 'pastWithTag';
-        $this->paginate['conditions'] = array('Tag.id' => $tag_id);
+        $findType = ($direction == 'future') ? 'upcomingWithTag' : 'pastWithTag';
+        $conditions = array('Tag.id' => $tag_id);
 
         // Get a count of the events found in the other direction (past/future)
         $count_other_direction = $direction == 'future'
             ? $this->Event->getCountPastWithTag($tag_id)
             : $this->Event->getCountUpcomingWithTag($tag_id);
 
+        $events = $this->Event->find($findType, array(
+            'conditions' => $conditions
+        ));
+
         $this->set(array(
             'title_for_layout' => 'Tag: '.ucwords($tag['Tag']['name']),
             'tag' => $tag,
-            'events' => $this->Event->arrangeByDate($this->paginate()),
+            'events' => $this->Event->arrangeByDate($events),
             'slug' => $slug,
             'direction' => $direction,
             'count_other_direction' => $count_other_direction

@@ -1,6 +1,3 @@
-<?php
-	$total = $this->Paginator->counter(array('format' => '{:count}'));
-?>
 <h1 class="page_title">
 	<?php echo $total; ?>
 	<?php echo ($direction == 'future') ? 'Upcoming' : 'Past'; ?>
@@ -31,16 +28,12 @@
 
 <?php if (isset($events) && ! empty($events)): ?>
 
-	<?php echo $this->element('pagination'); ?>
-
 	<?php foreach ($events as $date => $days_events): ?>
 		<?php echo $this->Calendar->dayHeaders($date); ?>
 		<?php echo $this->element('events/accordion_day', array(
 			'events' => $days_events
 		)); ?>
 	<?php endforeach; ?>
-
-	<?php echo $this->element('pagination'); ?>
 
 	<?php $this->Js->buffer("setupEventAccordion();"); ?>
 
