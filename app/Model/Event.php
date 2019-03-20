@@ -1014,7 +1014,7 @@ class Event extends AppModel {
 		$locations = $this->find('list', array(
 			'conditions' => array('Event.user_id' => $user_id),
 			'fields' => array('Event.location', 'Event.address'),
-			'group' => array('Event.location'),
+			'distinct' => array('Event.location'),
 			'contain' => false,
 			'order' => array('Event.created DESC')
 		));
