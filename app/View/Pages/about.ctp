@@ -31,6 +31,11 @@
     ); ?>.
 </p>
 
+<p>
+    Muncie Events began in 2003 as a component of the community website TheMuncieScene.com. Its event database currently
+    holds information for <?= number_format($eventCount) ?> local events going back over <?= $yearsCount ?> years.
+</p>
+
 <?php
     $credits = array(
         'People' => array(

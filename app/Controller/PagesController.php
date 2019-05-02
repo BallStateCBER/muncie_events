@@ -52,8 +52,11 @@ class PagesController extends AppController {
 	}
 
 	public function about() {
+	    $this->loadModel('Event');
 		$this->set(array(
-			'title_for_layout' => 'About'
+			'title_for_layout' => 'About',
+            'eventCount' => $this->Event->find('count'),
+            'yearsCount' => date('Y') - 2009
 		));
 	}
 
