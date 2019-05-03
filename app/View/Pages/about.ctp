@@ -3,6 +3,10 @@
  * Any changes to this file should be copied over to /src/Template/Element/Pages/about.ctp
  * in the Muncie Events API codebase
  */
+/**
+ * @var int $eventCount
+ * @var int $yearsCount
+ */
 ?>
 <h1 class="page_title">
 	About Muncie Events
@@ -11,8 +15,10 @@
 <p>
 	Muncie Events is a free, comprehensive event promotion service provided to the city of
     Muncie, Indiana with the support of Ball State University's <a href="https://bsu.edu/cber">Center for Business and
-    Economic Research</a> and the <a href="https://munciearts.org">Muncie Arts and Culture Council</a>. It serves as a
-    central repository for event information that gets distributed to every website with
+    Economic Research</a> and the <a href="https://munciearts.org">Muncie Arts and Culture Council</a>. It strives to
+    make learning about and promoting events easier for everyone by providing the underlying service to empower local
+    websites and mobile apps to be part of the same event promotion network. Event information collected by Muncie
+    Events gets distributed to every website displaying
     <?= $this->Html->link(
         'a Muncie Events calendar',
         [
@@ -33,7 +39,10 @@
 
 <p>
     Muncie Events began in 2003 as a component of the community website TheMuncieScene.com. Its event database currently
-    holds information for <?= number_format($eventCount) ?> local events going back over <?= $yearsCount ?> years.
+    holds information for <?= number_format($eventCount) ?> local events submitted by hundreds of people over
+    the past <?= $yearsCount ?> years.
+    Like us on <a href="https://www.facebook.com/MuncieEvents/">facebook.com/MuncieEvents</a> for news about this
+    service and announcements about new features being added.
 </p>
 
 <?php
