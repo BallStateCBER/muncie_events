@@ -26,15 +26,15 @@
             'action' => 'index',
             'plugin' => false
         ]
-    ); ?>, to apps using <a href="https://api.muncieevents.com">the Muncie Events API</a>, and to
-    <?php echo $this->Html->link(
+    ) ?>, to apps using <a href="https://api.muncieevents.com">the Muncie Events API</a>, and to
+    <?= $this->Html->link(
         'a customizable mailing list',
         [
             'controller' => 'mailing_list',
             'action' => 'join',
             'plugin' => false
         ]
-    ); ?>.
+    ) ?>.
 </p>
 
 <p>
@@ -46,8 +46,8 @@
 </p>
 
 <?php
-    $credits = array(
-        'People' => array(
+    $credits = [
+        'People' => [
             '<a href="mailto:graham@phantomwatson.com">Graham Watson</a>' => 'Web Developer, Administrator',
             'Erica Dee Fox' => 'Web Developer',
             'Gunner Bills' => 'Mobile App Developer',
@@ -57,27 +57,34 @@
             'Sydnee Kuebler' => 'Icon Designer',
             'Benjamin Easley' => 'Graphic Designer',
             'Nicholas Boyum' => 'Artist (map of Muncie background image)',
-        ),
-        'Organizations' => array(
+        ],
+        'Organizations' => [
             '<a href="https://munciearts.org">Muncie Arts and Culture Council</a>' => '',
             '<a href="http://bsu.edu/cber">Center for Business and Economic Research</a>' => ''
-        ),
-        'Software' => array(
+        ],
+        'Software' => [
             '<a href="http://cakephp.org">CakePHP</a>' => 'Back-end framework',
             '<a href="http://jquery.com/">jQuery</a> &amp; <a href="http://jqueryui.com/">jQuery UI</a>' => 'Front-end framework',
             '<a href="https://facebook.github.io/react-native/">React Native</a>' => 'Mobile app framework',
             '<a href="http://dimsemenov.com/plugins/magnific-popup/">Magnific Popup</a>' => 'Elegant media popups',
             '<a href="http://www.digitalmagicpro.com/jPicker/">jPicker</a>' => 'Color picker',
             '<a href="http://recaptcha.net/">reCAPTCHA</a>' => 'Spam defense',
-        )
-    );
+        ]
+    ];
 ?>
 
 <ul id="credits">
 	<?php foreach ($credits as $category => $members): ?>
-		<li class="category"><?php echo $category ?><br class="break" /></li>
+		<li class="category">
+            <?= $category ?>
+            <br class="break" />
+        </li>
 		<?php foreach ($members as $name => $position): ?>
-			<li class="row"><div class="name"><?php echo $name ?></div><div class="position"><?php echo $position ?></div><br class="break" /></li>
+			<li class="row">
+                <div class="name"><?= $name ?></div>
+                <div class="position"><?= $position ?></div>
+                <br class="break" />
+            </li>
 		<?php endforeach; ?>
 		<li class="row" style="border: none;">&nbsp;</li>
 	<?php endforeach; ?>
