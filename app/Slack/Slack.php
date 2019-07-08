@@ -17,7 +17,7 @@ class Slack
 
     public function __construct()
     {
-        $webhookUrl = 'https://hooks.slack.com/services/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';
+        $webhookUrl = Configure::read('slack_webhook_url');
         $this->client = new Client($webhookUrl);
     }
 
