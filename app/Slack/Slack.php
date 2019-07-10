@@ -1,6 +1,7 @@
 <?php
 namespace App\Slack;
 
+use Configure;
 use Maknz\Slack\Client;
 
 /**
