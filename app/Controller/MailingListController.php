@@ -199,7 +199,7 @@ class MailingListController extends AppController
         list($y, $m, $d) = $this->MailingList->getTodayYMD();
         $events = $this->Event->getEventsOnDay($y, $m, $d, true);
         if (empty($events)) {
-            $this->MailingList->markAllDailyAsProcessed($recipients, 'd');
+            $this->MailingList->markAllDailyAsProcessed($recipients, 2);
             return $this->renderMessage(array(
                 'title' => 'Daily Emails Not Sent',
                 'message' => 'No events to inform anyone about today',
