@@ -950,6 +950,7 @@ class EventsController extends AppController
 
         // Get search results
         $this->paginate['conditions'] = $this->Event->parseCriteria($this->passedArgs);
+        $this->paginate['conditions'][] = ['Event.published' => 1];
         $events = $this->Event->arrangeByDate($this->paginate());
 
         if ($direction == 'all') {
