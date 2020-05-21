@@ -19,6 +19,10 @@
         under "members only", and as such, only the first meeting of multiple-day classes may be posted if subsequent
         meetings are restricted to only enrolled students.
 	</li>
+    <li>
+        <strong>Virtual Events:</strong> Virtual events may be posted if they are live video broadcasts being made from
+        a location in Muncie or virtual meetings hosted by Muncie groups that are open to the public to attend.
+    </li>
 	<li>
 		<strong>Significant Events:</strong> Ongoing events that take place very frequently (such as 
 		unspecific live music at a coffee shop every day) may not be posted.  
@@ -31,7 +35,7 @@
 	</li>
 	<li>
 		<strong>Language:</strong> To be considerate of our wide and diverse audience, offensive language 
-		is not allowed. In general, any words that would be bleeped on television are not allowed in 
+		is not allowed. In general, any words that would be censored on television are not allowed in
 		posted events.
 	</li>
 	<li>
