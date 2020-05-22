@@ -169,10 +169,6 @@ function setupEventForm() {
 		$('#eventform_nosource').hide();
 		$('#eventform_hassource').show();
 	}
-	if ($('#EventAddress').val() != '') {
-		$('#eventform_noaddress').hide();
-		$('#eventform_address').show();
-	}
 	if ($('#eventform_hasendtime_boolinput').val() == '1') {
 		$('#eventform_hasendtime').show();
 		$('#eventform_noendtime').hide();
@@ -189,6 +185,37 @@ function setupEventForm() {
 	});
 	if ($('#EventUpdateSeries0').is(':checked')) {
 		$('#series_editing_warning').hide();
+	}
+	const handleChangeEventType = function (event) {
+		const isVirtual = event.target.value === 'virtual';
+		const locationNameField = document.getElementById('EventLocation');
+		const addressHeader = document.querySelector('#eventform_address th');
+		const addressField = document.getElementById('EventAddress');
+		const locationDetailsField = document.getElementById('EventLocationDetails');
+		const locationRow = locationNameField.parentElement.parentElement.parentElement.parentElement;
+		if (isVirtual) {
+			locationNameField.value = 'Online';
+			addressHeader.textContent = 'URL';
+			addressField.placeholder = 'https://';
+			addressField.setAttribute('type', 'url');
+			addressField.required = true;
+			locationDetailsField.parentElement.style.display = 'none';
+			locationRow.style.display = 'none';
+		} else {
+			if (locationNameField.value === 'Online') {
+				locationNameField.value = '';
+			}
+			addressHeader.textContent = 'Address';
+			addressField.placeholder = '';
+			addressField.setAttribute('type', 'text');
+			addressField.required = false;
+			locationDetailsField.parentElement.style.display = 'block';
+			locationRow.style.display = 'table-row';
+		}
+	};
+	const options = document.querySelectorAll('input[name="data[Event][location_medium]"]');
+	for (let x = 0; x < options.length; x++) {
+		options[x].addEventListener('click', handleChangeEventType)
 	}
 }
 

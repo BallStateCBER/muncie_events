@@ -58,6 +58,24 @@
 ?>
 <table class="event_form">
 	<tbody>
+        <tr>
+            <th>
+                Type
+            </th>
+            <td>
+                <?= $this->Form->input('location_medium', [
+                    'div' => ['class' => 'col-lg-12'],
+                    'legend' => false,
+                    'options' => [
+                        'physical' => 'Regular event',
+                        'virtual' => 'Virtual event',
+                    ],
+                    'type' => 'radio',
+                    'separator' => '<br />',
+                ]) ?>
+            </td>
+        </tr>
+
 		<tr>
 			<th>Event</th>
 			<td><?php
@@ -215,18 +233,21 @@
 			</td>
 		</tr>
 		<tr>
-			<th>Location</th>
+			<th>
+                Location
+            </th>
 			<td>
-				<div class="form-group">
+                <div class="form-group">
 					<?php echo $this->Form->input('location', array(
                         'label' => false,
                         'class' => 'form-control col-lg-8 col-md-10',
+                        'placeholder' => 'Location name',
                         'div' => array(
                             'class' => 'col-lg-12'
                         ),
-                        'after' => '<a href="#" id="eventform_noaddress" <?php echo $has["address"] ? "style=\'display: none;\'" : ""?>Add address</a>'
                     )); ?>
-					<br />
+                </div>
+                <div class="form-group">
 					<?php echo $this->Form->input('location_details', array(
                         'label' => false,
                         'class' => 'form-control col-lg-8 col-md-10',
@@ -238,7 +259,7 @@
 				</div>
 			</td>
 		</tr>
-		<tr id="eventform_address" <?php if (! $has['address']): ?>style="display: none;"<?php endif; ?>>
+		<tr id="eventform_address">
 			<th>Address</th>
 			<td>
 				<?php echo $this->Form->input('address', array(

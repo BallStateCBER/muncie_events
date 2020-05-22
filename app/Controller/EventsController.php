@@ -607,9 +607,9 @@ class EventsController extends AppController
                             foreach ($dates as $date) {
                                 $this->request->data['Event']['date'] = $date;
                                 $this->Event->create();
-                                if (! $this->Event->saveAssociated($this->request->data, array('validate' => false))) {
+                                if (!$this->Event->saveAssociated($this->request->data, array('validate' => false))) {
                                     $error_flag = true;
-                                } elseif (! $redirect_to_event_id) {
+                                } elseif (!$redirect_to_event_id) {
                                     $redirect_to_event_id = $this->Event->id;
                                 }
                             }
@@ -618,7 +618,7 @@ class EventsController extends AppController
                             $this->Flash->error('There was a problem creating this event series. Please try again, or <a href="/contact">contact us</a> if you need assistance.');
                         }
 
-                    // Process submission of a single event
+                        // Process submission of a single event
                     } else {
                         $this->request->data['Event']['date'] = date('Y-m-d', strtotime(trim($this->request->data['Event']['date'])));
                         unset($this->request->data['EventSeries']);
@@ -629,7 +629,7 @@ class EventsController extends AppController
                         }
                     }
 
-                    if (! $error_flag) {
+                    if (!$error_flag) {
                         $noun_verb1 = $is_series ? 'events have' : 'event has';
                         $this->sendSlackAlert($this->request->data['Event']['title']);
                         $this->request->data = null;
@@ -643,13 +643,13 @@ class EventsController extends AppController
                                 'id' => $redirect_to_event_id
                             ));
 
-                        // If event is now in moderation queue
+                            // If event is now in moderation queue
                         } else {
                             $noun_verb2 = $is_series ? 'they are' : 'it is';
                             $noun = $is_series ? 'they' : 'it';
                             $add_url = Router::url(array('controller' => 'events', 'action' => 'add'));
                             return $this->renderMessage(array(
-                                'title' => ($is_series ? 'Events' : 'Event').' Submitted',
+                                'title' => ($is_series ? 'Events' : 'Event') . ' Submitted',
                                 'message' => "Your $noun_verb1 been submitted for review. Once $noun_verb2 approved by an administrator, $noun will appear on the calendar. <a href=\"$add_url\">Add another event</a>",
                                 'class' => 'success'
                             ));
@@ -662,6 +662,7 @@ class EventsController extends AppController
             }
         } else {
             $this->request->data['Event']['date'] = '';
+            $this->request->data['Event']['location_medium'] = 'physical';
             foreach (array('time_start', 'time_end') as $field) {
                 if (isset($this->request->data['Event'][$field])) {
                     // Fixes bug where midnight is represented as noon
