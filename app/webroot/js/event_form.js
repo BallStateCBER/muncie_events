@@ -269,6 +269,12 @@ function setupAddressLookup() {
 		var location_name = location_field.val();
 		var address_field = $('#EventAddress');
 
+		// Take no action if this is a virtual event
+		const eventType = document.querySelector('input[name="data[Event][location_medium]"]:checked');
+		if (eventType.value === 'virtual') {
+			return;
+		}
+
 		// Take no action if the address has already been entered
 		if (address_field.val() != '') {
 			return;
