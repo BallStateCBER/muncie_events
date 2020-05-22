@@ -89,12 +89,6 @@ function setupEventForm() {
 		$('#eventform_hasendtime').hide();
 		$('#eventform_hasendtime_boolinput').val('0');
 	});
-	$('#eventform_noaddress').click(function(event) {
-		event.preventDefault();
-		$('#eventform_noaddress').hide();
-		$('#eventform_address').show();
-		$('#EventAddress').focus();
-	});
 	$('#event_add_cost').click(function(event) {
 		event.preventDefault();
 		$('#eventform_nocost').hide();
@@ -255,18 +249,13 @@ function setupLocationAutocomplete() {
             return false;
 		},
 		select: function(event, ui) {
-			// Add the selected term to 'selected tags'
+			// Fill in the location name field
 			var location = ui.item.label;
 			this.value = location;
 
 			// Update address (might be changed to blank)
 			var address = ui.item.value;
 			$('#EventAddress').val(address);
-			if (address != '' && ! $('#eventform_address').is(':visible')) {
-				$('#eventform_noaddress').hide();
-				$('#eventform_address').show();
-			}
-			return false;
 		}
 	}).focus(function() {
 		// Trigger autocomplete on field focus
@@ -289,19 +278,13 @@ function setupAddressLookup() {
 		if (location_name == '') {
 			return;
 		}
-		var address_field = $('#EventAddress');
-		var address_row = $('#eventform_address');
-		var address_handle = $('#eventform_noaddress');
+
 		// Attempt to look up address from this user's previous locations
 		var matches = jQuery.grep(eventForm.previousLocations, function(location_obj) {
 			return location_obj.label == location_name;
 		});
 		if (matches.length > 0) {
 			address_field.val(matches[0].value);
-			if (! address_row.is(':visible')) {
-				address_handle.hide();
-				address_row.show();
-			}
 
 		// Ask the database for the address
 		} else {
@@ -310,11 +293,9 @@ function setupAddressLookup() {
 				url: '/events/getAddress/'+location_name,
 				beforeSend: function() {
 					address_th.addClass('loading');
-					address_handle.addClass('loading');
 				},
 				complete: function() {
 					address_th.removeClass('loading');
-					address_handle.removeClass('loading');
 				},
 				success: function (data) {
 					// Make sure address field hasn't received input since the AJAX request
@@ -322,10 +303,6 @@ function setupAddressLookup() {
 						return;
 					}
 					address_field.val(data);
-					if (! address_row.is(':visible')) {
-						address_handle.hide();
-						address_row.show();
-					}
 				},
 				error: function () {
 					console.log('Error trying to pull location address from /events/getAddress/'+location_name);
