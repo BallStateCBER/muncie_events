@@ -77,7 +77,7 @@
         </tr>
 
 		<tr>
-			<th>Event</th>
+			<th>Title</th>
 			<td><?php
                 echo $this->Form->input('title', array(
                     'label' => false,
