@@ -188,7 +188,7 @@ function setupEventForm() {
 		const locationDetailsField = document.getElementById('EventLocationDetails');
 		const locationRow = locationNameField.parentElement.parentElement.parentElement.parentElement;
 		if (isVirtual) {
-			locationNameField.value = 'Online';
+			locationNameField.value = 'Virtual Event';
 			addressHeader.textContent = 'URL';
 			addressField.placeholder = 'https://';
 			addressField.setAttribute('type', 'url');
@@ -196,7 +196,7 @@ function setupEventForm() {
 			locationDetailsField.parentElement.style.display = 'none';
 			locationRow.style.display = 'none';
 		} else {
-			if (locationNameField.value === 'Online') {
+			if (locationNameField.value === 'Virtual Event') {
 				locationNameField.value = '';
 			}
 			addressHeader.textContent = 'Address';
