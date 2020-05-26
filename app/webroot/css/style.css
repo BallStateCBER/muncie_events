@@ -2491,6 +2491,9 @@ a.calendar_controls {
   color: #555555;
   text-decoration: none;
 }
+#posting-rules-toggler-container span {
+  vertical-align: text-bottom;
+}
 #posting_rules_toggler {
   display: inline-block;
   margin-bottom: 15px;

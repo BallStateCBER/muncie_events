@@ -8,9 +8,12 @@
 	<?php echo $title_for_layout; ?>
 </h1>
 
-<a href="#posting_rules" id="posting_rules_toggler" data-toggle="collapse">
-	Rules for Posting Events
-</a>
+<p id="posting-rules-toggler-container">
+    <span>Before continuing, please read the</span>
+    <a href="#posting_rules" id="posting_rules_toggler" data-toggle="collapse" class="btn btn-sm btn-secondary">
+        Rules for Posting Events
+    </a>
+</p>
 
 <div id="posting_rules" class="alert alert-info collapse" aria-expanded="false">
 	<?php echo $this->element('rules'); ?>
