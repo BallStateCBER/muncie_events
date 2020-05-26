@@ -40,6 +40,7 @@ foreach (array('edit', 'edit_series', 'publish', 'approve', 'delete') as $action
 		array('id' => '[0-9]+', 'pass' => array('id'))
 	);
 }
+Router::redirect('/robots.txt', 	array('controller' => 'pages', 'action' => 'robots'));
 
 // Event series controller
 foreach (array('approve', 'delete', 'edit') as $action) {
@@ -68,6 +69,15 @@ Router::connect('/tags', 		array('controller' => 'tags', 'action' => 'index', 'f
 Router::connect('/tags/past', 	array('controller' => 'tags', 'action' => 'index', 'past'));
 
 // Locations
+Router::connect(
+    "/virtual",
+    array('controller' => 'events', 'action' => 'location', 'Virtual Event'),
+    array('pass' => array('location', 'direction'))
+);
+Router::redirect(
+    '/location/Virtual Event',
+    array('controller' => 'events', 'action' => 'location', 'Virtual Event')
+);
 Router::connect(
 	"/location/:location/:direction",
 	array('controller' => 'events', 'action' => 'location'),
