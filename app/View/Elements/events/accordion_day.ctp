@@ -148,7 +148,9 @@ $leave_open = (isset($open_only_event) && $open_only_event && count($events) == 
                                 </tr>
                             <?php endif; ?>
                             <tr class="link">
-                                <th>Link:</th>
+                                <th>
+                                    <?= $isVirtual ? 'Muncie Events Link:' : 'Link:' ?>
+                                </th>
                                 <td>
                                     <?php echo $this->Html->link($url, $url); ?>
                                 </td>
