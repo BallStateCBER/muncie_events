@@ -3,6 +3,7 @@
  * Any changes to this file should be copied over to /src/Template/Element/Pages/rules_events.ctp
  * in the Muncie Events API codebase
  */
+$adminEmail = Configure::read('admin_email');
 ?>
 <ul>
 	<li>
@@ -49,4 +50,8 @@
 		restrictions. Using CAPS LOCK FOR EMPHASIS and other obnoxiously-formatted text 
 		(administrators' discretion) is not allowed.
 	</li>
+    <li>
+        <strong>Questions?</strong> Please email <a href="mailto:<?= $adminEmail ?>"><?= $adminEmail ?></a> if you have
+        any questions.
+    </li>
 </ul>
