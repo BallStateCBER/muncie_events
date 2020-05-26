@@ -7,7 +7,9 @@
 		} elseif ($direction == 'past') {
 			echo 'Past ';
 		}
-		echo __n('Event', 'Events', $total)." at $location";
+		$isVirtual = ($location == 'Virtual Event');
+		$eventNoun = __n('Event', 'Events', $total);
+		echo $isVirtual ? "Virtual $eventNoun" : "$eventNoun at $location";
 	?>
 </h1>
 
@@ -27,7 +29,8 @@
 		at <?php echo $location; ?>
 	<?php else: ?>
 		<p class="light_text">
-			There are no <?php echo (($direction == 'future') ? 'past' : 'upcoming'); ?> events at <?php echo $location; ?>
+			There are no <?php echo (($direction == 'future') ? 'past' : 'upcoming'); ?>
+            <?= $isVirtual ? 'virtual events' : "events at $location" ?>
 		</p>
 	<?php endif; ?>
 <?php endif; ?>
