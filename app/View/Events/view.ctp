@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \View $this
+ * @var array $event
+ */
+$address = $event['Event']['address'];
+$location = $event['Event']['location'];
+$locationDetails = $event['Event']['location_details'];
+?>
 <h1 class="page_title">
 	<?php echo $event['Event']['title']; ?>
 </h1>
@@ -21,22 +30,21 @@
 			<tr>
 				<th>Where</th>
 				<td>
-					<?php echo $this->Html->link(
-					   $event['Event']['location'],
-					   array(
-					       'controller' => 'events',
-					       'action' => 'location',
-					       $event['Event']['location']
-                       )
-                    ); ?>
-					<?php if ($event['Event']['location_details']): ?>
-						<br />
-						<?php echo $event['Event']['location_details']; ?>
-					<?php endif; ?>
-					<?php if ($event['Event']['address']): ?>
-						<br />
-						<?php echo $event['Event']['address']; ?>
-					<?php endif; ?>
+                    <?= $this->Html->link(
+                        $location,
+                        [
+                            'controller' => 'events',
+                            'action' => 'location',
+                            $location,
+                        ]
+                    ) ?>
+                    <?php if ($location == 'Virtual Event'): ?>
+                        <br />
+                        <?= $address ? $this->Text->autoLinkUrls($address) : 'URL not provided' ?>
+                    <?php else: ?>
+                        <?= $locationDetails ? '<br />' . $locationDetails : null ?>
+                        <?= $address ? '<br />' . $address : null ?>
+                    <?php endif; ?>
 				</td>
 			</tr>
 			<tr>

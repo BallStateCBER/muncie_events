@@ -3,7 +3,8 @@
  * @var \View $this
  * @var array $events
  */
-	$leave_open = (isset($open_only_event) && $open_only_event && count($events) == 1);
+
+$leave_open = (isset($open_only_event) && $open_only_event && count($events) == 1);
 ?>
 
 <ul class="event_accordion">
@@ -15,6 +16,14 @@
                     'action' => 'view',
                     'id' => $event['Event']['id']
                 ), true);
+                $eventId = $event['Event']['id'];
+                $address = $event['Event']['address'];
+                $location = $event['Event']['location'];
+                $locationDetails = $event['Event']['location_details'];
+                $cost = $event['Event']['cost'];
+                $ageRestriction = $event['Event']['age_restriction'];
+                $isVirtual = $location == 'Virtual Event';
+                $hasDetails = $cost || $ageRestriction || $isVirtual;
             ?>
             <?php if (! empty($event['EventsImage'])): ?>
                 <span class="tiny_thumbnails">
@@ -27,7 +36,7 @@
                     <?php endforeach; ?>
                 </span>
             <?php endif; ?>
-            <a data-toggle="collapse" data-target="#more_info_<?php echo $event['Event']['id']; ?>" href="<?php echo $url; ?>" title="Click for more info" class="more_info_handle" id="more_info_handle_<?php echo $event['Event']['id']; ?>">
+            <a data-toggle="collapse" data-target="#more_info_<?= $eventId ?>" href="<?php echo $url; ?>" title="Click for more info" class="more_info_handle" id="more_info_handle_<?= $eventId ?>">
                 <?php echo $this->Icon->category($event['Category']['name']); ?>
                 <span class="title">
                     <?php echo $event['Event']['title']; ?>
@@ -37,16 +46,18 @@
                     @
                 </span>
                 <span class="where">
-                    <?php echo $event['Event']['location'] ? $event['Event']['location'] : '&nbsp;'; ?>
-                    <?php if ($event['Event']['location_details']): ?>
-                        <span class="location_details" id="location_details_<?php echo $event['Event']['id']; ?>">
-                            <?php echo $event['Event']['location_details']; ?>
-                        </span>
-                    <?php endif; ?>
-                    <?php if ($event['Event']['address']): ?>
-                        <span class="address" id="address_<?php echo $event['Event']['id']; ?>">
-                            <?php echo $event['Event']['address']; ?>
-                        </span>
+                    <?= $location ? $location : '&nbsp;' ?>
+                    <?php if ($location != 'Virtual Event'): ?>
+                        <?php if ($locationDetails): ?>
+                            <span class="location_details" id="location_details_<?= $eventId ?>">
+                                <?= $locationDetails ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ($address): ?>
+                            <span class="address" id="address_<?= $eventId ?>">
+                                <?= $address ?>
+                            </span>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </span>
             </a>
@@ -54,22 +65,30 @@
                 <div class="card">
                     <div class="card-header">
                         <?php echo $this->element('events/actions', compact('event')); ?>
-                        <?php if ($event['Event']['cost'] || $event['Event']['age_restriction']): ?>
+                        <?php if ($hasDetails): ?>
                             <div class="details">
                                 <table>
-                                    <?php if ($event['Event']['cost']): ?>
+                                    <?php if ($location == 'Virtual Event'): ?>
                                         <tr class="cost">
-                                            <th>Cost:</th>
+                                            <th>URL:</th>
                                             <td>
-                                                <?php echo $event['Event']['cost']; ?>
+                                                <?= $address ? $this->Text->autoLinkUrls($address) : 'URL not provided' ?>
                                             </td>
                                         </tr>
                                     <?php endif; ?>
-                                    <?php if ($event['Event']['age_restriction']): ?>
-                                        <tr class="age_restriction detail" id="age_restriction_<?php echo $event['Event']['id']; ?>">
+                                    <?php if ($cost): ?>
+                                        <tr class="cost">
+                                            <th>Cost:</th>
+                                            <td>
+                                                <?= $cost ?>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php if ($ageRestriction): ?>
+                                        <tr class="age_restriction detail" id="age_restriction_<?= $eventId ?>">
                                             <th>Ages:</th>
                                             <td>
-                                                <?php echo $event['Event']['age_restriction']; ?>
+                                                <?= $ageRestriction ?>
                                             </td>
                                         </tr>
                                     <?php endif; ?>
