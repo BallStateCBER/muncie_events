@@ -1281,6 +1281,9 @@ h1.page_title {
   font-size: 80%;
   margin: 0;
 }
+#front_page_announcement a {
+  text-decoration: underline;
+}
 /* FORMS */
 #datepicker_text {
   width: 80%;

@@ -5,14 +5,14 @@
 		<?php echo $this->Html->link('network of online calendars', array(
 			'controller' => 'widgets',
 			'action' => 'index'
-		)); ?>
+		)); ?>,
+        a
+        <a href="https://play.google.com/store/apps/details?id=com.muncieevents.MuncieEvents&hl=en_US">mobile app</a>,
 		and a personalized
 		<?php echo $this->Html->link('mailing list', array(
 			'controller' => 'mailing_list',
 			'action' => 'join'
 		)); ?>.
-		We're constantly developing this project to meet the needs of our community,
-		so stay tuned for more bells and whistles.
 		If you like what we're doing, please
 		<a href="http://facebook.com/MuncieEvents">like us on Facebook</a>,
 		<a href="/contact">give us your feedback</a>, and
