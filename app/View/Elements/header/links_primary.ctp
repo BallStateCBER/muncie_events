@@ -85,9 +85,9 @@
 	<li class="<?php echo (!empty($this->params['action']) && ($this->params['action']=='add'))?'active ' :'' ?>nav-item">
 		<?php echo $this->Html->link('Add Event', array('plugin' => false, 'controller' => 'events', 'action' => 'add'), array('class'=>'nav-link')); ?>
 	</li>
-	<li class="<?php echo (!empty($this->params['action']) && ($this->params['controller']=='widgets'))?'active ' :'' ?>nav-item">
-		<?php echo $this->Html->link('Widgets', array('plugin' => false, 'controller' => 'widgets', 'action' => 'index'), array('class'=>'nav-link')); ?>
-	</li>
+    <li class="<?php echo (!empty($this->params['action']) && ($this->params['controller'] == 'events') && $this->params['action'] == 'location' && $this->params['pass'][0] == 'Virtual Event') ? 'active ' : '' ?>nav-item">
+        <?php echo $this->Html->link('Virtual Events', array('plugin' => false, 'controller' => 'events', 'action' => 'location', 'Virtual Event'), array('class'=>'nav-link')); ?>
+    </li>
 </ul>
 <?php
     if (isset($header_vars['populated_dates'])) {
