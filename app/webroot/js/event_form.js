@@ -180,8 +180,9 @@ function setupEventForm() {
 	if ($('#EventUpdateSeries0').is(':checked')) {
 		$('#series_editing_warning').hide();
 	}
-	const handleChangeEventType = function (event) {
-		const isVirtual = event.target.value === 'virtual';
+	const handleChangeEventType = function () {
+		const virtualButton = document.querySelector('input[name="data[Event][location_medium]"][value="virtual"]');
+		const isVirtual = virtualButton.checked;
 		const locationNameField = document.getElementById('EventLocation');
 		const addressHeader = document.querySelector('#eventform_address th');
 		const addressField = document.getElementById('EventAddress');
@@ -211,6 +212,7 @@ function setupEventForm() {
 	for (let x = 0; x < options.length; x++) {
 		options[x].addEventListener('click', handleChangeEventType)
 	}
+	handleChangeEventType();
 }
 
 function setupLocationAutocomplete() {
