@@ -1120,7 +1120,7 @@ class EventsController extends AppController
         }
 
         $this->set(array(
-            'title_for_layout' => $location,
+            'title_for_layout' => $location == 'Virtual Event' ? 'Virtual Events' : $location,
             'location' => $location,
             'events' => $this->Event->arrangeByDate($this->paginate()),
             'direction' => $direction,
