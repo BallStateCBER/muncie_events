@@ -737,6 +737,9 @@ class EventsController extends AppController
             }
         } else {
             $this->request->data = $this->Event->read();
+            $location = $this->request->data['Event']['location'];
+            $medium = $location == 'Virtual Event' ? 'virtual' : 'physical';
+            $this->request->data['Event']['location_medium'] = $medium;
         }
 
         $this->__prepareEventForm();
