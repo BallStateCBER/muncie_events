@@ -16,17 +16,20 @@
 <?php if ($count_other_direction !== false): ?>
 	<?php if ($count_other_direction): ?>
 		<?php
-			$link_text = $count_other_direction.' ';
-			$link_text .= ($direction == 'future') ? 'past' : 'upcoming';
-			$link_text .= __n(' event', ' events', $count_other_direction);
-			echo $this->Html->link($link_text, array(
+            $eventNoun = __n(' event', ' events', $count_other_direction);
+            $linkText = sprintf(
+                '%s %s %s',
+                $count_other_direction,
+                ($direction == 'future') ? 'past' : 'upcoming',
+                $isVirtual ? "virtual $eventNoun" : "$eventNoun at $location"
+            );
+			echo $this->Html->link($linkText, array(
 				'controller' => 'events',
 				'action' => 'location',
 				'location' => $location,
 				'direction' => ($direction == 'future') ? 'past' : 'future'
 			));
 		?>
-		at <?php echo $location; ?>
 	<?php else: ?>
 		<p class="light_text">
 			There are no <?php echo (($direction == 'future') ? 'past' : 'upcoming'); ?>
